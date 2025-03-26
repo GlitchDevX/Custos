@@ -1,0 +1,56 @@
+name: PR Checks
+on:
+  workflow_dispatch:
+  pull_request: 
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - '.gitignore'
+      - 'backend/.python-version'
+
+jobs:
+  frontend:
+    runs-on: [self-hosted, linux, x64]
+    timeout-minutes: 10
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: Enter frontend directory
+        run: cd frontend
+      
+      - name: Cache npm Dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci
+        
+      - name: Lint Code
+        run: npm run lint
+
+      # possibly execute test later on
+          
+  backend:
+    runs-on: [self-hosted, linux, x64]
+    timeout-minutes: 10
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+      
+      - name: Enter backend directory
+        run: cd backend
+      
+      # Setup uv and execute test
