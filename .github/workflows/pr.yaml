@@ -6,7 +6,6 @@ on:
     paths-ignore:
       - 'README.md'
       - '.gitignore'
-      - 'backend/.python-version'
 
 jobs:
   frontend:
@@ -45,7 +44,7 @@ jobs:
           
   backend:
     runs-on: [self-hosted, linux, x64]
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -53,4 +52,14 @@ jobs:
       - name: Enter backend directory
         run: cd backend
       
-      # Setup uv and execute test
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+      
+      - name: Install requirements
+        run: uv sync
+
+      - name: Run tests
+        run: uv run pytest tests
