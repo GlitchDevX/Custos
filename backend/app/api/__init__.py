@@ -1,0 +1,1 @@
+# Endpoints with flask_restx
