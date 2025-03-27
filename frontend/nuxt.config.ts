@@ -17,5 +17,12 @@ export default defineNuxtConfig({
     serverBundle: {
       collections: ['lucide']
     },
+    customCollections: [
+      {
+        prefix: 'ci',
+        dir: './assets/custom-icons'
+      }
+    ],
+    mode: 'svg'
   }
 })
