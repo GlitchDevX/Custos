@@ -8,11 +8,14 @@ It consists of three parts. A Web UI to manage the application and check flagged
 
 The tech stack is `Python` with `Flask` and `Nuxt`.
 
+## Local Development
+To develop locally, start the docker compose file to be able to access the db.
+
 
 <div align="center">
     <h3><strong>Custos</strong></h3>
     <strong>Slogan Placeholder</strong>
     <br>
     <br>
-    <img src=".readme-docs/logo.png" width=50%>
+    <img src=".readme-docs/logo.png" width=200>
 </div>
