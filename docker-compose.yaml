@@ -1,4 +1,9 @@
 services:
+  # custos:
+  #   image: placeholder
+  #   restart: always
+  #   environment:
+  #     DATABASE_URL: 'mysql+pymysql://user:password@localhost/custos'
   db:
     image: mysql:8.0
     restart: always
