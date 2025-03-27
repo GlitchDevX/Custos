@@ -1,75 +1,26 @@
-# Nuxt Minimal Starter
+# Custos Frontend
+The frontend of custos will be an admin panel to manage all services and moderate users.
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+The tech-stack of the frontend is purely Nuxt.
 
-## Setup
+## Local Setup
+You need to have `Node` installed to work in this repository.
 
-Make sure to install dependencies:
-
+To start the local development server.
 ```bash
-# npm
+# install dependencies (once)
 npm install
 
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
+# start development server
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+## Build Website
+To build the website run the following command. You'll receive static files that can be deployed on any Web-host.
+```
+npm run generate
 ```
 
-Locally preview production build:
 
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
+Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
