@@ -41,6 +41,18 @@ jobs:
         run: npm run lint
 
       # possibly execute test later on
+
+  linting:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Linting Backend code
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: check --select B
+          src: "./backend"
           
   backend:
     runs-on: [self-hosted, linux, x64]
