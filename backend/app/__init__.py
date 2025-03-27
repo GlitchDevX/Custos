@@ -2,6 +2,9 @@ from flask import Flask
 from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 def create_app(config):
     app = Flask(__name__)
