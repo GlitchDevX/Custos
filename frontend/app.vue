@@ -10,3 +10,9 @@
 <script lang="ts" setup>
 
 </script>
+
+<style>
+* {
+  font-family: Inter;
+}
+</style>
