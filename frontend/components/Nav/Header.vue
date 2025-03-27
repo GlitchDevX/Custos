@@ -1,11 +1,13 @@
 <template>
-  <div class="flex flex-row justify-between align-middle px-2">
-    <UButton variant="ghost" href="/" size="md" icon="ci:logo" class="my-2 text-2xl font-bold">
-        Custos
-    </UButton>
+    <div class="w-full h-16">
+        <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-50 w-full">
+            <UButton variant="ghost" href="/" size="md" icon="ci:logo" class="my-2 text-2xl font-bold">
+                Custos
+            </UButton>
 
-    <UNavigationMenu :items="navigationItems"/>
-  </div>
+            <UNavigationMenu :items="navigationItems"/>
+        </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -35,6 +37,10 @@ const navigationItems = ref<NavigationMenuItem[]>([
 ]);
 </script>
 
-<style>
-
+<style scoped>
+.header-container {
+    /* background: var(--ui-bg); */
+    backdrop-filter: blur(5px);
+    border-bottom: 1px var(--ui-bg-muted) solid;
+}
 </style>
