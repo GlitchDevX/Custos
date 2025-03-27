@@ -15,7 +15,7 @@ def run(config):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run the Flask application.')
     parser.add_argument('--config', type=str, choices=['dev', 'tst', 'prd'],
-                        default='development', help='Choose the configuration to use')
+                        default='dev', help='Choose the configuration to use')
 
     args = parser.parse_args()
     run(configs.get(args.config))
