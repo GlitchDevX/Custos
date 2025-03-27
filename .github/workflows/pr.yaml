@@ -60,6 +60,7 @@ jobs:
     defaults:
       run:
         working-directory: backend
+    needs: linting
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
