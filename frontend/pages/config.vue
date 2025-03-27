@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-4 flex gap-4 flex-col">
     
   </div>
 </template>
