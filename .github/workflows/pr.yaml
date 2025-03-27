@@ -11,6 +11,9 @@ jobs:
   frontend:
     runs-on: [self-hosted, linux, x64]
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -19,9 +22,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      
-      - name: Enter frontend directory
-        run: cd frontend
       
       - name: Cache npm Dependencies
         id: cache
@@ -57,12 +57,12 @@ jobs:
   backend:
     runs-on: [self-hosted, linux, x64]
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
-      
-      - name: Enter backend directory
-        run: cd backend
       
       - name: Install uv
         uses: astral-sh/setup-uv@v5
