@@ -13,21 +13,20 @@ class ValidatorManager:
     def __init__(self):
         #TODO: Check if is enables in config here
         self.validators.append(FormatValidator())
-        self.validators.append(SpamlistValidator())
-        self.validators.append(MailserverValidator())
+        # self.validators.append(SpamlistValidator())
+        # self.validators.append(MailserverValidator())
 
-    def evaluate_results(results: List[ValidationResult]):
-        # build response body here
-        if len(results) == 0:
-            return 'ok'
+    def _evaluate_result(_, result: ValidationResult):
+        if result is None or result.passed:
+            return 'ok', 200
         
-        return results[0].text
+        return result.text, 400
 
     def validate_mail(self, mail):
-        results: List[ValidationResult] = []
+        result: ValidationResult = None
         for validator in self.validators:
             result = validator.execute_check(mail)
             if not result.passed:
                 break
-        
-        return self.evaluate_results(results)
+
+        return self._evaluate_result(result)
