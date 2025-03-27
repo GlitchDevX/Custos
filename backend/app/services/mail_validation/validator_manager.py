@@ -20,9 +20,9 @@ class ValidatorManager:
 
     def _evaluate_result(_, result: ValidationResult):
         if result is None or result.passed:
-            return json.dumps({'code': 'OK'}), 200
+            return {'code': 'OK'}, 200
         
-        return json.dumps({'code': result.code, 'text': result.text}), 400
+        return {'code': result.code, 'text': result.text}, 400
 
     def validate_mail(self, mail):
         result: ValidationResult = None
