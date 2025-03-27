@@ -12,4 +12,10 @@ export default defineNuxtConfig({
   ],
 
   css: ['~/assets/css/main.css'],
+
+  icon: {
+    serverBundle: {
+      collections: ['lucide']
+    },
+  }
 })
