@@ -6,4 +6,4 @@ class FormatValidator(ValidatorModule):
 
     def execute_check(self, email) -> ValidationResult:
         # impl regex logic 
-        return ValidationResult(False, "The email format is invalid")
+        return ValidationResult(False, "FORMAT_INVALID", "The email format is invalid")
