@@ -3,7 +3,7 @@ from typing import List
 from .validator_module import ValidatorModule
 from .validation_result import ValidationResult
 from .mailserver_validator import MailserverValidator
-from .spamlist_validator import SpamlistValidator
+from .disposable_validator import DisposableValidator
 from .format_validator import FormatValidator
 
 
