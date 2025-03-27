@@ -8,6 +8,11 @@ It consists of three parts. A Web UI to manage the application and check flagged
 
 The tech stack is `Python` with `Flask` and `Nuxt`.
 
+
 <div align="center">
+    <h3><strong>Custos</strong></h3>
+    <strong>Slogan Placeholder</strong>
+    <br>
+    <br>
     <img src=".readme-docs/logo.png" width=50%>
 </div>
