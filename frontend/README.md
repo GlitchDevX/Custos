@@ -3,6 +3,8 @@ The frontend of custos will be an admin panel to manage all services and moderat
 
 The tech-stack of the frontend is purely Nuxt.
 
+Most UI is using `NuxtUI`, for an overview of components see the [documentation here](https://ui.nuxt.com/components).
+
 ## Local Setup
 You need to have `Node` installed to work in this repository.
 
