@@ -17,6 +17,7 @@ class ValidatorManager:
         self.validators.append(MailserverValidator())
 
     def evaluate_results(results: List[ValidationResult]):
+        # build response body here
         if len(results) == 0:
             return 'ok'
         
