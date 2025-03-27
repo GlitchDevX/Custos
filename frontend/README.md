@@ -23,6 +23,8 @@ To build the website run the following command. You'll receive static files that
 npm run generate
 ```
 
+## Icons
+To search for icons use [this page](https://icon-sets.iconify.design/lucide/) and add a prefix of `lucide-` to the icon name.
 
 ---
 Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
