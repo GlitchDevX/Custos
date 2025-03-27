@@ -15,4 +15,10 @@ def create_app(config):
     api.add_namespace(ns_metric)
     api.add_namespace(ns_mail)
 
+    db.init_app(app)
+
+    with app.app_context():
+        from .models.metrics import Metrics
+        db.create_all()
+
     return app
