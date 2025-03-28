@@ -16,7 +16,7 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t custos:${{ github.ref }} .
+          docker build -t custos:main .
 
       - name: Save Docker image to a tar file
         run: |
