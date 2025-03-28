@@ -14,7 +14,7 @@ class ValidatorManager:
         #TODO: Check if is enables in config here
         self.validators.append(FormatValidator())
         # self.validators.append(SpamlistValidator())
-        # self.validators.append(MailserverValidator())
+        self.validators.append(MailserverValidator())
 
     def _evaluate_result(_, result: ValidationResult):
         if result is None or result.passed:
