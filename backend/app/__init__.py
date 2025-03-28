@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
+from .resources.config import ns_config
 from .utils.sqlalchemy_utils import SQLAlchemyWrapper
 from .models.email_metrics import EmailMetrics
 
@@ -15,6 +16,7 @@ def create_app(config):
 
     api.add_namespace(ns_metric)
     api.add_namespace(ns_mail)
+    api.add_namespace(ns_config)
 
     db.init_app(app)
 
