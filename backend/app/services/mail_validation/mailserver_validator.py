@@ -3,6 +3,7 @@ import socket
 from typing import Set
 import dns.resolver
 
+from .mail_utils import get_domain_from_email
 from .validation_result import ValidationResult
 from .validator_module import ValidatorModule
 
@@ -13,8 +14,6 @@ class MailserverValidator(ValidatorModule):
     _no_mailserver = ValidationResult(False, "NO_MAILSERVER", "The Mailserver is not reachable")
     _ok_result = ValidationResult(True, "OK", "Everything okay")
 
-    def _get_domain_from_email(_, email: str):
-        return email[email.find('@')+1:]
     
     def _get_mail_servers(_, domain):
         mail_servers = dns.resolver.resolve(domain, 'MX', raise_on_no_answer=False)
@@ -56,7 +55,7 @@ class MailserverValidator(ValidatorModule):
 
 
     def execute_check(self, email):
-        domain = self._get_domain_from_email(email)
+        domain = get_domain_from_email(email)
         
         servers = self._get_mail_servers(domain)
         if len(servers) == 0:
