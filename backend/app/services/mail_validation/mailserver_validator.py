@@ -53,13 +53,13 @@ class MailserverValidator(ValidatorModule):
             return code == 250
         
         except smtplib.SMTPServerDisconnected as e:
-            pass
+            print(e)
             # save metric
         except smtplib.SMTPConnectError as e:
-            pass
+            print(e)
             # save metric
         except socket.timeout as e:
-            pass
+            print(e)
             # save metric
 
         return False
