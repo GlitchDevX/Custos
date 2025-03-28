@@ -10,10 +10,6 @@ parser.add_argument('mail', type=str, required=True, location='json')
 class MailValidationResource(Resource):
     validator_manager = ValidatorManager()
 
-    # def __init__(self, x):
-    #     print(x)
-    #     self.validator_manager = ValidatorManager()
-
     @ns_mail.expect(parser)
     def post(self):
         parser.parse_args(strict=True)
