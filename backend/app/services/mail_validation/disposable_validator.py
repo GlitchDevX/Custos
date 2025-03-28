@@ -5,11 +5,13 @@ from .mail_utils import get_domain_from_email
 
 class DisposableValidator(ValidatorModule):
 
-    disposable_domains: List[str]
+    disposable_domains: List[str] = []
 
-    def __init__(self):
+    def __init__(self, config):
         with open('data/disposable_mail_domains.txt') as file:
             self.disposable_domains = file.read().splitlines()
+        
+        self.disposable_domains.extend(config.get("disposableDomains"))
 
     def execute_check(self, email):
         domain = get_domain_from_email(email)

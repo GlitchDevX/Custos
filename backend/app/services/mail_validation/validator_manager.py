@@ -1,5 +1,7 @@
 from typing import List
 
+from app.config_reader import ConfigReader
+
 from .validator_module import ValidatorModule
 from .validation_result import ValidationResult
 from .mailserver_validator import MailserverValidator
@@ -11,10 +13,16 @@ class ValidatorManager:
     validators: List[ValidatorModule] = []
 
     def __init__(self):
-        #TODO: Check if is enables in config here
-        self.validators.append(FormatValidator())
-        self.validators.append(DisposableValidator())
-        self.validators.append(MailserverValidator())
+        self.config = ConfigReader("mail_validation")
+
+        if self.config.get("formatCheck"):
+            self.validators.append(FormatValidator())
+        
+        if self.config.get("disposableCheck"):
+            self.validators.append(DisposableValidator(self.config))
+        
+        if self.config.get("mxRecordCheck"):
+            self.validators.append(MailserverValidator(self.config))
 
     def _evaluate_result(_, result: ValidationResult):
         if result is None or result.passed:

@@ -14,6 +14,8 @@ class MailserverValidator(ValidatorModule):
     _no_mailserver = ValidationResult(False, "NO_MAILSERVER", "The Mailserver is not reachable")
     _ok_result = ValidationResult(True, "OK", "Everything okay")
 
+    def __init__(self, config):
+        self.config = config
     
     def _get_mail_servers(_, domain):
         mail_servers = dns.resolver.resolve(domain, 'MX', raise_on_no_answer=False)
@@ -60,6 +62,9 @@ class MailserverValidator(ValidatorModule):
         servers = self._get_mail_servers(domain)
         if len(servers) == 0:
             return self._no_mailserver
+        
+        if not self.config.get("smtpHelo"):
+            return self._ok_result
         
         if email in self._successful_cache:
             print(f"Email found in valid cache: {email}")
