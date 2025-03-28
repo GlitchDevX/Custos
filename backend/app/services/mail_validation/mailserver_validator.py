@@ -54,6 +54,11 @@ class MailserverValidator(ValidatorModule):
         except socket.timeout as e:
             pass
             # save metric
+        except dns.resolver.NXDOMAIN:
+            pass
+            # save metric
+
+        return False
 
 
     def execute_check(self, email):
