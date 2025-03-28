@@ -20,7 +20,7 @@ class ValidatorManager:
         if result is None or result.passed:
             return {'code': 'OK'}, 200
         
-        return {'code': result.code, 'text': result.text}, 400
+        return {'code': result.code, 'text': result.text}, 200
 
     def validate_mail(self, mail):
         result: ValidationResult = None
