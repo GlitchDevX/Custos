@@ -18,16 +18,23 @@ class MailserverValidator(ValidatorModule):
         self.config = config
     
     def _get_mail_servers(_, domain):
-        mail_servers = dns.resolver.resolve(domain, 'MX', raise_on_no_answer=False)
-        servers_dict = {}
-        for server in mail_servers:
-            priority, host = server.to_text().split(' ')
-            servers_dict[host] = int(priority)
-        
-        sorted_servers_tuples = sorted(servers_dict.items(), key=lambda x: x[1])
-        sorted_servers = list(map(lambda tuple: tuple[0], sorted_servers_tuples))
+        try:
+            mail_servers = dns.resolver.resolve(domain, 'MX', raise_on_no_answer=False)
+            servers_dict = {}
+            for server in mail_servers:
+                priority, host = server.to_text().split(' ')
+                servers_dict[host] = int(priority)
 
-        return sorted_servers
+            sorted_servers_tuples = sorted(servers_dict.items(), key=lambda x: x[1])
+            sorted_servers = list(map(lambda tuple: tuple[0], sorted_servers_tuples))
+
+            return sorted_servers
+        
+        except dns.resolver.NXDOMAIN:
+            pass
+            # save metric
+        
+        return []
 
     def _check_mail_servers(_, mail_host: str, email: str):
         print(f"Will check mail server with host: {mail_host}")
@@ -52,9 +59,6 @@ class MailserverValidator(ValidatorModule):
             pass
             # save metric
         except socket.timeout as e:
-            pass
-            # save metric
-        except dns.resolver.NXDOMAIN:
             pass
             # save metric
 
