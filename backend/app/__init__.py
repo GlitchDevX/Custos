@@ -2,9 +2,10 @@ from flask import Flask
 from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
-from flask_sqlalchemy import SQLAlchemy
+from .utils.sqlalchemy_utils import SQLAlchemyWrapper
+from .models.model_metrics import Metrics
 
-db = SQLAlchemy()
+db = SQLAlchemyWrapper().database
 
 def create_app(config):
     app = Flask(__name__)
@@ -18,7 +19,6 @@ def create_app(config):
     db.init_app(app)
 
     with app.app_context():
-        from .models.metrics import Metrics
         db.create_all()
 
     return app

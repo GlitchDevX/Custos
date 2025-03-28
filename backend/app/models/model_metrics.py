@@ -1,7 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
-from .. import db
+from ..utils.sqlalchemy_utils import SQLAlchemyWrapper
+from .base_model import BaseModel
 
-class Metrics(db.Model):
+db = SQLAlchemyWrapper().database
+
+class Metrics(db.Model, BaseModel):
     __tablename__ = 'metrics'
     
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -9,3 +11,4 @@ class Metrics(db.Model):
     invalid_format = db.Column(db.Boolean, nullable=True)
     no_dns_record = db.Column(db.Boolean, nullable=True)
     spam_mail = db.Column(db.Boolean, nullable=True)
+
