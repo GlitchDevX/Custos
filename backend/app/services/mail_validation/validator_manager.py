@@ -1,7 +1,5 @@
 from typing import List
 
-from flask import json
-
 from .validator_module import ValidatorModule
 from .validation_result import ValidationResult
 from .mailserver_validator import MailserverValidator
