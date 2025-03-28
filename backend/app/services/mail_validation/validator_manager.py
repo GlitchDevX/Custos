@@ -13,7 +13,7 @@ class ValidatorManager:
     def __init__(self):
         #TODO: Check if is enables in config here
         self.validators.append(FormatValidator())
-        # self.validators.append(SpamlistValidator())
+        self.validators.append(DisposableValidator())
         self.validators.append(MailserverValidator())
 
     def _evaluate_result(_, result: ValidationResult):
