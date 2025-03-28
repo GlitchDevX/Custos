@@ -3,12 +3,12 @@ services:
   #   image: placeholder
   #   restart: always
   #   environment:
-  #     DATABASE_URL: 'mysql+pymysql://user:password@localhost/custos'
+  #     SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://user:password@localhost/custos'
   db:
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
+      MYSQL_DATABASE: 'custos'
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'

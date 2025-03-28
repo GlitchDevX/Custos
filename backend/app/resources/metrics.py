@@ -1,4 +1,6 @@
 from flask_restx import Resource, Namespace
+from ..services.metrics_receiver.receiver import MetricsReceiver
+from flask import jsonify
 
 ns_metric = Namespace('metrics', description='Metrics')
 
@@ -6,4 +8,5 @@ ns_metric = Namespace('metrics', description='Metrics')
 class MetricsResource(Resource):
 
     def get(self):
-        return 200
+        metrics = MetricsReceiver.get_email_metrics()
+        return jsonify(metrics)

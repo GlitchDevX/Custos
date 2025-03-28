@@ -2,6 +2,10 @@ from flask import Flask
 from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
+from .utils.sqlalchemy_utils import SQLAlchemyWrapper
+from .models.email_metrics import EmailMetrics
+
+db = SQLAlchemyWrapper().database
 
 def create_app(config):
     app = Flask(__name__)
@@ -11,5 +15,10 @@ def create_app(config):
 
     api.add_namespace(ns_metric)
     api.add_namespace(ns_mail)
+
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
 
     return app
