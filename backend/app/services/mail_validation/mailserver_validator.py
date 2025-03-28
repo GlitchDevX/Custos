@@ -63,6 +63,7 @@ class MailserverValidator(ValidatorModule):
             return self._no_mailserver
         
         if email in self._successful_cache:
+            print(f"Email found in valid cache: {email}")
             return self._ok_result
         
         valid = False
