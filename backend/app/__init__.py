@@ -3,7 +3,7 @@ from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .utils.sqlalchemy_utils import SQLAlchemyWrapper
-from .models.model_metrics import Metrics
+from .models.email_metrics import EmailMetrics
 
 db = SQLAlchemyWrapper().database
 

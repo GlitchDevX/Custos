@@ -7,3 +7,4 @@ class SingletonMeta(type):
             instance = super().__call__(*args, **kwds)
             cls._instances[cls] = instance
         return cls._instances[cls]
+    
