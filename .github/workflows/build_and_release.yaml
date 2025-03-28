@@ -1,5 +1,7 @@
 name: Build and Release
 
+permissions: write-all
+
 on:
   workflow_dispatch:
   push:
