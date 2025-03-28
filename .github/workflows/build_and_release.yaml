@@ -1,0 +1,37 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+      
+      - name: Build Docker image
+        run: |
+          docker build -t custos:${{ github.ref }} .
+
+      - name: Save Docker image to a tar file
+        run: |
+          docker save custos:${{ github.ref }} -o custos-${{ github.ref }}.tar
+
+  release:
+    runs-on: [self-hosted, linux, x64]
+    needs: build
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+      
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            custos-${{ github.ref }}.tar
