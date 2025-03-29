@@ -5,10 +5,10 @@
         <ConfigMailValidation />
       </template>
       <template #realtimeCheck>
-        <p>Realtime Content Check</p>
+        <ConfigRealtime />
       </template>
       <template #pipelineCheck>
-        <p>Pipeline Check</p>
+        <ConfigPipeline />
       </template>
     </UTabs>
   </div>
