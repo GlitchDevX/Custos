@@ -1,7 +1,7 @@
 from typing import List
-from .validation_result import ValidationResult
+from ..validation_result import ValidationResult
 from .validator_module import ValidatorModule
-from .mail_utils import get_domain_from_email
+from ..mail_utils import get_domain_from_email
 
 class DisposableValidator(ValidatorModule):
 

@@ -1,5 +1,5 @@
 import re
-from .validation_result import ValidationResult
+from ..validation_result import ValidationResult
 from .validator_module import ValidatorModule
 
 
