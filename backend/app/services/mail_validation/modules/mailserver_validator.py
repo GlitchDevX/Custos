@@ -3,8 +3,8 @@ import socket
 from typing import Set
 import dns.resolver
 
-from .mail_utils import get_domain_from_email
-from .validation_result import ValidationResult
+from ..mail_utils import get_domain_from_email
+from ..validation_result import ValidationResult
 from .validator_module import ValidatorModule
 
 class MailserverValidator(ValidatorModule):

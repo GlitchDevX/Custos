@@ -2,11 +2,11 @@ from typing import List
 
 from app.config_reader import ConfigReader
 
-from .validator_module import ValidatorModule
 from .validation_result import ValidationResult
-from .mailserver_validator import MailserverValidator
-from .disposable_validator import DisposableValidator
-from .format_validator import FormatValidator
+from .modules.validator_module import ValidatorModule
+from .modules.mailserver_validator import MailserverValidator
+from .modules.disposable_validator import DisposableValidator
+from .modules.format_validator import FormatValidator
 
 
 class ValidatorManager:
