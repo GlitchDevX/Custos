@@ -6,7 +6,7 @@ class Config:
     PORT = 5000
     SECRET_KEY = os.environ.get('SECRET_KEY', token_urlsafe(32))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://user:password@localhost/custos"
+    SQLALCHEMY_DATABASE_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
     DEBUG = False
 
 class DevelopmentConfig(Config):
