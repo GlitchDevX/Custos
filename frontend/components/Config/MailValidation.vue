@@ -29,7 +29,7 @@
                 Comma separated list of additional domains to mark as disposable.
             </p>
             <UTextarea placeholder="gmail.com, github.com..." 
-                :maxrows="5" :autoresize="true" class="w-96 mt-1" />
+                :maxrows="5" :autoresize="true" class="w-116 mt-1" />
         </UFormField>
 
         <FeatureToggle
@@ -46,13 +46,19 @@
             <p class="muted-text">
                 Maximum amount of mail servers to perform a HELO check.
             </p>
-            <UInputNumber v-model="state.maxHeloChecks" class="w-32 mt-1"/>
+            <UInputNumber v-model="state.maxHeloChecks" class="w-32 mt-1" :min="1" />
         </UFormField>
     </div>
+
+    <UButton label="Save" size="lg" class="mt-8"
+        @click="submitConfig" :loading="sending"/>
   </ConfigLayout>
 </template>
 
 <script lang="ts" setup>
+import { SET_CONFIG_PATH } from '~/assets/ts/backendConnector';
+
+const toast = useToast();
 const state = reactive({
     enabled: true,
     formatCheck: true,
@@ -72,6 +78,41 @@ function onSmtpHeloChange() {
     if (state.smtpHeloCheck && !state.mxRecordCheck) {
         state.mxRecordCheck = true;
     }
+}
+
+const sending = ref(false);
+async function submitConfig() {
+    const body = { 'file': 'mail_validation', 'content': state };
+
+    console.log("Submitting data: ", JSON.stringify(body));
+    sending.value = true;
+    
+    setTimeout(() => {
+        sending.value = false;
+        toast.add({
+            title: 'Success',
+            description: 'Updated config in the backend.',
+            icon: 'lucide-check',
+            color: 'success'
+        });
+        toast.add({
+            title: 'Failed',
+            description: 'Failed to update config in the backend.',
+            icon: 'lucide-x',
+            color: 'error',
+            duration: 8000,
+            actions: [
+                {
+                    icon: 'lucide-refresh-cw',
+                    label: 'retry',
+                    variant: 'outline',
+                    color: 'neutral',
+                    onClick: submitConfig
+                }
+            ],
+        });
+    }, 750);
+    // const result = await $fetch(SET_CONFIG_PATH, { method: 'POST', body: body });
 }
 </script>
 
