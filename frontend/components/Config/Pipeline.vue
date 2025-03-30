@@ -1,6 +1,6 @@
 <template>
-    <div class="px-40 py-8">
-      <EndpointSummary path="/report-content" title="Realtime Check"
+    <ConfigLayout>
+      <EndpointSummary path="scheduled pipeline" title="Pipeline Check"
           summary="This endpoint is used to quickly verify or censor user-content by applying rules."
       />
       <USwitch
@@ -19,7 +19,7 @@
               v-model="state.check"
           />
       </div>
-    </div>
+    </ConfigLayout>
   </template>
   
   <script lang="ts" setup>

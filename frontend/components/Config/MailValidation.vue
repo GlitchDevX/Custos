@@ -1,5 +1,5 @@
 <template>
-  <div class="px-40 py-8">
+  <ConfigLayout>
     <EndpointSummary path="/validate-mail" title="Mail Validation"
         summary="This endpoint is used to verify if an email is valid by using different techniques."
     />
@@ -49,7 +49,7 @@
             <UInputNumber v-model="state.maxHeloChecks" class="w-32 mt-1"/>
         </UFormField>
     </div>
-  </div>
+  </ConfigLayout>
 </template>
 
 <script lang="ts" setup>
