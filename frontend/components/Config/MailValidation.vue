@@ -23,6 +23,15 @@
             description="Check the email for common disposable domains."
             v-model="state.disposableCheck"
         />
+
+        <UFormField label="Extra Disposable Domains" size="xl" class="pt-4">
+            <p class="muted-text">
+                Comma separated list of additional domains to mark as disposable.
+            </p>
+            <UTextarea placeholder="gmail.com, github.com..." 
+                :maxrows="5" :autoresize="true" class="w-96 mt-1" />
+        </UFormField>
+
         <FeatureToggle
             title="MX Record Check"
             description="Checks if the domain has a mailserver in the MX Records."
@@ -33,6 +42,12 @@
             description="Perform a SMTP HELO check verifying the existance of the mail server."
             v-model="state.smtpHeloCheck"
         />
+        <UFormField label="Max Mailserver Checks" size="xl" class="pt-4">
+            <p class="muted-text">
+                Maximum amount of mail servers to perform a HELO check.
+            </p>
+            <UInputNumber v-model="state.maxHeloChecks" class="w-32 mt-1"/>
+        </UFormField>
     </div>
   </div>
 </template>
@@ -42,8 +57,10 @@ const state = reactive({
     enabled: true,
     formatCheck: true,
     disposableCheck: true,
+    extraDisposableDomains: [],
     mxRecordCheck: true,
-    smtpHeloCheck: true
+    smtpHeloCheck: true,
+    maxHeloChecks: 5
 });
 </script>
 

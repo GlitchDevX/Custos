@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-8">
+  <div class="pt-8">
     <USwitch 
         unchecked-icon="lucide-x"
         checked-icon="lucide-check"
@@ -9,7 +9,7 @@
         class="pb-1"
         v-model="model"
     />
-    <p class="muted-feature-description">
+    <p class="muted-text">
         {{props.description}}
     </p>
   </div>
@@ -24,7 +24,5 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.muted-feature-description {
-    color: var(--ui-text-muted);
-}
+
 </style>
