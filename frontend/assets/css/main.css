@@ -4,3 +4,7 @@
 .muted-text {
   color: var(--ui-text-muted);
 }
+
+.low-opacity {
+    opacity: 0.5;
+}

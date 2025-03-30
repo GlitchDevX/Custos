@@ -12,7 +12,7 @@
         v-model="state.enabled"
     />
 
-    <div>
+    <div :class="{'low-opacity': !state.enabled}">
         <FeatureToggle
             title="Format Check"
             description="Apply basic format checks to an email."
@@ -24,7 +24,7 @@
             v-model="state.disposableCheck"
         />
 
-        <UFormField label="Extra Disposable Domains" size="xl" class="pt-4">
+        <UFormField label="Extra Disposable Domains" size="xl" class="pt-4" :class="{'low-opacity': !state.disposableCheck}">
             <p class="muted-text">
                 Comma separated list of additional domains to mark as disposable.
             </p>
@@ -34,15 +34,15 @@
 
         <FeatureToggle
             title="MX Record Check"
-            description="Checks if the domain has a mailserver in the MX Records."
-            v-model="state.mxRecordCheck"
+            description="Checks if the domain has a mail server in the MX Records."
+            v-model="state.mxRecordCheck" @update:model-value="onMxRecordChange"
         />
         <FeatureToggle
             title="SMTP HELO Check"
             description="Perform a SMTP HELO check verifying the existance of the mail server."
-            v-model="state.smtpHeloCheck"
+            v-model="state.smtpHeloCheck" @update:model-value="onSmtpHeloChange"
         />
-        <UFormField label="Max Mailserver Checks" size="xl" class="pt-4">
+        <UFormField label="Max Mailserver Checks" size="xl" class="pt-4" :class="{'low-opacity': !state.smtpHeloCheck}">
             <p class="muted-text">
                 Maximum amount of mail servers to perform a HELO check.
             </p>
@@ -62,6 +62,17 @@ const state = reactive({
     smtpHeloCheck: true,
     maxHeloChecks: 5
 });
+
+function onMxRecordChange() {
+    if (state.smtpHeloCheck && !state.mxRecordCheck) {
+        state.smtpHeloCheck = false;
+    }
+}
+function onSmtpHeloChange() {
+    if (state.smtpHeloCheck && !state.mxRecordCheck) {
+        state.mxRecordCheck = true;
+    }
+}
 </script>
 
 <style scoped>
