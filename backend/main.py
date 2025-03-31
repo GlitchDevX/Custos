@@ -1,5 +1,5 @@
 import argparse
-from app import create_app
+from app.app import FlaskApplication
 from app.config import DevelopmentConfig, TestingConfig, ProductionConfig
 
 configs = {
@@ -9,8 +9,7 @@ configs = {
 }
 
 def run(config):
-    app = create_app(config)
-    app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
+    app = FlaskApplication(config)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run the Flask application.')
