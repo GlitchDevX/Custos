@@ -10,19 +10,14 @@ from .modules.format_validator import FormatValidator
 
 
 class ValidatorManager:
-    validators: List[ValidatorModule] = []
+    validators: List[(str, ValidatorModule)] = []
 
     def __init__(self):
         self.config = ConfigReader("mail_validation")
 
-        if self.config.get("formatCheck"):
-            self.validators.append(FormatValidator())
-        
-        if self.config.get("disposableCheck"):
-            self.validators.append(DisposableValidator(self.config))
-        
-        if self.config.get("mxRecordCheck"):
-            self.validators.append(MailserverValidator(self.config))
+        self.validators.append(("formatCheck", FormatValidator()))        
+        self.validators.append(("disposableCheck", DisposableValidator(self.config)))
+        self.validators.append(("mxRecordCheck", MailserverValidator(self.config)))
 
     def _evaluate_result(_, result: ValidationResult):
         if result is None or result.passed:
@@ -32,7 +27,10 @@ class ValidatorManager:
 
     def validate_mail(self, mail):
         result: ValidationResult = None
-        for validator in self.validators:
+        for (configName, validator) in self.validators:
+            if not self.config.get(configName):
+                continue
+
             result = validator.execute_check(mail)
             if not result.passed:
                 break
