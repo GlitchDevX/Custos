@@ -5,7 +5,7 @@ import pytest
 @pytest.fixture()
 def app():
     app = FlaskApplication(TestingConfig)
-    yield app
+    yield app.flask_app
 
 @pytest.fixture()
 def client(app):
