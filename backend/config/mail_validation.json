@@ -2,6 +2,7 @@
     "disposableCheck": true,
     "disposableDomains": [],
     "formatCheck": true,
+    "maxHeloChecks": 1,
     "mxRecordCheck": true,
     "smtpHelo": true
 }
