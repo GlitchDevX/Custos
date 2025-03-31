@@ -12,8 +12,6 @@ class DisposableValidator(ValidatorModule):
         with open('data/disposable_mail_domains.txt') as file:
             self.disposable_domains = file.read().splitlines()
         
-        self.disposable_domains.extend()
-
     def execute_check(self, email):
         domain = get_domain_from_email(email)
         extra_domains = self.config.get("disposableDomains")
