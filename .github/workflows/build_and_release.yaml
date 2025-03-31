@@ -25,17 +25,18 @@ jobs:
       - name: Echo Tag to output
         run: |
           echo ${{ steps.tag.outputs.new_tag }}
-          echo "${{ steps.tag.outputs.new_tag }}" >> "$GITHUB_OUTPUT"
+          echo "tag=${{ steps.tag.outputs.new_tag }}" >> "$GITHUB_OUTPUT"
 
   build-backend:
     runs-on: [self-hosted, linux, x64]
+    needs: get-version-tag
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
       
       - name: Build Docker image
         run: |
-          docker build -t custos:${{needs.get-version-tag.outputs.output1}} -t custos:latest .
+          docker build -t custos:${{needs.get-version-tag.outputs.tag}} -t custos:latest .
 
       - name: Save Docker image to a tar file
         run: |
@@ -45,10 +46,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: custos-latest
-          path: custos-main.tar
+          path: custos-latest.tar
   
   build-frontend:
     runs-on: [self-hosted, linux, x64]
+    needs: get-version-tag
     defaults:
       run:
         working-directory: frontend
@@ -60,7 +62,7 @@ jobs:
         run: npm run generate
 
       - name: Build Docker image
-        run: docker build -t custos-ui:${{needs.get-version-tag.outputs.output1}} -t custos-ui:latest .
+        run: docker build -t custos-ui:${{needs.get-version-tag.outputs.tag}} -t custos-ui:latest .
 
       - name: Save Docker image to a tar file
         run: |
@@ -102,7 +104,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
+
           tag_name: ${{ steps.tag.outputs.new_tag }}
           files: |
-            custos-main.tar
+            custos-latest.tar
             custos-ui-latest.tar
