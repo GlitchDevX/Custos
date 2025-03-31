@@ -22,7 +22,7 @@ class ConfigSetter:
             return {"code": "OK"}, 200
         else:
             print(f"Tried to write config to non existent file. Filename: {namespace}.json")
-            return {"code": "NOT_FOUND", "text": "Config file not found" }, 404 
+            return {"code": "NAMESPACE_NOT_FOUND", "text": "Config Namespace not found" }, 404 
 
     def update_file(self, namespace, content):
         path = f"config/{namespace}.json"
