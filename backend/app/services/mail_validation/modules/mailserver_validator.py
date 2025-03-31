@@ -80,10 +80,15 @@ class MailserverValidator(ValidatorModule):
             return self._ok_result
         
         valid = False
+        counter = 0
         for server in servers:
+            counter += 1
             valid = self._check_mail_servers(server, email)
             if valid:
                 self._successful_cache.add(email)
+                break
+            
+            if counter >= self.config.get("maxHeloChecks"):
                 break
         
         return self._ok_result if valid else self._no_mailserver
