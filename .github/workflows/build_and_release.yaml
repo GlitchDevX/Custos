@@ -84,7 +84,7 @@ jobs:
         run: npm run generate
 
       - name: Build Docker image
-        run: docker build -t custos-ui:${{needs.get-version-tag.outputs.tag}} -t custos-ui:latest .
+        run: docker build -t custos-ui:${{ needs.get-version-tag.outputs.tag }} -t custos-ui:latest .
 
       - name: Save Docker image to a tar file
         run: |
@@ -98,18 +98,10 @@ jobs:
 
   release:
     runs-on: [self-hosted, linux, x64]
-    needs: [build-backend, build-frontend]
+    needs: [get-version-tag, build-backend, build-frontend]
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
-
-      - name: Bump version and push tag
-        id: tag
-        uses: anothrNick/github-tag-action@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          WITH_V: true
-          PRERELEASE: true
 
       - name: Download Backend Docker image tar
         uses: actions/download-artifact@v4
@@ -126,8 +118,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-
-          tag_name: ${{ steps.tag.outputs.new_tag }}
+          tag_name: ${{ needs.get-version-tag.outputs.tag }}
           files: |
             custos-latest.tar
             custos-ui-latest.tar
