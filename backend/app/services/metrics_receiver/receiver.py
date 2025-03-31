@@ -12,7 +12,7 @@ class MetricsReceiver:
         result = {
             "total": EmailMetrics.query.count(),
             "invalid_format": EmailMetrics.query.filter(EmailMetrics.invalid_format == True).count(),
-            "no_dns_record": EmailMetrics.query.filter(EmailMetrics.no_dns_record == True).count(),
-            "spam_mail": EmailMetrics.query.filter(EmailMetrics.spam_mail == True).count()
+            "no_dns_record": EmailMetrics.query.filter(EmailMetrics.no_mailserver == True).count(),
+            "spam_mail": EmailMetrics.query.filter(EmailMetrics.disposable == True).count()
         }
         return result
