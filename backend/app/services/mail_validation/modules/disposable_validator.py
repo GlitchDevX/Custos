@@ -8,15 +8,17 @@ class DisposableValidator(ValidatorModule):
     disposable_domains: List[str] = []
 
     def __init__(self, config):
+        self.config = config
         with open('data/disposable_mail_domains.txt') as file:
             self.disposable_domains = file.read().splitlines()
         
-        self.disposable_domains.extend(config.get("disposableDomains"))
+        self.disposable_domains.extend()
 
     def execute_check(self, email):
         domain = get_domain_from_email(email)
-        
-        if domain in self.disposable_domains:
+        extra_domains = self.config.get("disposableDomains")
+
+        if domain in self.disposable_domains or domain in extra_domains:
             return ValidationResult(False, "DISPOSABLE", "Disposable mails are not allowed")
         
         return ValidationResult(True, "OK", "Everything okay")
