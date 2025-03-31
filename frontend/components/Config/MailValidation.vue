@@ -28,7 +28,7 @@
             <p class="muted-text">
                 Comma separated list of additional domains to mark as disposable.
             </p>
-            <UTextarea placeholder="gmail.com, github.com..." 
+            <UTextarea placeholder="gmail.com, github.com..."
                 :maxrows="5" :autoresize="true" class="w-116 mt-1" />
         </UFormField>
 
@@ -40,9 +40,9 @@
         <FeatureToggle
             title="SMTP HELO Check"
             description="Perform a SMTP HELO check verifying the existance of the mail server."
-            v-model="state.smtpHeloCheck" @update:model-value="onSmtpHeloChange"
+            v-model="state.smtpHelo" @update:model-value="onSmtpHeloChange"
         />
-        <UFormField label="Max Mailserver Checks" size="xl" class="pt-4" :class="{'low-opacity': !state.smtpHeloCheck}">
+        <UFormField label="Max Mailserver Checks" size="xl" class="pt-4" :class="{'low-opacity': !state.smtpHelo}">
             <p class="muted-text">
                 Maximum amount of mail servers to perform a HELO check.
             </p>
@@ -63,56 +63,72 @@ const state = reactive({
     enabled: true,
     formatCheck: true,
     disposableCheck: true,
-    extraDisposableDomains: [],
+    disposableDomains: [],
     mxRecordCheck: true,
-    smtpHeloCheck: true,
+    smtpHelo: true,
     maxHeloChecks: 5
 });
 
 function onMxRecordChange() {
-    if (state.smtpHeloCheck && !state.mxRecordCheck) {
-        state.smtpHeloCheck = false;
+    if (state.smtpHelo && !state.mxRecordCheck) {
+        state.smtpHelo = false;
     }
 }
 function onSmtpHeloChange() {
-    if (state.smtpHeloCheck && !state.mxRecordCheck) {
+    if (state.smtpHelo && !state.mxRecordCheck) {
         state.mxRecordCheck = true;
     }
 }
 
 const sending = ref(false);
 async function submitConfig() {
-    const body = { 'file': 'mail_validation', 'content': state };
-
-    console.log("Submitting data: ", JSON.stringify(body));
+    const body = { 'namespace': 'mail_validation', 'content': state };
     sending.value = true;
     
-    setTimeout(() => {
-        sending.value = false;
-        toast.add({
-            title: 'Success',
-            description: 'Updated config in the backend.',
-            icon: 'lucide-check',
-            color: 'success'
-        });
-        toast.add({
-            title: 'Failed',
-            description: 'Failed to update config in the backend.',
-            icon: 'lucide-x',
-            color: 'error',
-            duration: 8000,
-            actions: [
-                {
-                    icon: 'lucide-refresh-cw',
-                    label: 'retry',
-                    variant: 'outline',
-                    color: 'neutral',
-                    onClick: submitConfig
+    let result: { code: string };
+    try {
+        result = await $fetch<{code: string}>(SET_CONFIG_PATH, { method: 'POST', body: body, ignoreResponseError: true });
+    }
+    catch {
+        result = {code: "FAILED"};
+    }
+
+    if (result?.code === "OK") {
+        showSuccess();
+    }
+    else {
+        showFail();
+    }
+    sending.value = false;
+}
+
+function showSuccess() {
+    toast.add({
+        title: 'Success',
+        description: 'Updated config in the backend.',
+        icon: 'lucide-check',
+        color: 'success'
+    });
+}
+function showFail() {
+    toast.add({
+        title: 'Failed',
+        description: 'Failed to update config in the backend.',
+        icon: 'lucide-x',
+        color: 'error',
+        duration: 8000,
+        actions: [
+            {
+                icon: 'lucide-refresh-cw',
+                label: 'retry',
+                variant: 'outline',
+                color: 'neutral',
+                onClick: () => {
+                    submitConfig();
                 }
-            ],
-        });
-    }, 750);
-    // const result = await $fetch(SET_CONFIG_PATH, { method: 'POST', body: body });
+            }
+        ],
+    });
 }
 </script>
 
