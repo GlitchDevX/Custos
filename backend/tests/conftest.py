@@ -1,11 +1,11 @@
-from app import create_app
 from app.config import TestingConfig
+from app.app import FlaskApplication
 import pytest
 
 @pytest.fixture()
 def app():
-    app = create_app(TestingConfig)
-    yield app
+    app = FlaskApplication(TestingConfig)
+    yield app.flask_app
 
 @pytest.fixture()
 def client(app):
