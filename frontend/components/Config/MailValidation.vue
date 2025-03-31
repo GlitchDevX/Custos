@@ -90,12 +90,12 @@ async function loadConfig() {
     loading.value = true;
     loaded.value = false;
     try {
-        result = await $fetch<Object>(CONFIG_PATH + "?namespace=mail_validation", { method: 'GET' });
+        result = await $fetch<object>(CONFIG_PATH + "?namespace=mail_validation", { method: 'GET' });
         Object.assign(state, result);
         loaded.value = true;
         console.log(result);
         
-    } catch {}
+    } catch { /* empty */ }
 
     if (Object.keys(result).length === 0) {
         showFail("Failed to get config from the backend", loadConfig);

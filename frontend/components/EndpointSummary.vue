@@ -14,9 +14,18 @@
 
 <script lang="ts" setup>
 const props = defineProps({
-    title: String,
-    path: String,
-    summary: String
+    title: {
+      type: String,
+      required: true
+    },
+    path: {
+      type: String,
+      required: true
+    },
+    summary: {
+      type: String,
+      required: true
+    }
 })
 </script>
 
