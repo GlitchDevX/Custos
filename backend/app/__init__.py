@@ -4,7 +4,7 @@ from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
 from .utils.sqlalchemy_utils import SQLAlchemyWrapper
-from .models.email_metrics import EmailMetrics
+from .models.metric import Metric
 
 db = SQLAlchemyWrapper().database
 
