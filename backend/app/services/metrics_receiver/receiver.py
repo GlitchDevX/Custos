@@ -10,5 +10,5 @@ class MetricsReceiver:
     @staticmethod
     def get_email_metrics():
         return {
-            "metric": Metric.query.all()
+            "metric": _filter_response(Metric.query.all())
         }
