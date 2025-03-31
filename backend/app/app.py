@@ -3,12 +3,12 @@ from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
-from .utils.sqlalchemy_utils import SQLAlchemyWrapper
+from .utils.sqlalchemy_utils import SQLAlchemySingleton
 from .models.metric import Metric
 
 
 class FlaskApplication:
-    db = SQLAlchemyWrapper().database
+    db = SQLAlchemySingleton()
     METRICS = ["MAIL_OK",
                "MAIL_FORMAT_INVALID",
                "MAIL_DISPOSABLE",

@@ -1,6 +1,6 @@
-from ..utils.sqlalchemy_utils import SQLAlchemyWrapper
+from ..utils.sqlalchemy_utils import SQLAlchemySingleton
 
-db = SQLAlchemyWrapper().database
+db = SQLAlchemySingleton()
 
 class Metric(db.Model):
     __tablename__ = 'metrics'
