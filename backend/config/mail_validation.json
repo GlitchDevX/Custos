@@ -1,0 +1,7 @@
+{
+    "disposableCheck": true,
+    "disposableDomains": [],
+    "formatCheck": true,
+    "mxRecordCheck": true,
+    "smtpHelo": true
+}
