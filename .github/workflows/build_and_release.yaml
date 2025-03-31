@@ -10,6 +10,8 @@ on:
 jobs:
   get-version-tag:
     runs-on: [self-hosted, linux, x64]
+    outputs:
+      tag: ${{ steps.tag.outputs.new_tag }}
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -25,7 +27,6 @@ jobs:
       - name: Echo Tag to output
         run: |
           echo ${{ steps.tag.outputs.new_tag }}
-          echo "tag=${{ steps.tag.outputs.new_tag }}" >> "$GITHUB_OUTPUT"
 
   build-backend:
     runs-on: [self-hosted, linux, x64]
@@ -58,6 +59,27 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v4
       
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      
+      - name: Cache npm Dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            frontend/node_modules
+            frontend/.nuxt
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          npm ci
+
       - name: Build Frontend
         run: npm run generate
 
