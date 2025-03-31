@@ -6,6 +6,7 @@ import dns.resolver
 from ..mail_utils import get_domain_from_email
 from ..validation_result import ValidationResult
 from .validator_module import ValidatorModule
+from ....models.metric import Metric
 
 class MailserverValidator(ValidatorModule):
 
@@ -31,8 +32,7 @@ class MailserverValidator(ValidatorModule):
             return sorted_servers
         
         except dns.resolver.NXDOMAIN:
-            pass
-            # MAIL_INVALID_DOMAIN
+            Metric.increase("MAIL_INVALID_DOMAIN")
         
         return []
 
@@ -54,13 +54,13 @@ class MailserverValidator(ValidatorModule):
         
         except smtplib.SMTPServerDisconnected as e:
             print(e)
-            # MAIL_SMTP_DISCONNECT
+            Metric.increase("MAIL_SMTP_DISCONNECT")
         except smtplib.SMTPConnectError as e:
             print(e)
-            # MAIL_SMTP_CONNECTION_ERROR
+            Metric.increase("MAIL_SMTP_CONNECTION_ERROR")
         except socket.timeout as e:
             print(e)
-            # MAIL_SMTP_TIMEOUT
+            Metric.increase("MAIL_SMTP_TIMEOUT")
 
         return False
 
