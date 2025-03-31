@@ -8,6 +8,25 @@ on:
     branches: [main]
 
 jobs:
+  get-version-tag:
+    runs-on: [self-hosted, linux, x64]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Bump version and push tag
+        id: tag
+        uses: anothrNick/github-tag-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          PRERELEASE: true
+      
+      - name: Echo Tag to output
+        run: |
+          echo ${{ steps.tag.outputs.new_tag }}
+          echo "${{ steps.tag.outputs.new_tag }}" >> "$GITHUB_OUTPUT"
+
   build-backend:
     runs-on: [self-hosted, linux, x64]
     steps:
@@ -16,16 +35,16 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t custos:main .
+          docker build -t custos:${{needs.get-version-tag.outputs.output1}} -t custos:latest .
 
       - name: Save Docker image to a tar file
         run: |
-          docker save custos:main -o custos-main.tar
+          docker save custos:latest -o custos-latest.tar
 
       - name: Upload Docker image tar as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: custos-image
+          name: custos-latest
           path: custos-main.tar
   
   build-frontend:
@@ -41,7 +60,7 @@ jobs:
         run: npm run generate
 
       - name: Build Docker image
-        run: docker build -t custos-ui:latest .
+        run: docker build -t custos-ui:${{needs.get-version-tag.outputs.output1}} -t custos-ui:latest .
 
       - name: Save Docker image to a tar file
         run: |
@@ -68,10 +87,16 @@ jobs:
           WITH_V: true
           PRERELEASE: true
 
-      - name: Download Docker image tar
+      - name: Download Backend Docker image tar
         uses: actions/download-artifact@v4
         with:
           name: custos-image
+          path: .
+
+      - name: Download Frontend Docker image tar
+        uses: actions/download-artifact@v4
+        with:
+          name: custos-ui-image
           path: .
 
       - name: Create Release
@@ -80,3 +105,4 @@ jobs:
           tag_name: ${{ steps.tag.outputs.new_tag }}
           files: |
             custos-main.tar
+            custos-ui-latest.tar
