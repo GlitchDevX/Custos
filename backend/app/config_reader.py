@@ -9,8 +9,14 @@ class ConfigReader:
         instances.append(self)
 
     def read_conf_file(self):
-        with open(f"config/{self.namespace}.json") as file:
-            self.config = json.loads(file.read())
+        try:
+            with open(f"config/{self.namespace}.json") as file:
+                self.config = json.loads(file.read())
+        except:
+            self.config = None
+
+    def get_all(self):
+        return self.config
 
     def get(self, name):
         return self.config[name]
