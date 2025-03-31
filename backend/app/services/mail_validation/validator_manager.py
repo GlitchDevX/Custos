@@ -10,7 +10,7 @@ from .modules.format_validator import FormatValidator
 
 
 class ValidatorManager:
-    validators: List[(str, ValidatorModule)] = []
+    validators: List[tuple[str, ValidatorModule]] = []
 
     def __init__(self):
         self.config = ConfigReader("mail_validation")
