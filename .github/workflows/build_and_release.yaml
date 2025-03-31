@@ -46,7 +46,7 @@ jobs:
       - name: Upload Docker image tar as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: custos-latest
+          name: custos-image
           path: custos-latest.tar
   
   build-frontend:
