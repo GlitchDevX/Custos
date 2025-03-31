@@ -20,4 +20,4 @@ def test_should_get_disposable_mail(client):
 def test_should_get_no_mailserver(client):
     response = client.post("/validate-mail/", json={"mail": "test@one.one.one.one"}) # 1.1.1.1 has no MX-Records set
     assert response.status_code == 200
-    assert response.json["code"] == "NO_MAILSERVER"
+    assert response.json["code"] == "NO_SERVER"

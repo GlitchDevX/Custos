@@ -11,3 +11,10 @@ class Metric(db.Model):
     def filter_state(self):
         del self.__dict__['_sa_instance_state']
         return self.__dict__
+    
+    @staticmethod
+    def increase(metric_name):
+        metric = Metric.query.filter_by(metric_name=metric_name).first()
+        if metric:
+            metric.data += 1
+            db.session.commit()

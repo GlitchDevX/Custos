@@ -11,7 +11,7 @@ class MailserverValidator(ValidatorModule):
 
     _successful_cache: Set[str] = set()
 
-    _no_mailserver = ValidationResult(False, "NO_MAILSERVER", "The Mailserver is not reachable")
+    _no_mailserver = ValidationResult(False, "NO_SERVER", "The Mailserver is not reachable")
     _ok_result = ValidationResult(True, "OK", "Everything okay")
 
     def __init__(self, config):
