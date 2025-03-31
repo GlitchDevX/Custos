@@ -32,7 +32,7 @@ class MailserverValidator(ValidatorModule):
         
         except dns.resolver.NXDOMAIN:
             pass
-            # save metric
+            # MAIL_INVALID_DOMAIN
         
         return []
 
@@ -54,13 +54,13 @@ class MailserverValidator(ValidatorModule):
         
         except smtplib.SMTPServerDisconnected as e:
             print(e)
-            # save metric
+            # MAIL_SMTP_DISCONNECT
         except smtplib.SMTPConnectError as e:
             print(e)
-            # save metric
+            # MAIL_SMTP_CONNECTION_ERROR
         except socket.timeout as e:
             print(e)
-            # save metric
+            # MAIL_SMTP_TIMEOUT
 
         return False
 
