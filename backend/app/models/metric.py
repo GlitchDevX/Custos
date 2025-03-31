@@ -1,5 +1,4 @@
 from ..utils.sqlalchemy_utils import SQLAlchemyWrapper
-from .base_model import BaseModel
 
 db = SQLAlchemyWrapper().database
 
