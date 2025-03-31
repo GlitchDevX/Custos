@@ -7,6 +7,7 @@ from .modules.validator_module import ValidatorModule
 from .modules.mailserver_validator import MailserverValidator
 from .modules.disposable_validator import DisposableValidator
 from .modules.format_validator import FormatValidator
+from ...models.metric import Metric
 
 
 class ValidatorManager:
@@ -20,10 +21,12 @@ class ValidatorManager:
         self.validators.append(("mxRecordCheck", MailserverValidator(self.config)))
 
     def _evaluate_result(_, result: ValidationResult):
-        if result is None or result.passed:
-            return {'code': 'OK'}, 200
-        
-        return {'code': result.code, 'text': result.text}, 200
+        code, text = "OK", ""
+        if result is not None or not result.passed:
+            code, text = result.code, result.text
+
+        Metric.increase(f"MAIL_{result.code}")
+        return {'code': code, 'text': text}, 200
 
     def validate_mail(self, mail):
         result: ValidationResult = None
