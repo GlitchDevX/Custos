@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-backend:
     runs-on: [self-hosted, linux, x64]
     steps:
       - name: Get latest code
@@ -27,10 +27,35 @@ jobs:
         with:
           name: custos-image
           path: custos-main.tar
+  
+  build-frontend:
+    runs-on: [self-hosted, linux, x64]
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+      
+      - name: Build Frontend
+        run: npm run generate
+
+      - name: Build Docker image
+        run: docker build -t custos-ui:latest .
+
+      - name: Save Docker image to a tar file
+        run: |
+          docker save custos-ui:latest -o custos-ui-latest.tar
+
+      - name: Upload Docker image tar as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: custos-ui-image
+          path: custos-ui-latest.tar
 
   release:
     runs-on: [self-hosted, linux, x64]
-    needs: build
+    needs: [build-backend, build-frontend]
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
