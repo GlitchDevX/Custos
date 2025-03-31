@@ -1,6 +1,6 @@
 from typing import List
 
-from app.config_reader import ConfigReader
+from ...config_reader import ConfigReader
 
 from .validation_result import ValidationResult
 from .modules.validator_module import ValidatorModule

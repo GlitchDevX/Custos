@@ -10,6 +10,7 @@ class Config:
     DEBUG = False
 
 class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://user:password@localhost/custos"
     DEBUG = True
 
 class TestingConfig(Config):
