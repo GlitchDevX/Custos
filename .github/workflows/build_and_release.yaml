@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: custos-ui-image
-          path: custos-ui-latest.tar
+          path: frontend/custos-ui-latest.tar
 
   release:
     runs-on: [self-hosted, linux, x64]
