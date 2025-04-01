@@ -37,6 +37,7 @@
                     Comma separated list of additional domains to mark as disposable.
                 </p>
                 <UTextarea
+                    v-model="state.disposableDomains" spellcheck="false"
                     placeholder="gmail.com, github.com..."
                     :maxrows="5" :autoresize="true" class="w-116 mt-1" />
             </UFormField>
@@ -71,14 +72,16 @@
 </template>
 
 <script lang="ts" setup>
+import type { ButtonProps } from '@nuxt/ui';
 import { CONFIG_PATH } from '~/assets/ts/backendConnector';
+import type { ConfigBody, ConfigResponse } from '~/assets/types/mailValidation';
 
 const toast = useToast();
 const state = reactive({
     enabled: true,
     formatCheck: true,
     disposableCheck: true,
-    disposableDomains: [],
+    disposableDomains: "",
     mxRecordCheck: true,
     smtpHelo: true,
     maxHeloChecks: 5
@@ -95,35 +98,38 @@ function onSmtpHeloChange() {
     }
 }
 
+
 const loading = ref(true);
 const loaded = ref(false);
 const loadingFailed = ref(false);
 async function loadConfig() {
-    let result = {};
+    let result: ConfigResponse | undefined;
     loading.value = true;
     loaded.value = false;
     loadingFailed.value = false;
     try {
-        result = await $fetch<object>(CONFIG_PATH + "?namespace=mail_validation", { method: 'GET' });
+        result = await $fetch<ConfigResponse>(CONFIG_PATH + "?namespace=mail_validation", { method: 'GET' });
         Object.assign(state, result);
+        state.disposableDomains = result.disposableDomains.join(', ');
         loaded.value = true;
-        console.log(result);
         
     } catch {
         loadingFailed.value = true
     }
 
-    if (Object.keys(result).length === 0) {
+    if (result === undefined) {
         showFail("Failed to get config from the backend", loadConfig);
     }
 
     loading.value = false;
 }
 loadConfig();
-
 const sending = ref(false);
 async function submitConfig() {
-    const body = { 'namespace': 'mail_validation', 'content': state };
+    const bodyState = { ...state } as ConfigBody;
+    bodyState.disposableDomains = state.disposableDomains.split(', ').map(s => s.trim());
+
+    const body = { 'namespace': 'mail_validation', 'content': bodyState };
     sending.value = true;
     
     let result: { code: string };
@@ -176,7 +182,7 @@ const retryButton = {
     variant: 'soft',
     color: 'neutral',
     onClick: loadConfig
-}
+} as ButtonProps
 </script>
 
 <style scoped>
