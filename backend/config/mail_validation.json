@@ -1,8 +1,9 @@
 {
     "disposableCheck": true,
     "disposableDomains": [],
+    "enabled": true,
     "formatCheck": true,
-    "maxHeloChecks": 1,
+    "maxHeloChecks": 4,
     "mxRecordCheck": true,
     "smtpHelo": true
 }

@@ -5,7 +5,11 @@
 </template>
 
 <script lang="ts" setup>
+import { TITLE_SUFFIX } from '~/assets/data/appData';
 
+useHead({
+  title: 'Monitoring Dashboard' + TITLE_SUFFIX
+})
 </script>
 
 <style>

@@ -6,6 +6,15 @@ services:
       - db
     environment:
       SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
+  custos-ui:
+    image: custos-ui:latest
+    restart: always
+    depends_on:
+      - custos
+    ports:
+      - 3070:80
+    expose:
+      - 3070
   db:
     image: mysql:8.0
     restart: always

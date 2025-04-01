@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-16">
         <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-50 w-full">
-            <UButton variant="ghost" href="/" size="md" icon="ci:logo" class="my-2 text-2xl font-bold">
+            <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
                 Custos
             </UButton>
 

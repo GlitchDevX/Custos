@@ -16,6 +16,11 @@
 
 <script lang="ts" setup>
 import type { TabsItem } from '@nuxt/ui'
+import { TITLE_SUFFIX } from '~/assets/data/appData';
+
+useHead({
+  title: 'Configure Endpoints' + TITLE_SUFFIX
+});
 
 const items: TabsItem[] = [
   {
