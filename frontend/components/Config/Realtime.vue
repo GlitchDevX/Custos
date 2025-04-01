@@ -1,22 +1,23 @@
 <template>
     <ConfigLayout>
-        <EndpointSummary path="/check-content" title="Realtime Check"
+        <EndpointSummary 
+            path="/check-content" title="Realtime Check"
             summary="This endpoint is used to quickly verify or censor user-content by applying rules."
         />
         <USwitch
+            v-model="state.enabled"
             unchecked-icon="lucide-x"
             checked-icon="lucide-check"
             label="Endpoint enabled"
             size="xl"
             class="pb-8"
-            v-model="state.enabled"
         />
         
         <div>
             <FeatureToggle
-            title="Some Check"
-            description="Placeholder description. Yoyoyo."
-            v-model="state.check"
+                v-model="state.check"
+                title="Some Check"
+                description="Placeholder description. Yoyoyo."
             />
         </div>
     </ConfigLayout>
