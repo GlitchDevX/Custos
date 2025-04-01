@@ -9,13 +9,7 @@
         v-if="loadingFailed"
         color="error" title="Failed to load Config"
         icon="lucide-triangle-alert"
-        :actions="[{
-            icon: 'lucide-refresh-cw',
-            label: 'retry',
-            variant: 'soft',
-            color: 'neutral',
-            onClick: loadConfig
-        }]" />
+        :actions="[retryButton]" />
     <div v-show="loaded">
         <USwitch
             v-model="state.enabled"
@@ -174,6 +168,14 @@ function showFail(description: string, retryCallback: () => void) {
             }
         ],
     });
+}
+
+const retryButton = {
+    icon: 'lucide-refresh-cw',
+    label: 'retry',
+    variant: 'soft',
+    color: 'neutral',
+    onClick: loadConfig
 }
 </script>
 
