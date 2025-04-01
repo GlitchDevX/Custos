@@ -9,7 +9,7 @@
         v-if="loadingFailed"
         color="error" title="Failed to load Config"
         icon="lucide-triangle-alert"
-        :actions="[retryButton]" />
+    />
     <div v-show="loaded">
         <USwitch
             v-model="state.enabled"
@@ -37,7 +37,8 @@
                     Comma separated list of additional domains to mark as disposable.
                 </p>
                 <UTextarea
-                    v-model="state.disposableDomains" spellcheck="false"
+                    v-model="state.disposableDomains"
+                    spellcheck="false"
                     placeholder="gmail.com, github.com..."
                     :maxrows="5" :autoresize="true" class="w-116 mt-1" />
             </UFormField>
@@ -72,7 +73,6 @@
 </template>
 
 <script lang="ts" setup>
-import type { ButtonProps } from '@nuxt/ui';
 import { CONFIG_PATH } from '~/assets/ts/backendConnector';
 import type { ConfigBody, ConfigResponse } from '~/assets/types/mailValidation';
 
@@ -85,6 +85,10 @@ const state = reactive({
     mxRecordCheck: true,
     smtpHelo: true,
     maxHeloChecks: 5
+});
+
+onMounted(() => {
+    loadConfig();
 });
 
 function onMxRecordChange() {
@@ -118,12 +122,12 @@ async function loadConfig() {
     }
 
     if (result === undefined) {
-        showFail("Failed to get config from the backend", loadConfig);
+        showFail("Failed to get config from the backend");
     }
 
     loading.value = false;
 }
-loadConfig();
+
 const sending = ref(false);
 async function submitConfig() {
     const bodyState = { ...state } as ConfigBody;
@@ -144,7 +148,7 @@ async function submitConfig() {
         showSuccess();
     }
     else {
-        showFail("Failed to update config in the backend.", submitConfig);
+        showFail("Failed to update config in the backend.");
     }
     sending.value = false;
 }
@@ -157,32 +161,15 @@ function showSuccess() {
         color: 'success'
     });
 }
-function showFail(description: string, retryCallback: () => void) {
+function showFail(description: string) {
     toast.add({
         title: 'Failed',
         description: description,
         icon: 'lucide-x',
         color: 'error',
-        duration: 8000,
-        actions: [
-            {
-                icon: 'lucide-refresh-cw',
-                label: 'retry',
-                variant: 'outline',
-                color: 'neutral',
-                onClick: retryCallback
-            }
-        ],
+        duration: 5000
     });
 }
-
-const retryButton = {
-    icon: 'lucide-refresh-cw',
-    label: 'retry',
-    variant: 'soft',
-    color: 'neutral',
-    onClick: loadConfig
-} as ButtonProps
 </script>
 
 <style scoped>
