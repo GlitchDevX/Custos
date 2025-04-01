@@ -30,6 +30,11 @@
 
 <script lang="ts" setup>
 import { UTable } from '#components';
+import { TITLE_SUFFIX } from '~/assets/data/appData';
+
+useHead({
+    title: 'Home' + TITLE_SUFFIX
+})
 
 const mockData = reactive([
     {
