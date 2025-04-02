@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
-    
+    <MetricsBigNumber :zahl="12"/>
   </div>
 </template>
 
