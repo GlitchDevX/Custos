@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
     <PageTitle>Endpoint Playground</PageTitle>
-    <UAccordion :items="endpoints">
+    <UAccordion :items="endpoints" :unmountOnHide="false">
       <template #mailValidation>
         <PlaygroundMailValidation />
       </template>
