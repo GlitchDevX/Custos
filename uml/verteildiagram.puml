@@ -1,23 +1,33 @@
 @startuml Deployment Diagram
-package "Frontend" {
-    [Nuxt UI] --> [Nginx]
-    [Nginx] --> [REST API]
-    [Nginx] --> [Metrics Display]
-    [Nginx] --> [API Playground]
+node "Frontend" {
+    [Nginx] --> [User Interface] : Provides
+    [User Interface] --> [Metrics Display]
+    [User Interface] --> [Playground]
+    [User Interface] --> [Settings]
 }
 
-package "Flask Application" {
+node "Flask Application" {
     [Flask REST API] --> [Service Logic]
-    [Service Logic] --> [MySQL Database]
-    [Flask REST API] --> [Swagger UI]
 }
 
-package "MySQL Database" {
+database "MySQL Database" {
     [Metrics Storage]
 }
 
-[Nuxt UI] --> [Flask REST API] : Configures
-[Flask REST API] --> [Metrics Storage] : Writes Metrics
-[Flask REST API] --> [Metrics Storage] : Returns Metrics
-[Swagger UI] --> [Flask REST API] : Documentation Access
+node "Swagger" {
+    [Swagger UI]
+}
+
+node "External Data Sources" {
+    [Spam Domain List]
+    [Mailservers SMTP Response]
+    [DNS Records]
+}
+
+[Service Logic] --> [External Data Sources] : Fetches Data
+[Settings] --> [Flask REST API] : Configures Endpoints
+[Playground] --> [Flask REST API] : Tests Features
+[Metrics Display] --> [Flask REST API] : Fetches Metrics
+[Swagger UI] --> [Flask REST API] : Documentation
+[Service Logic] --> [MySQL Database] : Data Persistence
 @enduml
