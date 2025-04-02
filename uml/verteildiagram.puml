@@ -1,29 +1,23 @@
-@startuml Verteildiagramm
-
-node "User" {
-    [Web Browser]
+@startuml Deployment Diagram
+package "Frontend" {
+    [Nuxt UI] --> [Nginx]
+    [Nginx] --> [REST API]
+    [Nginx] --> [Metrics Display]
+    [Nginx] --> [API Playground]
 }
 
-node "Nginx Server" {
-    [Nuxt Frontend]
+package "Flask Application" {
+    [Flask REST API] --> [Service Logic]
+    [Service Logic] --> [MySQL Database]
+    [Flask REST API] --> [Swagger UI]
 }
 
-node "Backend Server" {
-    [Flask Application]
+package "MySQL Database" {
+    [Metrics Storage]
 }
 
-node "Swagger UI" {
-
-}
-
-database "MySQL Database" {
-    frame "Gespeicherte Daten" {
-
-    }
-}
-
-[Web Browser] --> [Nuxt Frontend] : HTTP
-[Nuxt Frontend] --> [Flask Application] : HTTP
-[Flask Application]
-[Flask Application] --> [Gespeicherte Daten]: TCP/IP
+[Nuxt UI] --> [Flask REST API] : Configures
+[Flask REST API] --> [Metrics Storage] : Writes Metrics
+[Flask REST API] --> [Metrics Storage] : Returns Metrics
+[Swagger UI] --> [Flask REST API] : Documentation Access
 @enduml
