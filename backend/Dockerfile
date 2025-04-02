@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY /backend .
+COPY . .
 
 RUN pip install --no-cache-dir uv
 RUN uv sync
