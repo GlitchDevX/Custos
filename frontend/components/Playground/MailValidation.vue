@@ -7,17 +7,19 @@
 
     <UCard>
       <div class="flex flex-row justify-between">
-        <div>
+        <UForm @submit="(_) => submitRequest()" :state="{}">
           <UFormField label="Email">
             <UInput v-model="email" placeholder="jonas.ringeis@gmail.com" />
           </UFormField>
           <UButton
-            label="Submit" class="mt-4"
+            label="Submit"
+            class="mt-4"
+            type="submit"
             :loading="loading"
-            @click="submitRequest"
             />
-        </div>
-        <UCollapsible :arrow="true" default-open>
+        </UForm>
+        
+        <UCollapsible :arrow="true" v-model:open="showResponse">
           <UButton
             block label="Show Response" variant="ghost" icon="lucide-chevron-down" class="group"
             :ui="{
@@ -35,16 +37,18 @@
 
 <script lang="ts" setup>
 import { VALIDATE_MAIL_PATH } from '~/assets/ts/backendConnector';
+const showResponse = ref(false);
 
 const response = ref({
-  code: "DISPOSABLE",
-  text: "Disposable Emails are not allowed"
+  code: "",
+  text: ""
 });
 const email = ref("");
 const loading = ref(false);
 
 async function submitRequest() {
   loading.value = true;
+  showResponse.value = false;
   const result = await $fetch<object>(VALIDATE_MAIL_PATH, {
     method: 'POST',
     body: {'mail': email.value}
@@ -52,6 +56,7 @@ async function submitRequest() {
   
   loading.value = false;
   response.value = result as any;
+  showResponse.value = true;
 }
 </script>
 
