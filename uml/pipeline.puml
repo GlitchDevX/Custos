@@ -1,0 +1,26 @@
+@startuml pipelineuml
+actor Developer
+participant "GitHub" as GH
+participant "CI/CD Pipeline" as CI
+participant "Self-Hosted Runner" as Runner
+participant "Test Environment" as TestEnv
+participant "Production" as Prod
+
+Developer -> GH: Push to Feature Branch (SSH)
+Developer -> GH: Create Pull Request to main (HTTPS)
+GH -> CI: Trigger Linting & Tests (Webhook)
+CI -> Runner: Deploy Test Environment (GitHub Action, Self-Hosted Runner)
+Runner -> TestEnv: Deploy & Run Tests ()
+TestEnv -> Runner: Report Test Results (HTTP API)
+
+alt Tests Successful
+    Developer -> GH: Merge PR to main (HTTPS)
+    GH -> CI: Trigger Build Pipeline (Webhook)
+    CI -> Runner: Build & Release Images (GitHub Action, Docker Registry, HTTPS)
+    Runner -> GH: Increase Semantic Version (GitHub Action)
+    Runner -> GH: Publish Release (GitHub Repository)
+else Tests Fail
+    CI -> Developer: Notify about failed tests (Email, Slack API)
+end
+
+@enduml
