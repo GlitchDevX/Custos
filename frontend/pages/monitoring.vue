@@ -1,5 +1,6 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
+    <Spinner label="Loading Metrics" v-if="loading"/>
     <div v-for="metrics in metricNamespaces" class="flex flex-wrap gap-4">
       <USeparator :label="metrics[0].namespace" size="xl" />
       <MetricsBigNumber
@@ -21,12 +22,13 @@ onMounted(() => {
   loadConfig();
 })
 
+const loading = ref(true);
 async function loadConfig() {
-  let result: MetricsResponse;
+  loading.value = true;
   try {
-    result = await $fetch<MetricsResponse>(METRIC_PATH, { method: 'GET' });
+    const result = await $fetch<MetricsResponse>(METRIC_PATH, { method: 'GET' });
     metricNamespaces.value = mapMetrics(result.metrics);
-    console.log(result);
+    loading.value = false;
   } catch { /* empty */ }
 }
 
