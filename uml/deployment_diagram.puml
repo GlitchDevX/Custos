@@ -1,6 +1,5 @@
 @startuml Deployment Diagram
-node "Frontend" {
-    [Nginx] --> [User Interface] : Provides
+node "Nginx" {
     [User Interface] --> [Metrics Display]
     [User Interface] --> [Playground]
     [User Interface] --> [Settings]
