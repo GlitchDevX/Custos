@@ -1,7 +1,10 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
-    <Spinner label="Loading Metrics" v-if="loading"/>
-    <div v-for="(metrics, namespace_index) in metricNamespaces" class="flex flex-wrap gap-4 justify-center px-8">
+    <Spinner v-if="loading" label="Loading Metrics"/>
+    <div
+      v-for="(metrics, namespace_index) in metricNamespaces"
+      :key="'monitoring_metric_namespace' + namespace_index"
+      class="flex flex-wrap gap-4 justify-center px-8">
       <USeparator :label="metrics[0].namespace" size="xl" />
       <MetricsBigNumber
         v-for="(metric, metric_index) in metrics" :key="metric.id"
