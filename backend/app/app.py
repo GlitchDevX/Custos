@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
@@ -21,6 +22,7 @@ class FlaskApplication:
                    ]
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
+        CORS(self.flask_app)
         api = Api(self.flask_app, version='0.1.0-dev', title='Custos',
                   description='A RESTful api for user content management')
 

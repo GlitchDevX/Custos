@@ -31,6 +31,9 @@ jobs:
   build-backend:
     runs-on: [self-hosted, linux, x64]
     needs: get-version-tag
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -47,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: custos-image
-          path: custos-latest.tar
+          path: backend/custos-latest.tar
   
   build-frontend:
     runs-on: [self-hosted, linux, x64]

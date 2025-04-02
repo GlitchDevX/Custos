@@ -1,0 +1,24 @@
+@startuml pipelineuml
+actor Developer
+participant "GitHub" as GH
+participant "CI/CD Pipeline" as CI
+participant "Self-Hosted Runner" as Runner
+participant "Test Environment" as TestEnv
+
+Developer -> GH: Create Pull Request to main (HTTPS)
+GH -> CI: Trigger Linting & Tests (Webhook)
+CI -> Runner: Deploy Test Environment (GitHub Action, Self-Hosted Runner)
+Runner -> TestEnv: Run Tests (GitHub Action)
+TestEnv -> Runner: Report Test Results (HTTP API)
+
+alt Tests Successful
+    Developer -> GH: Merge PR to main (HTTP API)
+    GH -> CI: Trigger Build Pipeline (Webhook)
+    CI -> Runner: Build & Release Images (GitHub Action, HTTP API)
+    Runner -> GH: Increase Semantic Version & Relase (GitHub Action, HTTP API)
+    CI -> Developer: Notify about new Release (SMTP)
+else Tests Fail
+    CI -> Developer: Notify about failed tests (SMTP)
+end
+
+@enduml
