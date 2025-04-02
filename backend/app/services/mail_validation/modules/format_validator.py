@@ -8,7 +8,7 @@ class FormatValidator(ValidatorModule):
     _invalid_result = ValidationResult(False, "FORMAT_INVALID", "The email format is invalid")
     _ok_result = ValidationResult(True, "OK", "Everything okay")
 
-    _regex=re.compile("^[A-z0-9!#$%&'*+\-/=?^_`{|}~.]+@[A-z0-9-.]+.[A-z0-9]+$")
+    _regex=re.compile("^[A-z0-9!#$%&'*+\-/=?^_`{|}~.]+@[A-z0-9-.]+\.[A-z0-9]+$")
 
     def execute_check(self, email: str) -> ValidationResult:
         # impl regex logic 
