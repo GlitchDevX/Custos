@@ -1,0 +1,29 @@
+@startuml Verteildiagramm
+
+node "User" {
+    [Web Browser]
+}
+
+node "Nginx Server" {
+    [Nuxt Frontend]
+}
+
+node "Backend Server" {
+    [Flask Application]
+}
+
+node "Swagger UI" {
+
+}
+
+database "MySQL Database" {
+    frame "Gespeicherte Daten" {
+
+    }
+}
+
+[Web Browser] --> [Nuxt Frontend] : HTTP
+[Nuxt Frontend] --> [Flask Application] : HTTP
+[Flask Application]
+[Flask Application] --> [Gespeicherte Daten]: TCP/IP
+@enduml
