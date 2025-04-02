@@ -1,11 +1,12 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
     <Spinner label="Loading Metrics" v-if="loading"/>
-    <div v-for="metrics in metricNamespaces" class="flex flex-wrap gap-4">
+    <div v-for="(metrics, namespace_index) in metricNamespaces" class="flex flex-wrap gap-4 justify-center px-8">
       <USeparator :label="metrics[0].namespace" size="xl" />
       <MetricsBigNumber
-        v-for="metric in metrics" :key="metric.id"
+        v-for="(metric, metric_index) in metrics" :key="metric.id"
         :title="metric.name" :number="metric.value"
+        :animation-delay="getAnimationDelay(metric_index, namespace_index)"
       />
     </div>
   </div>
@@ -55,6 +56,22 @@ function mapMetrics(metrics: Metric[]): EnhancedMetric[][] {
   });
   
   return orderedMetrics;
+}
+
+function getAnimationDelay(metric_index: number, namespace_index: number) {
+  const currentNamespace = metric_index / 2;
+  if (namespace_index == 0) {
+    return currentNamespace;
+  }
+
+  let delay = currentNamespace;
+  const namespacesBefore = metricNamespaces.value.slice(0, namespace_index);
+  
+  namespacesBefore.forEach(n => {
+    delay += n.length / 2;
+  })
+  
+  return delay;
 }
 
 useHead({
