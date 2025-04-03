@@ -42,7 +42,8 @@ async function submitRequest() {
   showResponse.value = false;
   const result = await $fetch<object>(VALIDATE_MAIL_PATH, {
     method: 'POST',
-    body: {'mail': email.value}
+    body: {'mail': email.value},
+    ignoreResponseError: true
   });
   
   loading.value = false;
