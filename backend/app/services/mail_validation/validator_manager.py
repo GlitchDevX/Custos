@@ -29,6 +29,9 @@ class ValidatorManager:
         return {'code': code, 'text': text}, 200
 
     def validate_mail(self, mail):
+        if not self.config.get("enabled"):
+            return {'code': "Endpoint disabled", 'text': "This endpoint is disabled. You can enable it in the config."}, 503
+
         result: ValidationResult = None
         for (configName, validator) in self.validators:
             if not self.config.get(configName):
