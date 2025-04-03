@@ -3,6 +3,7 @@ from .content_check_module import ContentCheckModule
 from ....utils.singleton_meta import SingletonMeta
 import re
 import urllib
+from ....models.metric import Metric
 
 class TopLevelDomainChecker(metaclass=SingletonMeta):
     top_level_domains = []
@@ -19,15 +20,17 @@ class URLContentChecker(ContentCheckModule):
         re.IGNORECASE,
     )
 
-    def execute_check(self, content):
+    def execute_check(self, content, **kwargs):
         censored_content = content
         has_url = False
         matches = self.pattern.findall(content)
-        print(matches)
         for m in matches:
             matched_parts = m[0].rsplit(".", 1)
             if matched_parts[-1] in self.domain_checker.top_level_domains:
                 censored_content = re.sub(re.escape(m[0]), '*' * len(m[0]), censored_content)
                 has_url = True
+
+        if has_url:
+            Metric.increase(f"CONTENT_URL_DETECTED")
 
         return self.flag_name, has_url, censored_content

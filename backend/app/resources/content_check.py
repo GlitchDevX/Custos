@@ -16,3 +16,4 @@ class ContentCheckResource(Resource):
         content = request.json["content"]
         result = self.content_service.check_content(content)
         return result
+    

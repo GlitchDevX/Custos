@@ -8,7 +8,6 @@ from .resources.content_check import ns_content_check
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
 from .models.metric import Metric
 
-
 class FlaskApplication:
     def __init__(self, config):
         self.db = SQLAlchemySingleton()
@@ -19,7 +18,10 @@ class FlaskApplication:
                    "MAIL_INVALID_DOMAIN",
                    "MAIL_SMTP_DISCONNECT",
                    "MAIL_SMTP_CONNECTION_ERROR",
-                   "MAIL_SMTP_TIMEOUT"
+                   "MAIL_SMTP_TIMEOUT",
+                   "CONTENT_EXECUTED_CHECK",
+                   "CONTENT_URL_DETECTED",
+                   "CONTENT_BANNED_WORD_DETECTED"
                    ]
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)

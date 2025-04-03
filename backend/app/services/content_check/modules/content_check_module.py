@@ -8,5 +8,5 @@ class ContentCheckModule(ABC):
         pass
 
     @abstractmethod
-    def execute_check(self, content):
+    def execute_check(self, content, **kwargs):
         pass
