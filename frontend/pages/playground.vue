@@ -6,7 +6,7 @@
         <PlaygroundMailValidation />
       </template>
       <template #realtimeContent>
-        <UAlert color="warning" title="Not implemented" icon="lucide-triangle-alert" />
+        <PlaygroundRealtimeContentCheck />
       </template>
       <template #pipelineCheck>
         <UAlert color="warning" title="Not implemented" icon="lucide-triangle-alert" />
