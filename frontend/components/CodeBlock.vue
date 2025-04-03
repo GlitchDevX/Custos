@@ -1,5 +1,6 @@
 <template>
-  <div class="codeblock-wrapper p-4 rounded-lg">
+  <div class="codeblock-wrapper p-4 rounded-lg relative">
+    <UButton :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
     <pre class="text-sm">{{ props.content }}</pre>
   </div>
 </template>
@@ -11,6 +12,16 @@ const props = defineProps({
         required: true
     }
 })
+
+const icon = ref("lucide-copy");
+function toClipboard() {
+  icon.value = "lucide-check";
+  navigator?.clipboard?.writeText(props.content);
+
+  setTimeout(() => {
+    icon.value = "lucide-copy";
+  }, 1000);
+}
 </script>
 
 <style scoped>
