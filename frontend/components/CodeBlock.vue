@@ -1,6 +1,6 @@
 <template>
   <div class="codeblock-wrapper p-4 rounded-lg relative">
-    <UButton :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
+    <UButton v-if="showCopy" :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
     <pre class="text-sm">{{ props.content }}</pre>
   </div>
 </template>
@@ -10,6 +10,10 @@ const props = defineProps({
     content: {
         type: String,
         required: true
+    },
+    showCopy: {
+      type: Boolean,
+      default: false
     }
 })
 
