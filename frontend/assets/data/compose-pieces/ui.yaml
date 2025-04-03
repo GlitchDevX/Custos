@@ -1,0 +1,9 @@
+  custos-ui:
+    image: custos-ui:latest
+    restart: always
+    depends_on:
+      - custos
+    ports:
+      - 3070:80
+    expose:
+      - 3070

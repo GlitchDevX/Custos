@@ -1,7 +1,7 @@
 <template>
   <div class="codeblock-wrapper p-4 rounded-lg relative">
     <UButton v-if="showCopy" :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
-    <pre class="text-sm">{{ props.content }}</pre>
+    <pre class="text-sm overflow-x-scroll thin-scrollbar">{{ props.content }}</pre>
   </div>
 </template>
 
@@ -31,5 +31,8 @@ function toClipboard() {
 <style scoped>
 .codeblock-wrapper {
     background: var(--ui-color-neutral-800);
+}
+.thin-scrollbar {
+  scrollbar-width: thin;
 }
 </style>
