@@ -1,11 +1,11 @@
 <template>
-    <div class="p-4 flex gap-4 flex-col">
+    <div class="p-4 flex gap-16 flex-col">
         <HomeHero />
-        <HomeFeatureMailValidation class="pt-8" />
-        <HomeFeatureRealtimeContent class="pt-8" />
-        <HomeFeaturePipeline class="pt-8" />
-        <HomeFeatureConfigurable class="pt-8"/>
-        <HomeFeatureGetStarted class="pt-8" />
+        <HomeFeatureMailValidation />
+        <HomeFeatureRealtimeContent />
+        <HomeFeaturePipeline />
+        <HomeFeatureConfigurable/>
+        <HomeFeatureGetStarted />
     </div>
 </template>
 
