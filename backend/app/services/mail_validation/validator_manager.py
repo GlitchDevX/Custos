@@ -1,5 +1,7 @@
 from typing import List
 
+from app.utils.common_responses import ENDPOINT_DISABLED
+
 from ...config_reader import ConfigReader
 
 from .validation_result import ValidationResult
@@ -30,7 +32,7 @@ class ValidatorManager:
 
     def validate_mail(self, mail):
         if not self.config.get("enabled"):
-            return {'code': "Endpoint disabled", 'text': "This endpoint is disabled. You can enable it in the config."}, 503
+            return ENDPOINT_DISABLED
 
         result: ValidationResult = None
         for (configName, validator) in self.validators:
