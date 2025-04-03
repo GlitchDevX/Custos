@@ -14,9 +14,6 @@ import type { TableColumn } from '@nuxt/ui';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
 import type { FlaggedUser } from '~/assets/types/flaggedUsers';
 
-//TODO: Set favicon to shield thingy & select 
-// & Set Page Theme
-
 const FlagsComponent = resolveComponent('UserFlags');
 
 const mockData = reactive([
