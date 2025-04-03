@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
-    <UTabs :items="items">
+    <UTabs :items="items" :unmountOnHide="false">
       <template #mailValidation>
         <ConfigMailValidation />
       </template>
