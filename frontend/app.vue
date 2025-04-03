@@ -8,7 +8,11 @@
 </template>
 
 <script lang="ts" setup>
-
+useHead({
+  link: [
+    { rel: 'shortcut icon', href: '/favicon.png' },
+  ]
+})
 </script>
 
 <style>
