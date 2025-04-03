@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 flex gap-4 flex-col">
     <PageTitle>Endpoint Playground</PageTitle>
-    <UAccordion :items="endpoints" :unmountOnHide="false">
+    <UAccordion v-model="active" :items="endpoints" :unmountOnHide="false">
       <template #mailValidation>
         <PlaygroundMailValidation />
       </template>
@@ -21,8 +21,9 @@ import { TITLE_SUFFIX } from '~/assets/data/appData';
 
 useHead({
   title: 'Endpoint Playground' + TITLE_SUFFIX
-})
+});
 
+const active = ref('0');
 const endpoints = [
   {
     label: 'Mail Validation',
