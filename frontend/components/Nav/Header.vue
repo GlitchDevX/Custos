@@ -44,8 +44,8 @@ const navigationItems = ref<NavigationMenuItem[]>([
 
 <style scoped>
 .header-container {
-    /* background: var(--ui-bg); */
-    backdrop-filter: blur(5px);
-    border-bottom: 1px var(--ui-bg-muted) solid;
+  backdrop-filter: blur(5px);
+  border-bottom: 1px var(--ui-bg-muted) solid;
+  background: color-mix(in oklch increasing hue, var(--ui-bg) 50%, rgba(57, 57, 57, 0) 50%)
 }
 </style>
