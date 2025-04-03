@@ -1,4 +1,6 @@
 from typing import List
+
+from app.utils.common_responses import ENDPOINT_DISABLED
 from ...models.metric import Metric
 from ...config_reader import ConfigReader
 from .modules.content_check_module import ContentCheckModule
@@ -15,6 +17,9 @@ class ContentCheckService:
         self.content_checks.append(("blockedWordsCheck", BlockedWordsContentChecker()))
 
     def check_content(self, content: str):
+        if not self.config.get("enabled"):
+            return ENDPOINT_DISABLED
+
         Metric.increase("CONTENT_EXECUTED_CHECK")
 
         flags, censored_content = [], content
