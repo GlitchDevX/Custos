@@ -4,7 +4,7 @@ from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
-from .resources.real_time_check import ns_content_check
+from .resources.content_check import ns_content_check
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
 from .models.metric import Metric
 
