@@ -12,12 +12,12 @@
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
+import type { FlaggedUser } from '~/assets/types/flaggedUsers';
 
 //TODO: Set favicon to shield thingy & select 
+// & Set Page Theme
 
-const TagsComponent = resolveComponent('Tags');
-
-type Tag = "slurs" | "spam" | "harassment" | "hate speech" | "misinformation" | "scams";
+const FlagsComponent = resolveComponent('UserFlags');
 
 const mockData = reactive([
   {
@@ -110,7 +110,7 @@ const mockData = reactive([
     flags: ["spam"],
     message: "Anyone else having trouble with the forum?"
   }
-] as {id: string, username: string, flags: Tag[], message: string}[]);
+] as FlaggedUser[]);
 
 const columns = [
   {
@@ -126,30 +126,14 @@ const columns = [
     header: 'Flags',
     cell: ({ row }) =>  {
       const flags = row.getValue<string[]>('flags');
-
-      return h(
-        'div', null, () => {
-          flags.map(f => {
-            const color = {
-              "slurs": 'error' as const,
-              "spam": 'warning' as const,
-              "harassment": 'red' as const,
-              "hate speech": 'red' as const,
-              "misinformation": 'info' as const,
-              "scams": 'red' as const,
-            }[f];
-            
-            return h(UBadge, { variant: 'subtle', color }, () => f);
-          })
-        }
-      );
+      return h(FlagsComponent, { flags: flags });
     }
   },
   {
     accessorKey: 'message',
     header: 'Message'
   }
-] as TableColumn<Tag[]>[]
+] as TableColumn<FlaggedUser>[]
 
 useHead({
   title: 'Flagged Users Inbox' + TITLE_SUFFIX
