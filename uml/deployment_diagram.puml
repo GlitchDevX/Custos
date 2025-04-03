@@ -21,6 +21,7 @@ node "External Data Sources" {
     [Spam Domain List]
     [Mailservers SMTP Response]
     [DNS Records]
+    [Internet Assigned Numbers Authority]
 }
 
 [Service Logic] --> [External Data Sources] : Fetches Data
