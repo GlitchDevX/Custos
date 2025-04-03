@@ -44,7 +44,7 @@ jobs:
 
       # possibly execute test later on
 
-  linting:
+  backend-linting:
     runs-on: [self-hosted, linux, x64]
     steps:
       - name: Get latest code
@@ -56,13 +56,13 @@ jobs:
           args: check --select B
           src: "./backend"
           
-  backend:
+  backend-tests:
     runs-on: [self-hosted, linux, x64]
     timeout-minutes: 30
     defaults:
       run:
         working-directory: backend
-    needs: linting
+    needs: backend-linting
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
