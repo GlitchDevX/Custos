@@ -1,0 +1,33 @@
+services:
+  custos:
+    image: custos:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
+  custos-ui:
+    image: custos-ui:latest
+    restart: always
+    depends_on:
+      - custos
+    ports:
+      - 3070:80
+    expose:
+      - 3070
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'custos'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:
