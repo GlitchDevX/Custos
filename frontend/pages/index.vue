@@ -4,6 +4,7 @@
         <HomeFeatureMailValidation class="pt-8" />
         <HomeFeatureRealtimeContent class="pt-8" />
         <HomeFeaturePipeline class="pt-8" />
+        <HomeFeatureConfigurable class="pt-8"/>
         <HomeFeatureGetStarted class="pt-8" />
     </div>
 </template>

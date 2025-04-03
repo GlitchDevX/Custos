@@ -9,7 +9,7 @@
                     Remove profanity and spam from user content to improve community health.
                 </p>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col mt-2">
                 <div class="flex justify-start">
                     <CodeBlock :content="JSON.stringify(realtimeInput, null, 4)"/>
                 </div>
