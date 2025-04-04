@@ -13,6 +13,7 @@ class MailserverValidator(ValidatorModule):
     _successful_cache: Set[str] = set()
 
     _no_mailserver = ValidationResult(False, "NO_SERVER", "The Mailserver is not reachable")
+    _mail_not_existing = ValidationResult(False, "NO_ADDRESS", "The Mailaddress is not reachable")
     _ok_result = ValidationResult(True, "OK", "Everything okay")
 
     def __init__(self, config):
@@ -50,7 +51,10 @@ class MailserverValidator(ValidatorModule):
             server.quit()
         
             print(f"Got Code {code} when testing mail host: {mail_host}. Response Message: '{message.decode()}'")
-            return code == 250
+            if code == 250:
+                return "SUCCESS"
+            else:
+                return "NOT_FOUND"
         
         except smtplib.SMTPServerDisconnected as e:
             print(e)
@@ -62,7 +66,7 @@ class MailserverValidator(ValidatorModule):
             print(e)
             Metric.increase("MAIL_SMTP_TIMEOUT")
 
-        return False
+        return "ERROR"
 
 
     def execute_check(self, email):
@@ -79,16 +83,21 @@ class MailserverValidator(ValidatorModule):
             print(f"Email found in valid cache: {email}")
             return self._ok_result
         
-        valid = False
+        result = False
         counter = 0
         for server in servers:
             counter += 1
-            valid = self._check_mail_servers(server, email)
-            if valid:
+            result = self._check_mail_servers(server, email)
+            if result == "SUCCESS":
                 self._successful_cache.add(email)
                 break
             
             if counter >= self.config.get("maxHeloChecks"):
                 break
         
-        return self._ok_result if valid else self._no_mailserver
+        if result == "SUCCESS":
+            return self._ok_result
+        if result == "ERROR":
+            return self._no_mailserver
+        if result == "NOT_FOUND":
+            return self._mail_not_existing

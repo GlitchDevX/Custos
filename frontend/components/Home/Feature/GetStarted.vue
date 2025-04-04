@@ -23,8 +23,8 @@
                         <UInput v-model="state.password" />
                     </UFormField>
                 </UCard>
-                <CodeBlock :content="compose" :showCopy="true" language="yaml" class="max-w-[500px]" />
-            </div>
+                <CodeBlock :content="compose" :showCopy="true" class="max-w-[500px]" />
+           </div>
         </div>
     </div>
 </template>
@@ -40,16 +40,12 @@ const state = reactive({
     password: ""
 });
 
-
 const compose = computed(() => {
-    let str = encodeURI(base);
-    console.log(str);
-    str = decodeURI(str);
-    return str;
+    let str = base;
     if (state.ui) {
-        str += "\n" + ui.toString();
+        str += "\n" + ui;
     }
-    str += "\n" + db.toString();
+    str += "\n" + db;
 
     str = str.replaceAll('<<user>>', state.user);
     str = str.replaceAll('<<password>>', state.password);
