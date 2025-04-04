@@ -40,7 +40,7 @@
                     v-model="state.disposableDomains"
                     spellcheck="false"
                     placeholder="gmail.com, github.com..."
-                    :maxrows="5" :autoresize="true" class="w-116 mt-1" />
+                    :maxrows="5" :autoresize="true" class="w-lg mt-1" />
             </UFormField>
 
             <FeatureToggle
