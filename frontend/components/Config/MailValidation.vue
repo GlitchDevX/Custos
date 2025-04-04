@@ -1,16 +1,10 @@
 <template>
-  <ConfigLayout>
-    <EndpointSummary
-        path="/validate-mail" title="Mail Validation"
-        summary="This endpoint is used to verify if an email is valid by using different techniques."
-    />
-    <Spinner v-if="loading" label="Loading Config"/>
-    <UAlert
-        v-if="loadingFailed"
-        color="error" title="Failed to load Config"
-        icon="lucide-triangle-alert"
-    />
-    <div v-show="loaded">
+    <ConfigLayout>
+        <EndpointSummary
+            path="/validate-mail" title="Mail Validation"
+            summary="This endpoint is used to verify if an email is valid by using different techniques."
+        />
+
         <USwitch
             v-model="state.enabled"
             unchecked-icon="lucide-x"
@@ -40,7 +34,7 @@
                     v-model="state.disposableDomains"
                     spellcheck="false"
                     placeholder="gmail.com, github.com..."
-                    :maxrows="5" :autoresize="true" class="w-116 mt-1" />
+                    :maxrows="5" :autoresize="true" class="w-lg mt-1" />
             </UFormField>
 
             <FeatureToggle
@@ -65,18 +59,24 @@
 
         <UButton
             label="Save" size="lg" class="mt-8"
-            :loading="sending"
             @click="submitConfig"
         />
-    </div>
-</ConfigLayout>
+    </ConfigLayout>
 </template>
 
 <script lang="ts" setup>
-import { CONFIG_PATH } from '~/assets/ts/backendConnector';
-import type { ConfigBody, ConfigResponse } from '~/assets/types/mailValidation';
+import type { ConfigBody } from '~/assets/types/mailValidation';
 
-const toast = useToast();
+const emit = defineEmits<{
+    submit: [config: object, namespace: string]
+}>();
+const props = defineProps({
+    config: {
+        type: Object,
+        required: true
+    }
+});
+
 const state = reactive({
     enabled: true,
     formatCheck: true,
@@ -87,9 +87,12 @@ const state = reactive({
     maxHeloChecks: 5
 });
 
-onMounted(() => {
-    loadConfig();
+onBeforeMount(() => {
+    Object.assign(state, props.config);
+    state.disposableDomains = props.config["disposableDomains"].join(', ');
 });
+
+//#region toggle behavior
 
 function onMxRecordChange() {
     if (state.smtpHelo && !state.mxRecordCheck) {
@@ -102,73 +105,12 @@ function onSmtpHeloChange() {
     }
 }
 
+//#endregion
 
-const loading = ref(true);
-const loaded = ref(false);
-const loadingFailed = ref(false);
-async function loadConfig() {
-    let result: ConfigResponse | undefined;
-    loading.value = true;
-    loaded.value = false;
-    loadingFailed.value = false;
-    try {
-        result = await $fetch<ConfigResponse>(CONFIG_PATH + "?namespace=mail_validation", { method: 'GET' });
-        Object.assign(state, result);
-        state.disposableDomains = result.disposableDomains.join(', ');
-        loaded.value = true;
-        
-    } catch {
-        loadingFailed.value = true
-    }
-
-    if (result === undefined) {
-        showFail("Failed to get config from the backend");
-    }
-
-    loading.value = false;
-}
-
-const sending = ref(false);
 async function submitConfig() {
-    const bodyState = { ...state } as ConfigBody;
-    bodyState.disposableDomains = state.disposableDomains.split(', ').map(s => s.trim());
-
-    const body = { 'namespace': 'mail_validation', 'content': bodyState };
-    sending.value = true;
-    
-    let result: { code: string };
-    try {
-        result = await $fetch<{code: string}>(CONFIG_PATH, { method: 'POST', body: body, ignoreResponseError: true });
-    }
-    catch {
-        result = {code: "FAILED"};
-    }
-
-    if (result?.code === "OK") {
-        showSuccess();
-    }
-    else {
-        showFail("Failed to update config in the backend.");
-    }
-    sending.value = false;
-}
-
-function showSuccess() {
-    toast.add({
-        title: 'Success',
-        description: 'Updated config in the backend.',
-        icon: 'lucide-check',
-        color: 'success'
-    });
-}
-function showFail(description: string) {
-    toast.add({
-        title: 'Failed',
-        description: description,
-        icon: 'lucide-x',
-        color: 'error',
-        duration: 5000
-    });
+    const config = { ...state } as ConfigBody;
+    config.disposableDomains = state.disposableDomains.split(', ').map(s => s.trim()).filter(s => s.length > 0);
+    emit('submit', config, 'mail_validation');
 }
 </script>
 

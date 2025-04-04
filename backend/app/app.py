@@ -4,9 +4,9 @@ from flask_restx import Api
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
+from .resources.content_check import ns_content_check
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
 from .models.metric import Metric
-
 
 class FlaskApplication:
     def __init__(self, config):
@@ -18,7 +18,10 @@ class FlaskApplication:
                    "MAIL_INVALID_DOMAIN",
                    "MAIL_SMTP_DISCONNECT",
                    "MAIL_SMTP_CONNECTION_ERROR",
-                   "MAIL_SMTP_TIMEOUT"
+                   "MAIL_SMTP_TIMEOUT",
+                   "CONTENT_EXECUTED_CHECK",
+                   "CONTENT_URL_DETECTED",
+                   "CONTENT_BLOCKED_WORD_DETECTED"
                    ]
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
@@ -29,6 +32,7 @@ class FlaskApplication:
         api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
+        api.add_namespace(ns_content_check)
 
         self.db.init_app(self.flask_app)
 

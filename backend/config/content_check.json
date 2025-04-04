@@ -1,0 +1,8 @@
+{
+    "blockedWords": [
+        "penner"
+    ],
+    "blockedWordsCheck": true,
+    "enabled": true,
+    "urlCheck": true
+}

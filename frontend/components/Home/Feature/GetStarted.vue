@@ -24,7 +24,7 @@
                     </UFormField>
                 </UCard>
                 <CodeBlock :content="compose" :showCopy="true" class="max-w-[500px]" />
-            </div>
+           </div>
         </div>
     </div>
 </template>
