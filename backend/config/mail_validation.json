@@ -1,8 +1,6 @@
 {
     "disposableCheck": true,
-    "disposableDomains": [
-        ""
-    ],
+    "disposableDomains": [],
     "enabled": true,
     "formatCheck": true,
     "maxHeloChecks": 4,
