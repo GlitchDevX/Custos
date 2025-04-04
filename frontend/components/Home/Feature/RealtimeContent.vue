@@ -11,13 +11,13 @@
             </div>
             <div class="flex flex-col mt-2">
                 <div class="flex justify-start">
-                    <CodeBlock :content="JSON.stringify(realtimeInput, null, 4)"/>
+                    <CodeBlock :content="JSON.stringify(realtimeInput, null, 4)" language="json" />
                 </div>
                 <div class="flex justify-center">
                     <UIcon name="lucide-arrow-down-right" :size="50" />
                 </div>
                 <div class="flex justify-end">
-                    <CodeBlock :content="JSON.stringify(realtimeOutput, null, 4)"/>
+                    <CodeBlock :content="JSON.stringify(realtimeOutput, null, 4)" language="json"/>
                 </div>
             </div>
         </div>

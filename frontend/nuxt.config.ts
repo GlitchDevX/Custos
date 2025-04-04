@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxt/ui'
+    '@nuxt/ui',
+    'nuxt-shiki',
   ],
 
   css: ['~/assets/css/main.css'],
@@ -28,5 +29,19 @@ export default defineNuxtConfig({
       }
     ],
     mode: 'svg'
+  },
+
+  shiki: {
+    defaultTheme: {
+      light: 'poimandres',
+      dark: 'poimandres',
+    },
+    bundledLangs: [
+      "yaml",
+      "json"
+    ],
+    bundledThemes: [
+      "poimandres"
+    ]
   },
 })

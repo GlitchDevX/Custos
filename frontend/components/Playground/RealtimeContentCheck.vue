@@ -1,7 +1,6 @@
 <template>
   <div class="px-4 pb-4">
-    <EndpointSummary
-      path="/check-content" title="Realtime Content Check"
+    <EndpointSummary path="/check-content" title="Realtime Content Check"
       summary="This endpoint is used to censor and flag user content in real time." />
 
     <UCard>
@@ -14,11 +13,10 @@
         </UForm>
 
         <UCollapsible v-model:open="showResponse" :arrow="true">
-          <UButton
-            block label="Show Response" variant="ghost" icon="lucide-chevron-down"
+          <UButton block label="Show Response" variant="ghost" icon="lucide-chevron-down"
             :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
           <template #content>
-            <CodeBlock :content="JSON.stringify(response, null, 4)" />
+            <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />
           </template>
         </UCollapsible>
       </div>

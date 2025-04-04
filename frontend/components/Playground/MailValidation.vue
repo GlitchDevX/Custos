@@ -1,7 +1,6 @@
 <template>
   <div class="px-4 pb-4">
-    <EndpointSummary
-      path="/validate-mail" title="Validate Mail"
+    <EndpointSummary path="/validate-mail" title="Validate Mail"
       summary="This endpoint is used to verify if an email is valid by using different techniques." />
 
     <UCard>
@@ -14,11 +13,10 @@
         </UForm>
 
         <UCollapsible v-model:open="showResponse" :arrow="true">
-          <UButton
-            block label="Show Response" variant="ghost" icon="lucide-chevron-down"
+          <UButton block label="Show Response" variant="ghost" icon="lucide-chevron-down"
             :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
           <template #content>
-            <CodeBlock :content="JSON.stringify(response, null, 4)" />
+            <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />
           </template>
         </UCollapsible>
       </div>

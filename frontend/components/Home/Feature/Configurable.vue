@@ -12,7 +12,7 @@
             <div class="flex flex-row justify-between items-center mt-2">
               <NuxtImg src="config_ui.png" class="w-[40%] border-2 border-[var(--ui-border)] rounded-xl" />
               <USeparator orientation="vertical" size="xl" class="h-[200px]" label="Or" />
-              <CodeBlock :content="mailValidation" />
+              <CodeBlock :content="mailValidation" language="json" />
             </div>
         </div>
     </div>

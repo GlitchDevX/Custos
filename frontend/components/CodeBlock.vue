@@ -1,7 +1,7 @@
 <template>
-  <div class="codeblock-wrapper p-4 rounded-lg relative">
+  <div class="codeblock-wrapper p-4 rounded-lg relative highlighted-code">
     <UButton v-if="showCopy" :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
-    <pre class="text-sm overflow-x-scroll thin-scrollbar">{{ props.content }}</pre>
+    <Shiki :lang="(language as any)" :code="props.content" class="text-sm overflow-x-scroll thin-scrollbar" />
   </div>
 </template>
 
@@ -14,8 +14,12 @@ const props = defineProps({
     showCopy: {
       type: Boolean,
       default: false
+    },
+    language: {
+      type: String,
+      default: ""
     }
-})
+});
 
 const icon = ref("lucide-copy");
 function toClipboard() {
@@ -30,7 +34,7 @@ function toClipboard() {
 
 <style scoped>
 .codeblock-wrapper {
-    background: var(--ui-color-neutral-800);
+  background: #1b1e28;
 }
 .thin-scrollbar {
   scrollbar-width: thin;
