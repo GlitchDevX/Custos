@@ -1,21 +1,43 @@
 from .content_check_module import ContentCheckModule
 from ....models.metric import Metric
 import re
+import urllib.request
+from ....utils.singleton_meta import SingletonMeta
+import json
+from typing import List
+
+class ProfanityList(metaclass=SingletonMeta):
+    profanities = List[str]
+
+    def __init__(self):
+        response = urllib.request.urlopen("https://raw.githubusercontent.com/zacanger/profane-words/refs/heads/master/words.json")
+        raw_data = response.read().decode('utf-8')
+        self.profanities = json.loads(raw_data)
 
 class BlockedWordsContentChecker(ContentCheckModule):
-    flag_name = "banned_word"
+    flag_name = "blocked_word"
+    profanity_list = ProfanityList()
 
     def execute_check(self, content, **kwargs):
-        blocked_words = kwargs.get("config").get("blockedWords")
-        censored_content = content.rstrip(",.!?:")
-        has_banned_word = False
+        blocked_words = list(set(kwargs.get("config").get("blockedWords") + self.profanity_list.profanities))
+        pattern = re.compile(
+            r"(" + "|".join(
+                r"\b" + re.escape(w) + r"\b" if len(w) <= 3 else re.escape(w)
+                for w in sorted(blocked_words, key=len, reverse=True)
+            ) + r")",
+            re.IGNORECASE
+        )
         
-        for s in censored_content.split(" "):
-            if s in blocked_words:
-                censored_content = re.sub(re.escape(s), '*' * len(s), censored_content)
-                has_banned_word = True
+        has_blocked_word = False
+        
+        def censor_match(match):
+            nonlocal has_blocked_word
+            has_blocked_word = True
+            return '*' * len(match.group(0))
 
-        if has_banned_word:
-            Metric.increase(f"CONTENT_BANNED_WORD_DETECTED")
+        censored_content = pattern.sub(censor_match, content)
 
-        return self.flag_name, has_banned_word, censored_content
+        if has_blocked_word:
+            Metric.increase(f"CONTENT_BLOCKED_WORD_DETECTED")
+
+        return self.flag_name, has_blocked_word, censored_content

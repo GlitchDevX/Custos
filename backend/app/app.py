@@ -21,7 +21,7 @@ class FlaskApplication:
                    "MAIL_SMTP_TIMEOUT",
                    "CONTENT_EXECUTED_CHECK",
                    "CONTENT_URL_DETECTED",
-                   "CONTENT_BANNED_WORD_DETECTED"
+                   "CONTENT_BLOCKED_WORD_DETECTED"
                    ]
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)

@@ -5,7 +5,7 @@ import re
 import urllib
 from ....models.metric import Metric
 
-class TopLevelDomainChecker(metaclass=SingletonMeta):
+class TopLevelDomainList(metaclass=SingletonMeta):
     top_level_domains = []
     def __init__(self):
         _list_raw = urllib.request.urlopen("http://data.iana.org/TLD/tlds-alpha-by-domain.txt")
@@ -14,7 +14,7 @@ class TopLevelDomainChecker(metaclass=SingletonMeta):
 
 
 class URLContentChecker(ContentCheckModule):
-    domain_checker = TopLevelDomainChecker()
+    domain_checker = TopLevelDomainList()
     flag_name = "contains_url"
     pattern = re.compile("((http://|https://)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)",
         re.IGNORECASE,

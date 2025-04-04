@@ -27,7 +27,6 @@ class ContentCheckService:
             if not self.config.get(configName):
                 continue
 
-            print(configName)
             result = check.execute_check(censored_content, config=self.config)
             if result[1]:
                 flags.append(result[0])
