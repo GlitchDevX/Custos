@@ -14,4 +14,5 @@ dependencies = [
     "mysql-connector-python>=9.2.0",
     "pymysql>=1.1.1",
     "pytest>=8.3.5",
+    "requests>=2.32.3",
 ]
