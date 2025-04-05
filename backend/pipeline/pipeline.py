@@ -1,11 +1,11 @@
 # this file will manage which pipelines to run according to the config.
 # this will be executed by a sheduled gh action workflow
 
-from llm_adapter import LlmAdapter
-from database_connector import DatabaseConnector
+from .llm_adapter import LlmAdapter
+from .database_connector import DatabaseConnector
 
 
-class PipelineExecuter:
+class Pipeline:
     
     def __init__(self):
         self.db = DatabaseConnector()
@@ -17,8 +17,3 @@ class PipelineExecuter:
         #     print(row)
 
         print(self.llm.prompt_llm("How many 'R' are in Banana?"))
-
-        
-
-
-PipelineExecuter().run()
