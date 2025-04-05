@@ -15,6 +15,22 @@ services:
       - 3070:80
     expose:
       - 3070
+  ollama:
+    image: ollama/ollama
+    entrypoint:
+      [
+        "/bin/bash",
+        "-c",
+        "ollama serve & sleep 5 && ollama pull gemma3:4b && wait",
+      ]
+    expose:
+      - 11434/tcp
+    ports:
+      - "11434:11434/tcp"
+    healthcheck:
+      test: ollama --version || exit 1
+    volumes:
+      - ollama:/root/.ollama
   db:
     image: mysql:8.0
     restart: always
@@ -31,3 +47,4 @@ services:
       - mysql:/var/lib/mysql
 volumes:
   mysql:
+  ollama:
