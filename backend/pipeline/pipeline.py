@@ -18,6 +18,7 @@ class Pipeline:
         #     print(row)
 
         message = "Ayo bro you're so ass in this game xD"
+        message = "Fuck you"
         prompt = self.prompt_builder.build_prompt(message)
 
         print(f"Message: {message}")

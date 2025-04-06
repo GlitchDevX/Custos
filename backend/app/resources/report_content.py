@@ -9,7 +9,7 @@ parser.add_argument('userId', type=str, required=True, location='json')
 parser.add_argument('content', type=str, required=True, location='json')
 
 @ns_report.route('/')
-class MailValidationResource(Resource):
+class ReportContentResource(Resource):
     pipeline_submitter = PipelineSubmitter()
 
     @ns_report.expect(parser)
