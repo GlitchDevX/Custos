@@ -17,3 +17,5 @@ class PipelineSubmitter:
 
         db.session.add(report)
         db.session.commit()
+
+        return {"code": "OK"}, 200
