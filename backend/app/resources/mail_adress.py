@@ -8,6 +8,9 @@ parser.add_argument('mail', type=str, required=True, location='json')
 
 @ns_mail.route('/')
 class MailValidationResource(Resource):
+    """
+    A resource class for validating email addresses.
+    """
     validator_manager = ValidatorManager()
 
     @ns_mail.expect(parser)

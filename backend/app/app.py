@@ -9,6 +9,17 @@ from .utils.sqlalchemy_utils import SQLAlchemySingleton
 from .models.metric import Metric
 
 class FlaskApplication:
+    """
+    A class to initialize and configure a Flask application with RESTful API capabilities.
+
+    Attributes:
+        db (SQLAlchemySingleton): Singleton instance for database management.
+        METRICS (list): A list of predefined metrics for monitoring mail and content checks.
+        flask_app (Flask): The Flask application instance.
+        
+    :param config (Config): Configuration object containing application settings such as HOST, PORT, and DEBUG.
+    """
+
     def __init__(self, config):
         self.db = SQLAlchemySingleton()
         self.METRICS = ["MAIL_OK",

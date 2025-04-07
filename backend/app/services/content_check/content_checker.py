@@ -9,6 +9,11 @@ from ...models.metric import Metric
 from .modules.blocked_words_checker import BlockedWordsContentChecker
 
 class ContentCheckService:
+    """
+    A service class for checking content against various criteria.
+    This class manages different content checks and orchestrates the content validation process.
+    """
+    
     content_checks: List[tuple[str, ContentCheckModule]] = []
     config = ConfigReader("content_check")
 
