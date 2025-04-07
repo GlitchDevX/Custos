@@ -13,13 +13,16 @@ class Pipeline:
         self.prompt_builder = PromptBuilder()
 
     def run(self):
-        data = self.db.get_all()
-        # for row in data:
-        #     print(row)
+        all_reports = self.db.get_all_reported_content()
+        result = list(map(self.process_report, all_reports))
 
-        message = "Ayo bro you're so ass in this game xD"
-        message = "Fuck you"
+        print(result)
+
+    def process_report(self, report):
+        message = report["content"]
         prompt = self.prompt_builder.build_prompt(message)
 
         print(f"Message: {message}")
-        print(self.llm.prompt_llm(prompt))
+        response = self.llm.prompt_llm(prompt)
+
+        return response
