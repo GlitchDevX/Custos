@@ -1,3 +1,6 @@
+from typing import Dict, List, TypedDict
+
+
 report_analysis_schema = {
     "type": "object",
     "properties": {
@@ -12,3 +15,5 @@ report_analysis_schema = {
         "tags",
     ]
 }
+class ReportAnalysis(TypedDict):
+    tags: List[str]

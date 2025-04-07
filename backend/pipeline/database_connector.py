@@ -1,5 +1,11 @@
-from sqlalchemy import create_engine, text
+from datetime import datetime
+from typing import List
+from sqlalchemy import create_engine, select
 from app.config import Config, DevelopmentConfig
+from sqlalchemy.orm import Session
+
+from .models.reported_content import ReportedContent
+from .models.flagged_content import FlaggedContent
 
 class DatabaseConnector:
     
@@ -9,11 +15,12 @@ class DatabaseConnector:
         self.engine = create_engine(db_uri)
 
     def get_all_reported_content(self):
-        with self.engine.connect() as connection:
-            result = connection.execute(text("SELECT * FROM reported_content;"))
+        with Session(self.engine) as session:
+            statement = select(ReportedContent)
+            return session.scalars(statement).all()
 
-            mapped_response = []
-            for row in result:
-                mapped_response.append({"reportId": row[0], "userId": row[1], "content": row[2]})
-            
-            return mapped_response
+    def write_results(self, flagged_data: List[FlaggedContent]):
+        with Session(self.engine) as session:
+            for row in flagged_data:
+                session.add(row)
+            session.commit()

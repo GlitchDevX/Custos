@@ -7,7 +7,11 @@ from .resources.config import ns_config
 from .resources.content_check import ns_content_check
 from .resources.report_content import ns_report
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
+
+# Imports to generate tables
 from .models.metric import Metric
+from .models.reported_content import ReportedContent
+from .models.flagged_content import FlaggedContent
 
 class FlaskApplication:
     def __init__(self, config):

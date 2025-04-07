@@ -1,3 +1,4 @@
+import json
 import requests
 
 class LlmAdapter:
@@ -22,4 +23,4 @@ class LlmAdapter:
         # make this a metric like avg_response_time
         print(response.elapsed)
 
-        return response.json()["response"]
+        return json.loads(response.json()["response"])
