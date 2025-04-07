@@ -18,6 +18,9 @@ class Pipeline:
         results = list(map(self.process_content, all_reports))
 
         self.db.write_results(results)
+        
+        report_ids = list(map(lambda r: r.report_id, all_reports))
+        self.db.remove_reports(report_ids)
 
     def process_content(self, report: ReportedContent):
         message = report.content

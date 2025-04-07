@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from sqlalchemy import create_engine, select
+from sqlalchemy import create_engine, delete, select
 from app.config import Config, DevelopmentConfig
 from sqlalchemy.orm import Session
 
@@ -23,4 +23,11 @@ class DatabaseConnector:
         with Session(self.engine) as session:
             for row in flagged_data:
                 session.add(row)
+            session.commit()
+
+    def remove_reports(self, report_ids):
+        with Session(self.engine) as session:
+            for id in report_ids:
+                statement = delete(ReportedContent).where(ReportedContent.report_id.__eq__(id))
+                session.execute(statement)
             session.commit()
