@@ -11,4 +11,5 @@ class FlaggedContent(db.Model):
     processed_at = db.Column(db.DateTime, default=datetime.now())
     user_id = db.Column(db.String(100))
     content = db.Column(db.String(5000))
+    false_report = db.Column(db.Boolean())
     flags = db.Column(db.String(200)) # comma separated list
