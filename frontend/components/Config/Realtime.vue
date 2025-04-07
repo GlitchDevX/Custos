@@ -18,10 +18,10 @@
                     description="Remove and flag banned words. This includes profanity." />
 
                 <UFormField
-                    label="Extra Disposable Domains" size="xl" class="pt-4"
+                    label="Extra Banned Words" size="xl" class="pt-4"
                     :class="{'low-opacity': !state.blockedWordsCheck}">
                     <p class="muted-text">
-                        Comma separated list of additional domains to mark as disposable.
+                        Comma separated list of additional words to ban.
                     </p>
                     <UTextarea
                         v-model="state.blockedWords" spellcheck="false" placeholder="enormous, milk..."
