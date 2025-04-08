@@ -8,8 +8,8 @@
       <template #realtimeContent>
         <PlaygroundRealtimeContentCheck />
       </template>
-      <template #pipelineCheck>
-        <UAlert color="warning" title="Not implemented" icon="lucide-triangle-alert" />
+      <template #deepCheck>
+        <PlaygroundDeepContentCheck />
       </template>
     </UAccordion>
   </div>
@@ -36,9 +36,9 @@ const endpoints = [
     slot: 'realtimeContent'
   },
   {
-    label: 'Pipeline Check',
+    label: 'Deep Content Check',
     icon: 'lucide-workflow',
-    slot: 'pipelineCheck'
+    slot: 'deepCheck'
   }
 ] as AccordionItem[];
 </script>
