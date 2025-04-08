@@ -48,16 +48,17 @@ class Pipeline:
         print(f"Message: {message}")
         response: ReportAnalysis = self.llm.prompt_llm(prompt)
         
-        valid_flags = ["SPAM, PROFANITY, HARASSMENT, MISINFORMATION, OTHER"]
-        flags = ",".join(filter(lambda f: f in valid_flags, response["tags"]))
+        valid_flags = ["SPAM", "PROFANITY", "HARASSMENT", "MISINFORMATION", "OTHER"]
+        flags = filter(lambda f: f in valid_flags, response["tags"])
+        joined_flags = ",".join(flags)
         
         print(f"Response: {response}\n")
 
         result = FlaggedContent()
         for (key, value) in filter(lambda i: not i[0].startswith('_'), report.__dict__.items()):
             result.__dict__[key] = value
-        result.flags = flags
-        result.false_report = flags == "" or flags == "OTHER"
+        result.flags = joined_flags
+        result.false_report = joined_flags == "" or joined_flags == "OTHER"
         
         self.processed_reports += 1
         return result
