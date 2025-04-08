@@ -19,7 +19,7 @@ class PipelineSubmitter(metaclass=SingletonMeta):
         model = ReportedContent(content=content)
         result = self.pipeline.process_content(model)
         split_flags = list(filter(lambda f: f != "", result.flags.split(',')))
-        return { "flags": split_flags, "falseContent": result.false_report }, 200
+        return { "flags": split_flags, "falseReport": result.false_report }, 200
 
     def get_status(self):
         return self.pipeline.get_status(), 200
