@@ -5,8 +5,15 @@ from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
 from .resources.content_check import ns_content_check
+from .resources.report_content import ns_report
+from .resources.flagged_content import ns_flagged
+from .resources.pipeline import ns_pipeline
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
+
+# Imports to generate tables
 from .models.metric import Metric
+from .models.reported_content import ReportedContent
+from .models.flagged_content import FlaggedContent
 
 class FlaskApplication:
     def __init__(self, config):
@@ -33,6 +40,9 @@ class FlaskApplication:
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
+        api.add_namespace(ns_report)
+        api.add_namespace(ns_flagged)
+        api.add_namespace(ns_pipeline)
 
         self.db.init_app(self.flask_app)
 
