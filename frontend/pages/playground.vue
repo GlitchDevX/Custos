@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 flex gap-4 flex-col">
+  <div class="py-4 px-8 flex gap-4 flex-col">
     <PageTitle>Endpoint Playground</PageTitle>
     <UAccordion v-model="active" :items="endpoints" :unmountOnHide="false">
       <template #mailValidation>

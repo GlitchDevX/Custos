@@ -1,11 +1,9 @@
 <template>
-  <div class="p-4 flex gap-4 flex-col">
-    <UCard>
-      <h2 class="text-2xl font-bold mb-4">
-        Flagged User Inbox
-      </h2>
-      <UTable :data="mockData" :columns="columns" />
-    </UCard>
+  <div class="py-4 px-8 flex gap-4 flex-col">
+    <PageTitle>
+      Flagged User Inbox
+    </PageTitle>
+    <UTable :data="mockData" :columns="columns" />
   </div>
 </template>
 
