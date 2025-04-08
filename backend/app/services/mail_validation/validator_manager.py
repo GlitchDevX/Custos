@@ -13,6 +13,10 @@ from ...models.metric import Metric
 
 
 class ValidatorManager:
+    """
+    A class to manage email validation using various validators.
+    This class initializes different validators and orchestrates the validation process.
+    """
     validators: List[tuple[str, ValidatorModule]] = []
 
     def __init__(self):

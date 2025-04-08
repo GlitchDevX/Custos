@@ -8,6 +8,10 @@ from app.config_reader import reload_readers_with_namespace
 
 
 class ConfigSetter:
+    """
+    A class to manage the setting and updating of configuration files.
+    This class checks for existing configuration files and provides methods to update them.
+    """
 
     def __init__(self):
         path = "config/"
