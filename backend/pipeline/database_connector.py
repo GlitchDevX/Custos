@@ -11,7 +11,6 @@ class DatabaseConnector:
     
     def __init__(self):
         db_uri = DevelopmentConfig.SQLALCHEMY_DATABASE_URI
-        print(db_uri)
         self.engine = create_engine(db_uri)
 
     def get_all_reported_content(self):
