@@ -1,6 +1,6 @@
 import threading
-from app.utils.singleton_meta import SingletonMeta
 from app.models.reported_content import ReportedContent
+from app.utils.singleton_meta import SingletonMeta
 from pipeline.pipeline import Pipeline
 
 class PipelineSubmitter(metaclass=SingletonMeta):

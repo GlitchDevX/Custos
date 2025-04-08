@@ -1,8 +1,8 @@
-from datetime import datetime
 from typing import List
 from sqlalchemy import create_engine, delete, select
-from app.config import Config, DevelopmentConfig
 from sqlalchemy.orm import Session
+
+from app.config import app_config
 
 from .models.reported_content import ReportedContent
 from .models.flagged_content import FlaggedContent
@@ -10,7 +10,7 @@ from .models.flagged_content import FlaggedContent
 class DatabaseConnector:
     
     def __init__(self):
-        db_uri = DevelopmentConfig.SQLALCHEMY_DATABASE_URI
+        db_uri = app_config.config.DB_URI
         self.engine = create_engine(db_uri)
 
     def get_all_reported_content(self):

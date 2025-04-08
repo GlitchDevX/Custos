@@ -1,10 +1,10 @@
-from app.config import TestingConfig
+from backend.app.flask_config import FlaskTstConfig
 from app.app import FlaskApplication
 import pytest
 
 @pytest.fixture()
 def app():
-    app = FlaskApplication(TestingConfig)
+    app = FlaskApplication(FlaskTstConfig)
     yield app.flask_app
 
 @pytest.fixture()

@@ -10,7 +10,7 @@ class Pipeline:
     
     def __init__(self):
         self.db = DatabaseConnector()
-        self.llm = LlmAdapter("http://localhost:11434/api/generate", format=report_analysis_schema)
+        self.llm = LlmAdapter(format=report_analysis_schema)
         self.prompt_builder = PromptBuilder()
 
     running = False
