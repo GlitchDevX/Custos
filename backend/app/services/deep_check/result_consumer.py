@@ -15,12 +15,11 @@ class ResultConsumer:
 
         result = self.db.session.scalars(select_query)
 
-        # if remove:
-        #     delete_query = delete(FlaggedContent)
-        #     delete_query = self.apply_filters(delete_query, report_id, reported_at, processed_at)
-        #     print("should be removing with query:")
-        #     print(delete_query)
-        #     print(self.db.session.scalars(delete_query))
+        if remove:
+            delete_query = delete(FlaggedContent)
+            delete_query = self.apply_filters(delete_query, report_id, reported_at, processed_at)
+            self.db.session.execute(delete_query)
+            self.db.session.commit()
         
         return self.map_result(result)
     
