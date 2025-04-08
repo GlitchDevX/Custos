@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace
 from flask import request
 
-from app.services.deep_check.pipeline_submitter import PipelineSubmitter
+from app.services.deep_check.content_reporter import ContentReporter
 
 ns_report = Namespace('report-content', description='Endpoint for reporting content to submit into pipeline')
 parser = ns_report.parser()
@@ -10,11 +10,11 @@ parser.add_argument('content', type=str, required=True, location='json')
 
 @ns_report.route('/')
 class ReportContentResource(Resource):
-    pipeline_submitter = PipelineSubmitter()
+    content_reporter = ContentReporter()
 
     @ns_report.expect(parser)
     def post(self):
         parser.parse_args(strict=True)
         userId = request.json["userId"]
         content = request.json["content"]
-        return self.pipeline_submitter.submit(userId, content)
+        return self.content_reporter.submit(userId, content)

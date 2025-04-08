@@ -1,21 +1,19 @@
-import uuid
+import threading
+from app.utils.singleton_meta import SingletonMeta
+from pipeline.pipeline import Pipeline
 
-from app.models.reported_content import ReportedContent
+class PipelineSubmitter(metaclass=SingletonMeta):
 
-from ...utils.sqlalchemy_utils import SQLAlchemySingleton
+    def __init__(self):
+        self.pipeline = Pipeline()
+
+    def run_pipeline(self):
+        if self.pipeline.running:
+            return { "code": "ALREADY_RUNNING", "text": "The Pipeline is already running." }, 409
+        
+        threading.Thread(target=self.pipeline.run).start()
+        return { "code": "OK" }
 
 
-db = SQLAlchemySingleton()
-
-class PipelineSubmitter:
-    
-    def submit(self, userId, content):
-        report = ReportedContent()
-        report.report_id = uuid.uuid4()
-        report.user_id = userId
-        report.content = content
-
-        db.session.add(report)
-        db.session.commit()
-
-        return {"code": "OK"}, 200
+    def get_status(self):
+        return self.pipeline.get_status(), 200

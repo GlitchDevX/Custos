@@ -13,14 +13,33 @@ class Pipeline:
         self.llm = LlmAdapter("http://localhost:11434/api/generate", format=report_analysis_schema)
         self.prompt_builder = PromptBuilder()
 
+    running = False
+    total_reports = 0
+    processed_reports = 0
+
+    def get_status(self):
+        return {
+            "active": self.running,
+            "total": self.total_reports,
+            "processed": self.processed_reports,
+            "ratio": 0 if self.total_reports == 0 else self.processed_reports / self.total_reports
+        }
+
     def run(self):
         all_reports = self.db.get_all_reported_content()
+        
+        self.running = True
+        self.total_reports = len(all_reports)
+        self.processed_reports = 0
+
         results = list(map(self.process_content, all_reports))
 
         self.db.write_results(results)
         
         report_ids = list(map(lambda r: r.report_id, all_reports))
         self.db.remove_reports(report_ids)
+
+        self.running = False
 
     def process_content(self, report: ReportedContent):
         message = report.content
@@ -39,5 +58,6 @@ class Pipeline:
             result.__dict__[key] = value
         result.flags = flags
         result.false_report = flags == "" or flags == "OTHER"
-
+        
+        self.processed_reports += 1
         return result
