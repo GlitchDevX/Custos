@@ -10,7 +10,7 @@
         <ConfigRealtime :config="(contentCheck as object)" @submit="submitConfig" />
       </template>
       <template #pipelineCheck>
-        <ConfigPipeline />
+        <ConfigPipeline :config="(pipeline as object)" @submit="submitConfig"/>
       </template>
     </UTabs>
   </div>
@@ -46,6 +46,7 @@ const items: TabsItem[] = [
 
 const mailValidation = await getConfig("mail_validation");
 const contentCheck = await getConfig("content_check");
+const pipeline = await getConfig("pipeline");
 
 const loaded = ref(false);
 const failed = ref(false);

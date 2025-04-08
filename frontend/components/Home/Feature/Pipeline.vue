@@ -3,7 +3,7 @@
         <div class="w-3xl">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold flex flex-row gap-2 justify-start items-center">
-                    AI Powered Pipeline <UBadge label="Coming Soon" />
+                    AI Powered Pipeline
                 </h2>
                 <p class="muted-text">
                     Deep content checks utilizing a combination of flexible LLMs and concrete rulesets to flag user-content.
