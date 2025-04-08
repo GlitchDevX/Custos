@@ -6,6 +6,7 @@ from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
 from .resources.content_check import ns_content_check
 from .resources.report_content import ns_report
+from .resources.flagged_content import ns_flagged
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
 
 # Imports to generate tables
@@ -39,6 +40,7 @@ class FlaskApplication:
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
         api.add_namespace(ns_report)
+        api.add_namespace(ns_flagged)
 
         self.db.init_app(self.flask_app)
 

@@ -28,6 +28,6 @@ class DatabaseConnector:
     def remove_reports(self, report_ids):
         with Session(self.engine) as session:
             for id in report_ids:
-                statement = delete(ReportedContent).where(ReportedContent.report_id.__eq__(id))
+                statement = delete(ReportedContent).where(ReportedContent.report_id == id)
                 session.execute(statement)
             session.commit()
