@@ -33,13 +33,13 @@ dependencies = [
     { name = "flask-sqlalchemy" },
     { name = "mysql-connector-python" },
     { name = "pymysql" },
+    { name = "requests" },
 ]
 
 [package.optional-dependencies]
 dev = [
     { name = "coverage" },
     { name = "pytest" },
-    { name = "requests" },
 ]
 
 [package.metadata]
