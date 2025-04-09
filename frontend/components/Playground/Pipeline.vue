@@ -1,21 +1,22 @@
 <template>
     <div class="px-4 pb-4">
-      <EndpointSummary path="/validate-mail" title="Validate Mail"
-        summary="This endpoint is used to verify if an email is valid by using different techniques." />
+      <EndpointSummary
+        path="/pipeline" title="Pipeline"
+        summary="This endpoint is used to submit content to the pipeline and trigger it." />
   
     <UCard class="mt-4">
-        <h3 class="text-2xl font-bold">
-            Report Content
-        </h3>
-        <div class="flex flex-row justify-between mt-2">
+        <div class="flex flex-row justify-between">
           <UForm :state="{}" @submit="(_) => submitReport()">
             <UFormField label="User Id">
               <UInput v-model="reportContent.userId" class="min-w-lg" />
             </UFormField>
-            <UFormField label="Content">
+            <UFormField label="Content" class="mt-2">
               <UTextarea v-model="reportContent.content" class="min-w-lg" />
             </UFormField>
-            <UButton label="Submit" class="mt-4" type="submit" :loading="reportLoading" />
+            <div class="flex flex-row gap-2 mt-4">
+              <UButton label="Report Content" type="submit" :loading="reportLoading" />
+              <UButton label="Trigger Pipeline" :loading="triggerLoading" variant="subtle" @click="triggerPipeline()" />
+            </div>
           </UForm>
 
           <UCollapsible v-model:open="showResponse" :arrow="true" class="group">
@@ -23,26 +24,7 @@
               block label="Show Response" variant="ghost" icon="lucide-chevron-down"
               :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
             <template #content>
-              <CodeBlock :content="JSON.stringify(reportResponse, null, 4)" language="json" />
-            </template>
-          </UCollapsible>
-        </div>
-    </UCard>
-      <UCard class="mt-4">
-        <h3 class="text-2xl font-bold">
-            Trigger Pipeline
-        </h3>
-        <div class="flex flex-row justify-between mt-2">
-            <div>
-                <UButton label="Trigger" class="mt-4" type="submit" :loading="triggerLoading" @click="triggerPipeline()" />
-            </div>
-  
-          <UCollapsible v-model:open="showTriggerResponse" :arrow="true" class="group">
-            <UButton
-              block label="Show Response" variant="ghost" leading-icon="lucide-chevron-down"
-              :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
-            <template #content>
-              <CodeBlock :content="JSON.stringify(triggerResponse, null, 4)" language="json" />
+              <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />
             </template>
           </UCollapsible>
         </div>
@@ -52,45 +34,46 @@
 
 <script lang="ts" setup>
 import { PIPELINE_PATH, REPORT_CONTENT_PATH } from '~/assets/ts/backendConnector';
-const showResponse = ref(false);
 
-const reportResponse = ref({
-    code: "",
-    text: ""
+const response = ref({ 
+  code: "",
+  text: ""
 });
+
 const reportContent = reactive({
-    content: "",
-    userId: "",
+  userId: "testUserId",
+  content: "",
 });
-const reportLoading = ref(false);
-async function submitReport() {
-    reportLoading.value = true;
-    showResponse.value = false;
-    const result = await $fetch<object>(REPORT_CONTENT_PATH, {
-        method: 'POST',
-        body: {'content': reportContent.content, "userId": reportContent.userId},
-        ignoreResponseError: true
-    });
 
-    reportLoading.value = false;
-    reportResponse.value = result as any;
-    showResponse.value = true;
+const reportLoading = ref(false);
+const showResponse = ref(false);
+async function submitReport() {
+  reportLoading.value = true;
+  showResponse.value = false;
+
+  const result = await $fetch<object>(REPORT_CONTENT_PATH, {
+    method: 'POST',
+    body: {'content': reportContent.content, "userId": reportContent.userId},
+    ignoreResponseError: true
+  });
+
+  reportLoading.value = false;
+  response.value = result as any;
+  showResponse.value = true;
 }
 
 const triggerLoading = ref(false);
-const showTriggerResponse = ref(false);
-const triggerResponse = ref({ "code": "" });
 async function triggerPipeline() {
     triggerLoading.value = true;
-    showTriggerResponse.value = false;
+    showResponse.value = false;
     const result = await $fetch<object>(PIPELINE_PATH, {
         method: 'PUT',
         ignoreResponseError: true
     });
     
     triggerLoading.value = false;
-    triggerResponse.value = result as any;
-    showTriggerResponse.value = true;
+    response.value = result as any;
+    showResponse.value = true;
 }
 </script>
 
