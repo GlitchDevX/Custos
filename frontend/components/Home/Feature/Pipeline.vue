@@ -6,7 +6,7 @@
                     AI Powered Pipeline
                 </h2>
                 <p class="muted-text">
-                    Deep content checks utilizing a combination of flexible LLMs and concrete rulesets to flag user-content.
+                    Deep content checks utilizing an LLM to flag user-content with a profound understanding.
                 </p>
             </div>
             <UTable :data="mockData" :columns="columns" />
@@ -16,45 +16,50 @@
 
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui';
-import type { FlaggedUser } from '~/assets/types/flaggedContent';
-
-const FlagsComponent = resolveComponent('PipelineContentFlags');
+import type { FlaggedContent } from '~/assets/types/flaggedContent';
 
 const mockData = reactive([
   {
-    reportId: "3",
     userId: "TechGuru",
-    flags: ["slurs"],
+    falseReport: false,
+    flags: ["profanity"],
     content: "You're all a bunch of worthless cunts.",
   },
   {
-    reportId: "6",
     userId: "PixelArtist",
+    falseReport: false,
     flags: ["harassment"],
     content: "I hope you all choke on your own vomit.",
   },
   {
-    reportId: "7",
     userId: "GamerPro",
-    flags: ["slurs", "hate speech"],
+    falseReport: false,
+    flags: ["profanity", "harassment"],
     content: "Kill yourselves, fags!",
   },
   {
-    reportId: "9",
     userId: "DataDynamo",
-    flags: ["spam", "harassment"],
+    falseReport: false,
+    flags: ["spam", "misinformation"],
     content: "Join my MLM scheme and get rich quick!",
   },
-] as FlaggedUser[]);
+] as FlaggedContent[]);
 
+const FlagsComponent = resolveComponent('PipelineContentFlags');
+const CheckboxComponent = resolveComponent('UCheckbox');
 const columns = [
   {
-    accessorKey: 'id',
-    header: 'Id'
+    accessorKey: 'userId',
+    header: 'User Id',
+    meta: { class: { th: 'max-w-28', td: 'max-w-28 truncate' } }
   },
   {
-    accessorKey: 'username',
-    header: 'Username'
+    accessorKey: 'falseReport',
+    header: 'False Report',
+    cell: ({ row }) => {
+      return h(CheckboxComponent, { modelValue: row.getValue<boolean>('falseReport'), class: 'pointer-events-none' })
+    },
+    meta: { class: { th: 'max-w-18', td: 'max-w-18 truncate' } }
   },
   {
     accessorKey: 'flags',
@@ -65,10 +70,11 @@ const columns = [
     }
   },
   {
-    accessorKey: 'message',
-    header: 'Message'
-  }
-] as TableColumn<FlaggedUser>[]
+    accessorKey: 'content',
+    header: 'Content'
+  },
+] as TableColumn<FlaggedContent>[]
+
 
 
 </script>

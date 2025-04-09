@@ -16,7 +16,7 @@
 import type { TableColumn } from '@nuxt/ui';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
 import { FLAGGED_CONTENT_PATH } from '~/assets/ts/backendConnector';
-import type { FlaggedUser as FlaggedContent } from '~/assets/types/flaggedContent';
+import type { FlaggedContent } from '~/assets/types/flaggedContent';
 
 onMounted(() => {
   loadData();
@@ -39,22 +39,12 @@ const columns = [
   {
     accessorKey: 'reportId',
     header: 'Report Id',
-    meta: {
-      class: {
-        th: 'max-w-20',
-        td: 'max-w-20 truncate'
-      }
-    }
+    meta: { class: { th: 'max-w-20', td: 'max-w-20 truncate' } }
   },
   {
     accessorKey: 'userId',
     header: 'User Id',
-    meta: {
-      class: {
-        th: 'max-w-20',
-        td: 'max-w-20 truncate'
-      }
-    }
+    meta: { class: { th: 'max-w-20', td: 'max-w-20 truncate' } }
   },
   {
     accessorKey: 'falseReport',
@@ -62,12 +52,7 @@ const columns = [
     cell: ({ row }) => {
       return h(CheckboxComponent, { modelValue: row.getValue<boolean>('falseReport'), class: 'pointer-events-none' })
     },
-    meta: {
-      class: {
-        th: 'max-w-18',
-        td: 'max-w-18 truncate'
-      }
-    }
+    meta: { class: { th: 'max-w-18', td: 'max-w-18 truncate' } }
   },
   {
     accessorKey: 'flags',
@@ -84,12 +69,7 @@ const columns = [
   {
     accessorKey: 'reportedAt',
     header: 'Reported At',
-    meta: {
-      class: {
-        th: 'max-w-24',
-        td: 'max-w-24 truncate'
-      }
-    }
+    meta: { class: { th: 'max-w-24', td: 'max-w-24 truncate' } }
   }
 ] as TableColumn<FlaggedContent>[]
 
