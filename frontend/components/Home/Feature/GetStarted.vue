@@ -16,7 +16,8 @@
                         Configure Compose
                     </span>
                     <USwitch v-model="state.ui" label="User Interface" class="mt-4" />
-                    <UFormField label="Database Username" class="mt-2">
+                    <USwitch v-model="state.llm " label="LLM Pipeline" class="mt-4" />
+                    <UFormField label="Database Username" class="mt-4">
                         <UInput v-model="state.user" />
                     </UFormField>
                     <UFormField label="Database Password" class="mt-2">
@@ -36,6 +37,7 @@ import db from '~/assets/data/compose-pieces/db.yaml?raw';
 
 const state = reactive({
     ui: true,
+    llm: true,
     user: "custos_user",
     password: ""
 });
