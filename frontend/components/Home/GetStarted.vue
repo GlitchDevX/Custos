@@ -33,6 +33,7 @@
 <script lang="ts" setup>
 import base from '~/assets/data/compose-pieces/base.yaml?raw';
 import ui from '~/assets/data/compose-pieces/ui.yaml?raw';
+import ollama from '~/assets/data/compose-pieces/llm.yaml?raw';
 import db from '~/assets/data/compose-pieces/db.yaml?raw';
 
 const state = reactive({
@@ -47,10 +48,24 @@ const compose = computed(() => {
     if (state.ui) {
         str += "\n" + ui;
     }
+    if (state.llm) {
+      str += "\n" + ollama;
+    }
+    else {
+    }
     str += "\n" + db;
 
     str = str.replaceAll('<<user>>', state.user);
     str = str.replaceAll('<<password>>', state.password);
+
+    if (state.llm) {
+      str = str.replaceAll('<<llm_dependency>>', '\n      - ollama');
+      str = str.replaceAll('<<llm_volume>>', '\n  ollama:');
+    }
+    else {
+      str = str.replaceAll('<<llm_dependency>>', '');
+      str = str.replaceAll('<<llm_volume>>', '');
+    }
 
     return str;
 })

@@ -3,6 +3,6 @@ services:
     image: custos:latest
     restart: always
     depends_on:
-      - db
+      - db<<llm_dependency>>
     environment:
       SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://<<user>>:<<password>>@db/custos'
