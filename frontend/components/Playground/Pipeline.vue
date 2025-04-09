@@ -6,7 +6,7 @@
   
     <UCard class="mt-4">
         <div class="flex flex-row justify-between">
-          <UForm :state="{}" @submit="(_) => submitReport()">
+          <UForm :state="{}" @submit="() => submitReport()">
             <UFormField label="User Id">
               <UInput v-model="reportContent.userId" class="min-w-lg" />
             </UFormField>

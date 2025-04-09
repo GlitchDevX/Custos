@@ -18,32 +18,32 @@
 import type { TableColumn } from '@nuxt/ui';
 import type { FlaggedUser } from '~/assets/types/flaggedContent';
 
-const FlagsComponent = resolveComponent('UserFlags');
+const FlagsComponent = resolveComponent('PipelineContentFlags');
 
 const mockData = reactive([
   {
-    id: "3",
-    username: "TechGuru",
+    reportId: "3",
+    userId: "TechGuru",
     flags: ["slurs"],
-    message: "You're all a bunch of worthless cunts."
+    content: "You're all a bunch of worthless cunts.",
   },
   {
-    id: "6",
-    username: "PixelArtist",
+    reportId: "6",
+    userId: "PixelArtist",
     flags: ["harassment"],
-    message: "I hope you all choke on your own vomit."
+    content: "I hope you all choke on your own vomit.",
   },
   {
-    id: "7",
-    username: "GamerPro",
+    reportId: "7",
+    userId: "GamerPro",
     flags: ["slurs", "hate speech"],
-    message: "Kill yourselves, fags!"
+    content: "Kill yourselves, fags!",
   },
   {
-    id: "9",
-    username: "DataDynamo",
+    reportId: "9",
+    userId: "DataDynamo",
     flags: ["spam", "harassment"],
-    message: "Join my MLM scheme and get rich quick!"
+    content: "Join my MLM scheme and get rich quick!",
   },
 ] as FlaggedUser[]);
 

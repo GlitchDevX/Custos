@@ -33,15 +33,41 @@ async function loadData() {
   loading.value = false;
 }
 
-const FlagsComponent = resolveComponent('UserFlags');
+const FlagsComponent = resolveComponent('PipelineContentFlags');
+const CheckboxComponent = resolveComponent('UCheckbox');
 const columns = [
   {
     accessorKey: 'reportId',
-    header: 'Report Id'
+    header: 'Report Id',
+    meta: {
+      class: {
+        th: 'max-w-20',
+        td: 'max-w-20 truncate'
+      }
+    }
   },
   {
     accessorKey: 'userId',
-    header: 'User Id'
+    header: 'User Id',
+    meta: {
+      class: {
+        th: 'max-w-20',
+        td: 'max-w-20 truncate'
+      }
+    }
+  },
+  {
+    accessorKey: 'falseReport',
+    header: 'False Report',
+    cell: ({ row }) => {
+      return h(CheckboxComponent, { modelValue: row.getValue<boolean>('falseReport'), class: 'pointer-events-none' })
+    },
+    meta: {
+      class: {
+        th: 'max-w-18',
+        td: 'max-w-18 truncate'
+      }
+    }
   },
   {
     accessorKey: 'flags',
@@ -54,6 +80,16 @@ const columns = [
   {
     accessorKey: 'content',
     header: 'Content'
+  },
+  {
+    accessorKey: 'reportedAt',
+    header: 'Reported At',
+    meta: {
+      class: {
+        th: 'max-w-24',
+        td: 'max-w-24 truncate'
+      }
+    }
   }
 ] as TableColumn<FlaggedContent>[]
 

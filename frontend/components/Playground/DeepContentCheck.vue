@@ -6,7 +6,7 @@
 
     <UCard>
       <div class="flex flex-row justify-between">
-        <UForm :state="{}" @submit="(_) => submitRequest()">
+        <UForm :state="{}" @submit="() => submitRequest()">
           <UFormField label="Content">
             <UTextarea v-model="content" class="min-w-lg" />
           </UFormField>
