@@ -1,3 +1,4 @@
+from datetime import datetime
 from .models.flagged_content import FlaggedContent
 from .models.reported_content import ReportedContent
 from .llm.prompt_builder import PromptBuilder
@@ -14,15 +15,20 @@ class Pipeline:
         self.prompt_builder = PromptBuilder()
 
     running = False
+    last_execution: datetime = None
     total_reports = 0
     processed_reports = 0
 
     def get_status(self):
+        time_string = "n/a"
+        if self.last_execution:
+            time_string = self.last_execution.strftime("%Y-%m-%d %H:%M:%S")
+
         return {
             "active": self.running,
             "total": self.total_reports,
             "processed": self.processed_reports,
-            "ratio": 0 if self.total_reports == 0 else self.processed_reports / self.total_reports
+            "lastExecution": time_string
         }
 
     def run(self):
@@ -31,6 +37,7 @@ class Pipeline:
         self.running = True
         self.total_reports = len(all_reports)
         self.processed_reports = 0
+        self.last_execution = datetime.now()
 
         results = list(map(self.process_content, all_reports))
 
