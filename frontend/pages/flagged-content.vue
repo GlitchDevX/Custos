@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
-import { FLAGGED_CONTENT } from '~/assets/ts/backendConnector';
+import { FLAGGED_CONTENT_PATH } from '~/assets/ts/backendConnector';
 import type { FlaggedUser as FlaggedContent } from '~/assets/types/flaggedContent';
 
 onMounted(() => {
@@ -23,7 +23,7 @@ const loading = ref(true);
 async function loadData() {
   loading.value = true;
 
-  const result = await $fetch<FlaggedContent[]>(FLAGGED_CONTENT);  
+  const result = await $fetch<FlaggedContent[]>(FLAGGED_CONTENT_PATH);  
   data.value = result;
   
   loading.value = false;

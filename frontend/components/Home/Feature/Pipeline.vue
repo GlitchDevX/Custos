@@ -16,7 +16,7 @@
 
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui';
-import type { FlaggedUser } from '~/assets/types/flaggedUsers';
+import type { FlaggedUser } from '~/assets/types/flaggedContent';
 
 const FlagsComponent = resolveComponent('UserFlags');
 

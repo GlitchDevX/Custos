@@ -13,7 +13,7 @@
           <UButton label="Submit" class="mt-4" type="submit" :loading="loading" />
         </UForm>
 
-        <UCollapsible v-model:open="showResponse" :arrow="true">
+        <UCollapsible v-model:open="showResponse" :arrow="true" class="group">
           <UButton
             block label="Show Response" variant="ghost" icon="lucide-chevron-down"
             :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
