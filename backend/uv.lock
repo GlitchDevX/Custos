@@ -54,7 +54,7 @@ requires-dist = [
     { name = "mysql-connector-python", specifier = ">=9.2.0" },
     { name = "pymysql", specifier = ">=1.1.1" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3.5" },
-    { name = "requests", specifier = ">=2.32.3" },
+    { name = "requests", marker = "extra == 'dev'", specifier = ">=2.32.3" },
 ]
 provides-extras = ["dev"]
 

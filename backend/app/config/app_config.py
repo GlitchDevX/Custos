@@ -1,7 +1,7 @@
 import os
 
 class BaseConfig:
-    DB_URI = os.environ.get("SQLALCHEMY_DATABASE_URI")
+    DB_URI = os.environ.get("DATABASE_URI")
     LLM_URI = "http://olama:11434"
 
 class DevConfig(BaseConfig):

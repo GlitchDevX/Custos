@@ -5,7 +5,7 @@ services:
     depends_on:
       - db
     environment:
-      SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
+      DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
   custos-ui:
     image: custos-ui:latest
     restart: always

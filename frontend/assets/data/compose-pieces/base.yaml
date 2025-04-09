@@ -5,4 +5,4 @@ services:
     depends_on:
       - db<<llm_dependency>>
     environment:
-      SQLALCHEMY_DATABASE_URI: 'mysql+pymysql://<<user>>:<<password>>@db/custos'
+      DATABASE_URI: 'mysql+pymysql://<<user>>:<<password>>@db/custos'

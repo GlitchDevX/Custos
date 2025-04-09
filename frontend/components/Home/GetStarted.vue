@@ -51,8 +51,6 @@ const compose = computed(() => {
     if (state.llm) {
       str += "\n" + ollama;
     }
-    else {
-    }
     str += "\n" + db;
 
     str = str.replaceAll('<<user>>', state.user);
