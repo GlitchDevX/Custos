@@ -51,9 +51,7 @@ const pipeline = await getConfig("pipeline");
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || contentCheck === undefined;
-  console.log(mailValidation);
-  console.log(contentCheck);
+  failed.value = mailValidation === undefined || contentCheck === undefined || pipeline === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");

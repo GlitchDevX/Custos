@@ -2,7 +2,7 @@
   <div class="px-4 pb-4">
     <EndpointSummary
       path="scheduled pipeline" title="Deep Content Check"
-      summary="This pipeline runs scheduled to flag user content with a deep understanding." />
+      summary="This executes the deep content check pipeline instantly to flag user content with a deep understanding. This is only intended for testing purposes." />
 
     <UCard>
       <div class="flex flex-row justify-between">
