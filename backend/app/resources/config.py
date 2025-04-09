@@ -14,6 +14,10 @@ get_parser.add_argument('namespace', type=str, required=True)
 
 @ns_config.route('/')
 class ConfigResource(Resource):
+    """
+    A resource class for managing configuration files.
+    This class provides endpoints to set and retrieve configuration settings.
+    """
     setter = ConfigSetter()
 
     @ns_config.expect(post_parser)

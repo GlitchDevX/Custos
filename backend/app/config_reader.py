@@ -2,6 +2,15 @@ import json
 from typing import List
 
 class ConfigReader:
+    """
+    A class to read and manage configuration settings from a JSON file.
+
+    Attributes:
+        namespace (str): The namespace used to identify the configuration file.
+        config (dict): The configuration settings loaded from the JSON file.
+
+    :param namespace (str): The namespace used to locate the configuration file.
+    """
 
     def __init__(self, namespace):
         self.namespace = namespace
