@@ -4,6 +4,7 @@ from sqlalchemy import Delete, Select, delete, select
 
 from app.models.flagged_content import FlaggedContent
 from app.utils.sqlalchemy_utils import SQLAlchemySingleton
+from app.utils.helpers import snake_to_camel_case
 
 
 class ResultConsumer:
@@ -42,9 +43,9 @@ class ResultConsumer:
             for key, value in row.__dict__.items():
                 if not key.startswith('_'):
                     if isinstance(value, datetime):
-                        obj[key] = value.strftime("%Y-%m-%d %H:%M:%S")
+                        obj[snake_to_camel_case(key)] = value.strftime("%Y-%m-%d %H:%M:%S")
                     else:
-                        obj[key] = value
+                        obj[snake_to_camel_case(key)] = value
             
             obj["flags"] = list(filter(lambda s: s != "", obj["flags"].split(',')))
             mapped_result.append(obj)
