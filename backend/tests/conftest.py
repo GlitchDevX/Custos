@@ -1,4 +1,4 @@
-from backend.app.flask_config import FlaskTstConfig
+from app.flask_config import FlaskTstConfig
 from app.app import FlaskApplication
 import pytest
 
