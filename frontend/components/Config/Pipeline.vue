@@ -2,7 +2,7 @@
     <ConfigLayout>
         <EndpointSummary
             path="scheduled pipeline" title="Pipeline Check"
-            summary="This endpoint is used to quickly verify or censor user-content by applying rules."
+            summary="This deep content check pipeline runs on a scheduled base to flag user content with a deep understanding."
         />
         <USwitch
             v-model="state.enabled"

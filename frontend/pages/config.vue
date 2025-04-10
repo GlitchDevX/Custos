@@ -38,7 +38,7 @@ const items: TabsItem[] = [
     slot: 'realtimeCheck'
   },
   {
-    label: 'Reported Pipeline Check',
+    label: 'Deep Content Check Pipeline',
     icon: 'lucide-workflow',
     slot: 'pipelineCheck'
   }
