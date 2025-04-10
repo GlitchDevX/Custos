@@ -1,5 +1,20 @@
+# Stage 1: Generate Static Files
+FROM node:lts-alpine AS builder
+
+COPY . .
+
+RUN npm ci
+
+RUN node -v | echo
+RUN npm -v | echo
+RUN export CI=true
+
+RUN npm run generate
+
+
+# Stage 2: Build Final Image
 FROM nginx:stable-alpine
 
-COPY .output/public /usr/share/nginx/html
+COPY --from=builder .output/public /usr/share/nginx/html
 
 EXPOSE 80
