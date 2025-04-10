@@ -5,10 +5,6 @@ COPY . .
 
 RUN npm ci
 
-RUN node -v | echo
-RUN npm -v | echo
-RUN export CI=true
-
 RUN npm run generate
 
 
