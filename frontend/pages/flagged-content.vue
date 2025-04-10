@@ -4,7 +4,13 @@
       Flagged Content Inbox
     </PageTitle>
     <div class="">
-      <UTable :data="data" :columns="columns" :loading="loading" class="mb-48"/>
+      <UTable :data="data" :columns="columns" :loading="loading" class="mb-48">
+        <template #empty>
+          <div v-if="endpointDisabled">
+            <h3>Endpoint disabled</h3>
+          </div>
+        </template>
+      </UTable>
     </div>
     <div class="relative w-full">
       <PipelineStatus class="fixed z-10 left-[2rem] bottom-[2rem]" style="width: calc(100% - 4rem)" @pipeline-state-changed="loadData" />
@@ -17,6 +23,7 @@ import type {TableColumn} from '@nuxt/ui';
 import {TITLE_SUFFIX} from '~/assets/data/appData';
 import {FLAGGED_CONTENT_PATH} from '~/assets/ts/backendConnector';
 import type {FlaggedContent} from '~/assets/types/flaggedContent';
+import type {ErrorResponse} from "assets/types/generic";
 
 onMounted(() => {
   loadData();
@@ -24,12 +31,17 @@ onMounted(() => {
 
 const data = ref<FlaggedContent[]>([]);
 const loading = ref(true);
+const endpointDisabled = ref(false)
 async function loadData() {
   loading.value = true;
 
-  data.value = await $fetch<FlaggedContent[]>(FLAGGED_CONTENT_PATH);
-  
+  const response = await $fetch<FlaggedContent[]|ErrorResponse>(FLAGGED_CONTENT_PATH, { ignoreResponseError: true });
   loading.value = false;
+  if (typeof response === 'object') {
+    endpointDisabled.value = (response as ErrorResponse).code === "ENDPOINT_DISABLED";
+    return;
+  }
+  data.value = response;
 }
 
 const FlagsComponent = resolveComponent('PipelineContentFlags');

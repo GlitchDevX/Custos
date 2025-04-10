@@ -2,7 +2,9 @@
 from datetime import date, datetime, timedelta
 from sqlalchemy import Delete, Select, delete, select
 
+from app.config_reader import ConfigReader
 from app.models.flagged_content import FlaggedContent
+from app.utils.common_responses import ENDPOINT_DISABLED
 from app.utils.sqlalchemy_utils import SQLAlchemySingleton
 from app.utils.helpers import snake_to_camel_case
 
@@ -10,7 +12,13 @@ from app.utils.helpers import snake_to_camel_case
 class ResultConsumer:
     db = SQLAlchemySingleton()
 
+    def __init__(self):
+        self.config = ConfigReader("pipeline")
+
     def consume_results(self, report_id: str, reported_at: date, processed_at: date, remove: bool):
+        if not self.config.get("enabled"):
+            return ENDPOINT_DISABLED
+
         select_query = select(FlaggedContent)
         select_query = self.apply_filters(select_query, report_id, reported_at, processed_at)
 
@@ -23,9 +31,10 @@ class ResultConsumer:
             self.db.session.commit()
         
         return self.map_result(result)
-    
+
     def apply_filters(self, query: Delete | Select, report_id: str, reported_at: date, processed_at: date):
         if report_id is not None:
+            # noinspection PyTypeChecker
             query = query.where(FlaggedContent.report_id == report_id)
         
         if reported_at is not None:
