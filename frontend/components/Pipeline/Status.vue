@@ -36,6 +36,8 @@
 <script lang="ts" setup>
 import { PIPELINE_PATH } from '~/assets/ts/backendConnector';
 
+const emit = defineEmits(["pipelineStateChanged"]);
+
 const status = reactive({
 	active: false,
 	total: 0,
@@ -51,6 +53,11 @@ const loading = ref(true);
 async function loadStatus() {
   loading.value = true;
   const result = await $fetch<any>(PIPELINE_PATH);
+
+  if (result.active !== status.active && result.active === false) {
+    emit("pipelineStateChanged");
+  }
+
   Object.assign(status, result);
   setTimeout(() => {
     loading.value = false

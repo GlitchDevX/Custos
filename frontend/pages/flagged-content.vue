@@ -7,16 +7,16 @@
       <UTable :data="data" :columns="columns" :loading="loading" class="mb-48"/>
     </div>
     <div class="relative w-full">
-      <PipelineStatus class="fixed z-10 left-[2rem] bottom-[2rem]" style="width: calc(100% - 4rem)" />
+      <PipelineStatus class="fixed z-10 left-[2rem] bottom-[2rem]" style="width: calc(100% - 4rem)" @pipeline-state-changed="loadData" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { TableColumn } from '@nuxt/ui';
-import { TITLE_SUFFIX } from '~/assets/data/appData';
-import { FLAGGED_CONTENT_PATH } from '~/assets/ts/backendConnector';
-import type { FlaggedContent } from '~/assets/types/flaggedContent';
+import type {TableColumn} from '@nuxt/ui';
+import {TITLE_SUFFIX} from '~/assets/data/appData';
+import {FLAGGED_CONTENT_PATH} from '~/assets/ts/backendConnector';
+import type {FlaggedContent} from '~/assets/types/flaggedContent';
 
 onMounted(() => {
   loadData();
@@ -27,8 +27,7 @@ const loading = ref(true);
 async function loadData() {
   loading.value = true;
 
-  const result = await $fetch<FlaggedContent[]>(FLAGGED_CONTENT_PATH);  
-  data.value = result;
+  data.value = await $fetch<FlaggedContent[]>(FLAGGED_CONTENT_PATH);
   
   loading.value = false;
 }
