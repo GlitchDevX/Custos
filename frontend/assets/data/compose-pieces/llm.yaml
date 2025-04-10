@@ -1,5 +1,6 @@
   ollama:
     image: ollama/ollama:latest
+    restart: always
     entrypoint:
       [ "/bin/bash", "-c", "ollama serve & sleep 5 && ollama pull gemma3:4b && wait" ]
     expose:
