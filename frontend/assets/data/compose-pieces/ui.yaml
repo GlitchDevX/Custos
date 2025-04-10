@@ -4,6 +4,6 @@
     depends_on:
       - custos
     ports:
-      - 3070:80
+      - "3070:80"
     expose:
       - 3070

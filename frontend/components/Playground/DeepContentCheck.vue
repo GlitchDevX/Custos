@@ -1,20 +1,21 @@
 <template>
   <div class="px-4 pb-4">
-    <EndpointSummary path="/validate-mail" title="Validate Mail"
-      summary="This endpoint is used to verify if an email is valid by using different techniques." />
+    <EndpointSummary
+      path="scheduled pipeline" title="Deep Content Check"
+      summary="This executes the deep content check pipeline instantly to flag user content with a deep understanding. This is only intended for testing purposes." />
 
     <UCard>
       <div class="flex flex-row justify-between">
-        <UForm :state="{}" @submit="(_) => submitRequest()">
-          <UFormField label="Email">
-            <UInput v-model="email" placeholder="jonas.ringeis@gmail.com" />
+        <UForm :state="{}" @submit="() => submitRequest()">
+          <UFormField label="Content">
+            <UTextarea v-model="content" class="min-w-lg" />
           </UFormField>
           <UButton label="Submit" class="mt-4" type="submit" :loading="loading" />
         </UForm>
 
         <UCollapsible v-model:open="showResponse" :arrow="true" class="group">
           <UButton
-            block label="Show Response" variant="ghost" leading-icon="lucide-chevron-down"
+            block label="Show Response" variant="ghost" icon="lucide-chevron-down"
             :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
           <template #content>
             <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />
@@ -26,22 +27,22 @@
 </template>
 
 <script lang="ts" setup>
-import { VALIDATE_MAIL_PATH } from '~/assets/ts/backendConnector';
+import { PIPELINE_PATH } from '~/assets/ts/backendConnector';
 const showResponse = ref(false);
 
 const response = ref({
   code: "",
   text: ""
 });
-const email = ref("");
+const content = ref("");
 const loading = ref(false);
 
 async function submitRequest() {
   loading.value = true;
   showResponse.value = false;
-  const result = await $fetch<object>(VALIDATE_MAIL_PATH, {
+  const result = await $fetch<object>(PIPELINE_PATH, {
     method: 'POST',
-    body: {'mail': email.value},
+    body: {'content': content.value},
     ignoreResponseError: true
   });
   

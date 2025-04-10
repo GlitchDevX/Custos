@@ -9,7 +9,7 @@ on:
 
 jobs:
   frontend:
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     defaults:
       run:
@@ -45,7 +45,7 @@ jobs:
       # possibly execute test later on
 
   backend-linting:
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -57,7 +57,7 @@ jobs:
           src: "./backend"
           
   backend-tests:
-    runs-on: [self-hosted, linux, x64]
+    runs-on: ubuntu-latest
     timeout-minutes: 30
     defaults:
       run:

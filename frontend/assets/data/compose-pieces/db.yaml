@@ -13,4 +13,4 @@
     volumes:
       - mysql:/var/lib/mysql
 volumes:
-  mysql:
+  mysql:<<llm_volume>>

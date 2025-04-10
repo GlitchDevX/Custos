@@ -1,10 +1,12 @@
 import json
 import requests
 
+from app.config import app_config
+
 class LlmAdapter:
 
-    def __init__(self, url="http://olama:11434/api/generate", model="gemma3:4b", format="json"):
-        self.url = url
+    def __init__(self, model="gemma3:4b", format="json"):
+        self.url = app_config.config.LLM_URI + "/api/generate"
         self.model = model
         self.format = format
 

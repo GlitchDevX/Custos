@@ -5,7 +5,7 @@
         <HomeFeatureRealtimeContent />
         <HomeFeaturePipeline />
         <HomeFeatureConfigurable/>
-        <HomeFeatureGetStarted />
+        <HomeGetStarted />
     </div>
 </template>
 

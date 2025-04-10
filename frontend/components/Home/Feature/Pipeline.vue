@@ -3,10 +3,10 @@
         <div class="w-3xl">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold flex flex-row gap-2 justify-start items-center">
-                    AI Powered Pipeline <UBadge label="Coming Soon" />
+                    AI Powered Pipeline
                 </h2>
                 <p class="muted-text">
-                    Deep content checks utilizing a combination of flexible LLMs and concrete rulesets to flag user-content.
+                    Deep content checks utilizing an LLM to flag user-content with a profound understanding.
                 </p>
             </div>
             <UTable :data="mockData" :columns="columns" />
@@ -16,45 +16,50 @@
 
 <script lang="ts" setup>
 import type { TableColumn } from '@nuxt/ui';
-import type { FlaggedUser } from '~/assets/types/flaggedUsers';
-
-const FlagsComponent = resolveComponent('UserFlags');
+import type { FlaggedContent } from '~/assets/types/flaggedContent';
 
 const mockData = reactive([
   {
-    id: "3",
-    username: "TechGuru",
-    flags: ["slurs"],
-    message: "You're all a bunch of worthless cunts."
+    userId: "TechGuru",
+    falseReport: false,
+    flags: ["profanity"],
+    content: "You're all a bunch of worthless cunts.",
   },
   {
-    id: "6",
-    username: "PixelArtist",
+    userId: "PixelArtist",
+    falseReport: false,
     flags: ["harassment"],
-    message: "I hope you all choke on your own vomit."
+    content: "I hope you all choke on your own vomit.",
   },
   {
-    id: "7",
-    username: "GamerPro",
-    flags: ["slurs", "hate speech"],
-    message: "Kill yourselves, fags!"
+    userId: "GamerPro",
+    falseReport: false,
+    flags: ["profanity", "harassment"],
+    content: "Kill yourselves, fags!",
   },
   {
-    id: "9",
-    username: "DataDynamo",
-    flags: ["spam", "harassment"],
-    message: "Join my MLM scheme and get rich quick!"
+    userId: "DataDynamo",
+    falseReport: false,
+    flags: ["spam", "misinformation"],
+    content: "Join my MLM scheme and get rich quick!",
   },
-] as FlaggedUser[]);
+] as FlaggedContent[]);
 
+const FlagsComponent = resolveComponent('PipelineContentFlags');
+const CheckboxComponent = resolveComponent('UCheckbox');
 const columns = [
   {
-    accessorKey: 'id',
-    header: 'Id'
+    accessorKey: 'userId',
+    header: 'User Id',
+    meta: { class: { th: 'max-w-28', td: 'max-w-28 truncate' } }
   },
   {
-    accessorKey: 'username',
-    header: 'Username'
+    accessorKey: 'falseReport',
+    header: 'False Report',
+    cell: ({ row }) => {
+      return h(CheckboxComponent, { modelValue: row.getValue<boolean>('falseReport'), class: 'pointer-events-none' })
+    },
+    meta: { class: { th: 'max-w-18', td: 'max-w-18 truncate' } }
   },
   {
     accessorKey: 'flags',
@@ -65,10 +70,11 @@ const columns = [
     }
   },
   {
-    accessorKey: 'message',
-    header: 'Message'
-  }
-] as TableColumn<FlaggedUser>[]
+    accessorKey: 'content',
+    header: 'Content'
+  },
+] as TableColumn<FlaggedContent>[]
+
 
 
 </script>

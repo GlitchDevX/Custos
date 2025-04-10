@@ -10,7 +10,7 @@
         <ConfigRealtime :config="(contentCheck as object)" @submit="submitConfig" />
       </template>
       <template #pipelineCheck>
-        <ConfigPipeline />
+        <ConfigPipeline :config="(pipeline as object)" @submit="submitConfig"/>
       </template>
     </UTabs>
   </div>
@@ -38,7 +38,7 @@ const items: TabsItem[] = [
     slot: 'realtimeCheck'
   },
   {
-    label: 'Reported Pipeline Check',
+    label: 'Deep Content Check Pipeline',
     icon: 'lucide-workflow',
     slot: 'pipelineCheck'
   }
@@ -46,13 +46,12 @@ const items: TabsItem[] = [
 
 const mailValidation = await getConfig("mail_validation");
 const contentCheck = await getConfig("content_check");
+const pipeline = await getConfig("pipeline");
 
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || contentCheck === undefined;
-  console.log(mailValidation);
-  console.log(contentCheck);
+  failed.value = mailValidation === undefined || contentCheck === undefined || pipeline === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");

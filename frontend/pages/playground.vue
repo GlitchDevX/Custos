@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 flex gap-4 flex-col">
+  <div class="py-4 px-8 flex gap-4 flex-col">
     <PageTitle>Endpoint Playground</PageTitle>
     <UAccordion v-model="active" :items="endpoints" :unmountOnHide="false">
       <template #mailValidation>
@@ -8,8 +8,11 @@
       <template #realtimeContent>
         <PlaygroundRealtimeContentCheck />
       </template>
-      <template #pipelineCheck>
-        <UAlert color="warning" title="Not implemented" icon="lucide-triangle-alert" />
+      <template #deepCheck>
+        <PlaygroundDeepContentCheck />
+      </template>
+      <template #pipeline>
+        <PlaygroundPipeline />
       </template>
     </UAccordion>
   </div>
@@ -36,9 +39,14 @@ const endpoints = [
     slot: 'realtimeContent'
   },
   {
-    label: 'Pipeline Check',
+    label: 'Deep Content Check',
+    icon: 'lucide-brain-circuit',
+    slot: 'deepCheck'
+  },
+  {
+    label: 'Pipeline Interaction',
     icon: 'lucide-workflow',
-    slot: 'pipelineCheck'
+    slot: 'pipeline'
   }
 ] as AccordionItem[];
 </script>

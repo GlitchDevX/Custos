@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api
+
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
