@@ -1,13 +1,18 @@
 group "default" {
-  targets = [ "ui" ]
+    targets = [ "backend", "frontend" ]
 }
 
 variable "TAG" {
     default = "latest"
 }
 
-target "ui" {
-  context = "."
-  dockerfile = "frontend/Dockerfile"
-  tags = ["glitchdevx/custos-ui:${TAG}"]
+target "backend" {
+    context = "backend"
+    dockerfile = "Dockerfile"
+    tags = ["glitchdevx/custos:${TAG}"]
+}
+target "frontend" {
+    context = "frontend"
+    dockerfile = "Dockerfile"
+    tags = ["glitchdevx/custos-ui:${TAG}"]
 }
