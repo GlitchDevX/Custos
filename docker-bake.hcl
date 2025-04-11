@@ -2,7 +2,7 @@ group "default" {
     targets = [ "backend-latest", "backend-version", "frontend-latest", "frontend-version" ]
 }
 group "backend" {
-    targets = [ "backend-version", "backend-latest" ]
+    targets = [ "backend-latest", "backend-version" ]
 }
 group "frontend" {
     targets = [ "frontend-latest", "frontend-version" ]

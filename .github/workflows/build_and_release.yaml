@@ -103,7 +103,8 @@ jobs:
         with:
           targets: frontend
           push: true
-          pull: true
+          pull: false
+          no-cache: 'true'
 
   release:
     runs-on: ubuntu-latest
