@@ -51,8 +51,8 @@ jobs:
         uses: docker/bake-action@v6
         env:
           CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
+        working-directory: /
         with:
-          workdir: ../
           targets: backend
           push: true
           pull: true
@@ -101,10 +101,10 @@ jobs:
 
       - name: Build and push
         uses: docker/bake-action@v6
+        working-directory: /
         env:
           CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
         with:
-          workdir: ../
           targets: frontend
           push: true
           pull: true
