@@ -113,8 +113,8 @@ jobs:
         env:
           CUSTOS_TAG: debuggin
         run: |
-          docker buildx bake frontend
-          docker run glitchdevx/custos-ui:debuggin
+          docker buildx bake frontend --load
+          docker run glitchdevx/custos-ui:latest
 
       - name: Build and push
         uses: docker/bake-action@v6
