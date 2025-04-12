@@ -106,7 +106,7 @@ jobs:
       - name: Debugging :)
         run: |
           cd frontend
-          docker build test-image .
+          docker build -t test-image .
           docker run test-image
 
       - name: Build and push
