@@ -95,6 +95,10 @@ jobs:
         run: |
           cd frontend
           npm run generate
+          ls -a
+
+      - name: List dirs (Debugging)
+        run: ls -a
 
       - name: Build and push
         uses: docker/bake-action@v6
