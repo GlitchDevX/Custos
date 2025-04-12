@@ -86,6 +86,7 @@ jobs:
         run: |
           cd frontend
           npm run generate
+          cp -r .output/public static-html
           ls -a
 
       - name: List dirs (Debugging)
