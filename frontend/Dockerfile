@@ -13,7 +13,7 @@
 FROM alpine
 
 COPY . .
-ENTRYPOINT pwd && ls
+ENTRYPOINT pwd && ls -a
 
 #COPY --from=builder .output/public /usr/share/nginx/html
 #COPY .output/public /usr/share/nginx/html
