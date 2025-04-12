@@ -122,6 +122,7 @@ jobs:
           CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
         with:
           targets: frontend
+          load: true
           push: false
           pull: false
           no-cache: 'true'
