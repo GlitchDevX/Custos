@@ -12,7 +12,7 @@
 #FROM nginx:stable-alpine
 FROM alpine
 
-COPY . .
+COPY --link . .
 ENTRYPOINT pwd && ls -a
 
 #COPY --from=builder .output/public /usr/share/nginx/html

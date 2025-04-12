@@ -98,7 +98,9 @@ jobs:
           ls -a
 
       - name: List dirs (Debugging)
-        run: ls -a
+        run: |
+          cd frontend
+          ls -a
 
       - name: Build and push
         uses: docker/bake-action@v6
