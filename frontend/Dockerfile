@@ -9,9 +9,12 @@
 
 
 # Stage 2: Build Final Image
-FROM nginx:stable-alpine
+#FROM nginx:stable-alpine
+FROM alpine
+
+ENTRYPOINT pwd && ls
 
 #COPY --from=builder .output/public /usr/share/nginx/html
-COPY .output/public /usr/share/nginx/html
-
-EXPOSE 80
+#COPY .output/public /usr/share/nginx/html
+#
+#EXPOSE 80
