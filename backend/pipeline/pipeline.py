@@ -1,6 +1,7 @@
 from datetime import datetime
-from .models.flagged_content import FlaggedContent
-from .models.reported_content import ReportedContent
+
+from app.models.flagged_content import FlaggedContent
+from app.models.reported_content import ReportedContent
 from .llm.prompt_builder import PromptBuilder
 from .llm.llm_adapter import LlmAdapter
 from .llm.schemas import ReportAnalysis, report_analysis_schema

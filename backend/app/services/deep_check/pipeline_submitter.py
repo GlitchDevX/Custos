@@ -1,4 +1,5 @@
 import threading
+from multiprocessing import Process
 from app.models.reported_content import ReportedContent
 from app.utils.singleton_meta import SingletonMeta
 from pipeline.pipeline import Pipeline
@@ -19,8 +20,9 @@ class PipelineSubmitter(metaclass=SingletonMeta):
         
         if self.pipeline.running:
             return { "code": "ALREADY_RUNNING", "text": "The Pipeline is already running." }, 409
-        
-        threading.Thread(target=self.pipeline.run).start()
+
+        Process(target=self.pipeline.run).start()
+
         return { "code": "OK" }
 
     def check_content_instant(self, content: str):
