@@ -2,8 +2,11 @@ services:
   custos:
     image: glitchdevx/custos:latest
     restart: always
+    ports:
+      - "5365:5365/tcp"
     depends_on:
       - db
+      - ollama
     environment:
       DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
   custos-ui:
@@ -12,18 +15,16 @@ services:
     depends_on:
       - custos
     ports:
-      - "3070:80"
-    expose:
-      - 3070
+      - "3000:80/tcp"
   ollama:
     image: ollama/ollama:latest
     restart: always
     entrypoint:
       [ "/bin/bash", "-c", "ollama serve & sleep 5 && ollama pull gemma3:4b && wait" ]
+    ports: # required for dev
+      - "5375:11434/tcp"
     expose:
-      - 11434/tcp
-    ports:
-      - "11434:11434/tcp"
+      - "5375:11434/tcp"
     healthcheck:
       test: ollama --version || exit 1
     volumes:
@@ -36,10 +37,10 @@ services:
       MYSQL_USER: 'user'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - '3306:3306'
-    expose:
-      - '3306'
+    ports: # required for dev
+      - '5385:3306'
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
     volumes:
       - mysql:/var/lib/mysql
 volumes:

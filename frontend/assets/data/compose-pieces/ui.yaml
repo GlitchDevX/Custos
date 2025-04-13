@@ -5,5 +5,3 @@
       - custos
     ports:
       - "3070:80"
-    expose:
-      - 3070

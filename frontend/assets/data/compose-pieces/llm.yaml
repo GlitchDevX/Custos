@@ -3,10 +3,10 @@
     restart: always
     entrypoint:
       [ "/bin/bash", "-c", "ollama serve & sleep 5 && ollama pull gemma3:4b && wait" ]
+    ports: # required for dev
+      - "5375:11434/tcp"
     expose:
-      - 11434/tcp
-    ports:
-      - "11434:11434/tcp"
+      - "5375:11434/tcp"
     healthcheck:
       test: ollama --version || exit 1
     volumes:

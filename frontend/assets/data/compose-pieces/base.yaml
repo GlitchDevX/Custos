@@ -2,6 +2,8 @@ services:
   custos:
     image: custos:latest
     restart: always
+    ports:
+      - "5365:5365/tcp"
     depends_on:
       - db<<llm_dependency>>
     environment:
