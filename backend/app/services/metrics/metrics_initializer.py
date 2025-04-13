@@ -33,8 +33,6 @@ class MetricsManager:
             for row in session.execute(select(Metric.metric_name, Metric.index)):
                 all_db_metrics[row[0]] = row[1]
 
-            print(all_db_metrics)
-
             for index, metric in enumerate(ALL_METRICS):
                 if metric not in all_db_metrics.keys():
                     metric_entry = Metric(metric_name=metric, index=index, data=0)

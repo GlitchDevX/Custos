@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from app.models.flagged_content import FlaggedContent
+from app.models.metric import Metric
 from app.models.reported_content import ReportedContent
 from .llm.prompt_builder import PromptBuilder
 from .llm.llm_adapter import LlmAdapter
@@ -59,6 +60,7 @@ class Pipeline:
         valid_flags = ["SPAM", "PROFANITY", "HARASSMENT", "MISINFORMATION", "OTHER"]
         flags = filter(lambda f: f in valid_flags, response["tags"])
         joined_flags = ",".join(flags)
+        false_report = joined_flags == "" or joined_flags == "OTHER"
         
         print(f"Response: {response}\n")
 
@@ -66,7 +68,11 @@ class Pipeline:
         for (key, value) in filter(lambda i: not i[0].startswith('_'), report.__dict__.items()):
             result.__dict__[key] = value
         result.flags = joined_flags
-        result.false_report = joined_flags == "" or joined_flags == "OTHER"
-        
+        result.false_report = false_report
+
+        self.db.increase_metric(f"PIPELINE_EXECUTED_CHECK")
+        if false_report:
+            self.db.increase_metric(f"PIPELINE_FALSE_REPORT")
+
         self.processed_reports += 1
         return result
