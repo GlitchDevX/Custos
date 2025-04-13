@@ -1,13 +1,13 @@
 services:
   custos:
-    image: custos:latest
+    image: glitchdevx/custos:latest
     restart: always
     depends_on:
       - db
     environment:
       DATABASE_URI: 'mysql+pymysql://user:password@db/custos'
   custos-ui:
-    image: custos-ui:latest
+    image: glitchdevx/custos-ui:latest
     restart: always
     depends_on:
       - custos
