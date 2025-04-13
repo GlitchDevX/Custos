@@ -20,7 +20,6 @@ class FlaskApplication:
 
     Attributes:
         db (SQLAlchemySingleton): Singleton instance for database management.
-        METRICS (list): A list of predefined metrics for monitoring mail and content checks.
         flask_app (Flask): The Flask application instance.
         
     :param config (Config): Configuration object containing application settings such as HOST, PORT, and DEBUG.
@@ -32,8 +31,8 @@ class FlaskApplication:
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
         CORS(self.flask_app, origins="*")
-        api = Api(self.flask_app, version='0.1.0-dev', title='Custos',
-                  description='A RESTful api for user content management')
+        api = Api(self.flask_app, version='1.0.0', title='Custos',
+                  description='Modular user-content management system written in Python.')
 
         api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
