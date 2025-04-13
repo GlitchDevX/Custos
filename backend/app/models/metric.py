@@ -7,6 +7,7 @@ class Metric(db.Model):
     __tablename__ = 'metrics'
     
     metric_name = Column(String(50), primary_key=True)
+    index = Column(Integer)
     data = Column(Integer)
 
     def filter_state(self):
@@ -15,7 +16,8 @@ class Metric(db.Model):
     
     @staticmethod
     def increase(metric_name):
-        metric = Metric.query.filter_by(metric_name=metric_name).first()
-        if metric:
-            metric.data += 1
-            db.session.commit()
+        with db.session() as session:
+            metric = Metric.query.filter_by(metric_name=metric_name).first()
+            if metric:
+                metric.data += 1
+                session.commit()
