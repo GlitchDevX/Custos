@@ -8,11 +8,27 @@ from typing import List
 
 class ProfanityList(metaclass=SingletonMeta):
     profanities = List[str]
+    _file_path = "data/profanity_words.json"
 
     def __init__(self):
-        response = urllib.request.urlopen("https://raw.githubusercontent.com/zacanger/profane-words/refs/heads/master/words.json")
-        raw_data = response.read().decode('utf-8')
-        self.profanities = json.loads(raw_data)
+        raw_json: str
+        try:
+            response = urllib.request.urlopen("https://raw.githubusercontent.com/zacanger/profane-words/refs/heads/master/words.json")
+            raw_json = response.read().decode('utf-8')
+            self._update_file(raw_json)
+        except:
+            print("Failed to get newest blocked words, will read from file")
+            raw_json = self._read_file()
+
+        self.profanities = json.loads(raw_json)
+
+    def _read_file(self):
+        with open(self._file_path) as file:
+            return file.read()
+
+    def _update_file(self, domains_raw):
+        with open(self._file_path, "w") as file:
+            file.write(domains_raw)
 
 class BlockedWordsContentChecker(ContentCheckModule):
     flag_name = "blocked_word"
