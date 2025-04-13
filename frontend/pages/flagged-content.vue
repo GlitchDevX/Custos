@@ -37,11 +37,12 @@ async function loadData() {
 
   const response = await $fetch<FlaggedContent[]|ErrorResponse>(FLAGGED_CONTENT_PATH, { ignoreResponseError: true });
   loading.value = false;
-  if (typeof response === 'object') {
-    endpointDisabled.value = (response as ErrorResponse).code === "ENDPOINT_DISABLED";
-    return;
+  if (Array.isArray(response)) {
+    data.value = response;
   }
-  data.value = response;
+  else {
+    endpointDisabled.value = (response as ErrorResponse).code === "ENDPOINT_DISABLED";
+  }
 }
 
 const FlagsComponent = resolveComponent('PipelineContentFlags');
