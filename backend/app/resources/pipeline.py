@@ -13,14 +13,18 @@ post_parser.add_argument('content', type=str, required=True, location='json')
 
 @ns_pipeline.route('/')
 class FlaggedContentResource(Resource):
-    
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.submitter = PipelineSubmitter()
+
     def put(self):
-        return PipelineSubmitter().run_pipeline()
+        return self.submitter.run_pipeline()
 
     def get(self):
-        return PipelineSubmitter().get_status()
+        return self.submitter.get_status()
 
     def post(self):
         post_parser.parse_args(request, strict=True)
         content = request.json["content"]
-        return PipelineSubmitter().check_content_instant(content)
+        return self.submitter.check_content_instant(content)
