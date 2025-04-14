@@ -115,15 +115,16 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.get-version-tag.outputs.tag }}
-          append_body: |
-            ## Images
+          append_body: true
+          body: |
+            ## Images on Dockerhub
 
             ### [Backend](https://hub.docker.com/repository/docker/glitchdevx/custos/general)
             ```bash
-            docker pull glitchdevx/custos
+            docker pull glitchdevx/custos:${{ needs.get-version-tag.outputs.tag }}
             ```
 
             ### [Frontend](https://hub.docker.com/repository/docker/glitchdevx/custos-ui/general)
             ```bash
-            docker pull glitchdevx/custos-ui
+            docker pull glitchdevx/custos-ui:${{ needs.get-version-tag.outputs.tag }}
             ```
