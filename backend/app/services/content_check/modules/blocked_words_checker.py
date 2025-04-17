@@ -16,18 +16,18 @@ class ProfanityList(metaclass=SingletonMeta):
             response = urllib.request.urlopen("https://raw.githubusercontent.com/zacanger/profane-words/refs/heads/master/words.json")
             raw_json = response.read().decode('utf-8')
             self._update_file(raw_json)
-        except:
-            print("Failed to get newest blocked words, will read from file")
+        except Exception as err:
+            print("Failed to get newest blocked words, will read from file\nException:", err)
             raw_json = self._read_file()
 
         self.profanities = json.loads(raw_json)
 
     def _read_file(self):
-        with open(self._file_path) as file:
+        with open(self._file_path, encoding="utf-8") as file:
             return file.read()
 
     def _update_file(self, domains_raw):
-        with open(self._file_path, "w") as file:
+        with open(self._file_path, "w", encoding="utf-8") as file:
             file.write(domains_raw)
 
 class BlockedWordsContentChecker(ContentCheckModule):
