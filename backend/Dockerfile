@@ -1,8 +1,8 @@
 FROM python:3.13-slim
 
-WORKDIR /app
+WORKDIR /
 
-COPY . .
+COPY --exclude=./.venv . .
 
 RUN pip install --no-cache-dir uv
 RUN uv sync
