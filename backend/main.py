@@ -1,8 +1,11 @@
 import argparse
+import atexit
+
 from app.app import FlaskApplication
 from app.config.flask_config import FlaskDevConfig, FlaskTstConfig, FlaskPrdConfig
 from app.config.app_config import DevConfig, PrdConfig, TstConfig
 from app.config import app_config
+from app.utils.scheduler_wrapper import scheduler
 
 flask_configs = {
     "dev": FlaskDevConfig,
@@ -14,6 +17,8 @@ app_configs = {
     "tst": TstConfig,
     "prd": PrdConfig,
 }
+
+atexit.register(lambda: scheduler.shutdown())
 
 def run(config):
     FlaskApplication(config)

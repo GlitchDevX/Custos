@@ -12,13 +12,28 @@
             size="xl" class="pb-8"
         />
 
-        <!-- <div>
+        <div :class="{'low-opacity': !state.enabled}">
             <FeatureToggle
-                v-model="state.check"
-                title="Some Check"
-                description="Placeholder description. Yoyoyo."
+                v-model="state.scheduledExecution"
+                title="Scheduled Execution"
+                description="Execute the pipeline on a scheduled base."
             />
-        </div> -->
+
+            <UFormField
+                label="Execution Interval"
+                size="xl" class="pt-8"
+                :class="{'low-opacity': !state.scheduledExecution}"
+            >
+                <p class="muted-text">
+                    Amount of hours between the execution of the pipeline.
+                </p>
+                <UInputNumber
+                    v-model="state.executionIntervalHours"
+                    size="lg" :step="0.5" :min="0.5"
+                    class="mt-1 w-32"
+                />
+            </UFormField>
+        </div>
         <UButton label="Save" size="lg" class="mt-8" @click="submitConfig" />
     </ConfigLayout>
 </template>
@@ -38,17 +53,18 @@ const props = defineProps({
 
 const state = reactive({
     enabled: true,
-    // check: true
+    scheduledExecution: true,
+    executionIntervalHours: 1,
 });
 
 onBeforeMount(() => {
     Object.assign(state, props.config);
-    // state.validFlags = props.config["blockedWords"].join(', ');
+    // state.validFlags = props.config["validFlags"].join(', ');
 });
 
 async function submitConfig() {
     const bodyState = { ...state } as ConfigBody;
-    // bodyState.blockedWords = state.blockedWords.split(', ').map(s => s.trim()).filter(s => s.length > 0);
+    // bodyState.validFlags = state.validFlags.split(', ').map(s => s.trim()).filter(s => s.length > 0);
 
     emit("submit", bodyState, 'pipeline');
 }

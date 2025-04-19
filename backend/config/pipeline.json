@@ -1,4 +1,5 @@
 {
     "enabled": true,
-    "validFlags": []
+    "executionIntervalHours": 0.5,
+    "scheduledExecution": true
 }
