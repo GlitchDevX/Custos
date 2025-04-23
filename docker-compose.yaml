@@ -24,7 +24,7 @@ services:
     ports: # required for dev
       - "5375:11434/tcp"
     expose:
-      - "5375:11434/tcp"
+      - "11434"
     healthcheck:
       test: ollama --version || exit 1
     volumes:
@@ -39,6 +39,8 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
     ports: # required for dev
       - '5385:3306'
+    expose:
+      - '3306'
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
     volumes:
