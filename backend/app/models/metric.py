@@ -1,3 +1,5 @@
+import logging
+
 from ..utils.sqlalchemy_utils import SQLAlchemySingleton
 from sqlalchemy import Column, String, Integer
 
@@ -21,3 +23,5 @@ class Metric(db.Model):
             if metric:
                 metric.data += 1
                 session.commit()
+            else:
+                logging.warning(f"Tried to increase metric with name '{metric_name}', but it does not exist.")
