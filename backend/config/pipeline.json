@@ -1,5 +1,5 @@
 {
     "enabled": true,
-    "executionIntervalHours": 0.5,
+    "executionIntervalHours": 1,
     "scheduledExecution": true
 }
