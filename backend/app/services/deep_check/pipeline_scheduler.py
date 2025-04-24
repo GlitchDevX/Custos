@@ -8,9 +8,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 class PipelineScheduler:
     def __init__(self):
+        self.config = ConfigReader("pipeline", self.reschedule_pipeline)
+
         self.scheduler = BackgroundScheduler(daemon=True)
         self.pipeline_submitter = PipelineSubmitter()
-        self.config = ConfigReader("pipeline", self.reschedule_pipeline)
 
         self.schedule_pipeline()
         atexit.register(self.scheduler.shutdown)
@@ -20,6 +21,9 @@ class PipelineScheduler:
         self.schedule_pipeline()
 
     def schedule_pipeline(self):
+        if not self.config.get("scheduledExecution"):
+            return
+
         interval_hours = self.config.get("executionIntervalHours")
         self.scheduler.add_job(self.pipeline_submitter.run_pipeline, "interval", hours=interval_hours)
         self.scheduler.start()
