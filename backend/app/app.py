@@ -1,3 +1,4 @@
+import werkzeug.serving
 from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api
@@ -10,7 +11,7 @@ from .resources.content_check import ns_content_check
 from .resources.report_content import ns_report
 from .resources.flagged_content import ns_flagged
 from .resources.pipeline import ns_pipeline
-from .services.deep_check.pipeline_submitter import PipelineSubmitter
+from .services.deep_check.pipeline_scheduler import PipelineScheduler
 from .utils.sqlalchemy_utils import SQLAlchemySingleton
 
 # Imports to generate tables
@@ -29,7 +30,6 @@ class FlaskApplication:
     def __init__(self, config):
         self.db = SQLAlchemySingleton()
         self.metrics = MetricsManager(self.db)
-        PipelineSubmitter()
 
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
@@ -50,6 +50,10 @@ class FlaskApplication:
         with self.flask_app.app_context():
             self.db.create_all()
             self.metrics.create_all()
+
+            if not self.flask_app.debug or self.flask_app.debug and werkzeug.serving.is_running_from_reloader():
+                # init one time calls per application run
+                PipelineScheduler()
 
         if not self.flask_app.config["TESTING"]:
             self.flask_app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
