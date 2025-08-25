@@ -41,7 +41,7 @@ class TopLevelDomainList(metaclass=SingletonMeta):
 class URLContentChecker(ContentCheckModule):
     domain_checker = TopLevelDomainList()
     flag_name = "contains_url"
-    pattern = re.compile("((http://|https://)?(www.)?(([a-zA-Z0-9-]){2,}\.){1,4}([a-zA-Z]){2,6}(/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)",
+    pattern = re.compile("((http://|https://)?(www.)?(([a-zA-Z0-9-])+\.){1,4}([a-zA-Z]){2,6}(/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)",
         re.IGNORECASE,
     )
 
