@@ -41,18 +41,19 @@ class TopLevelDomainList(metaclass=SingletonMeta):
 class URLContentChecker(ContentCheckModule):
     domain_checker = TopLevelDomainList()
     flag_name = "contains_url"
-    pattern = re.compile("((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){1,}\.){1,127}([a-zA-Z]){2,6}(\/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)",
+    pattern = re.compile("((http:\/\/|https:\/\/)?(www.)?(([a-zA-Z0-9-]){1,}\.){1,127}(?P<domain_ending>[a-zA-Z]{2,6})(\/([a-zA-Z-_/.0-9#:?=&;,]*)?)?)",
         re.IGNORECASE,
     )
 
     def execute_check(self, content, **kwargs):
         censored_content = content
         has_url = False
-        matches = self.pattern.findall(content)
+        matches = self.pattern.finditer(content)
         for m in matches:
-            matched_parts = m[0].rsplit(".", 1)
-            if matched_parts[-1] in self.domain_checker.top_level_domains:
-                censored_content = re.sub(re.escape(m[0]), '*' * len(m[0]), censored_content)
+            groups = m.groupdict()
+            domain_ending = groups['domain_ending']
+            if domain_ending in self.domain_checker.top_level_domains:                
+                censored_content = ('*' * len(m[0])).join([censored_content[:m.span()[0]], censored_content[m.span()[1]:]])
                 has_url = True
 
         if has_url:
