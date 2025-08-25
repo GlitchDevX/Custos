@@ -4,7 +4,7 @@ Custos is a User Content Moderation System which aims to prevent spam and helps 
 It consists of three parts. A Web UI to manage the application and check flagged users.
 An API where user content can be checked in real time. And a pipeline to flag reported user messages with the power of an LLM.
 
-The tech stack is `Python` with `Flask` and `Nuxt`.
+The tech stack is `Python` with `Flask` for the backend and `Nuxt` using the `Nuxt UI` component library for the frontend.
 
 ## Local Development
 To develop locally, see the individual readmes in the [frontend](frontend/README.md#local-setup) and [backend](frontend/README.md#local-setup).
