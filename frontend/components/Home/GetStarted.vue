@@ -16,7 +16,6 @@
                         Configure Compose
                     </span>
                     <USwitch v-model="state.ui" label="User Interface" class="mt-4" />
-                    <USwitch v-model="state.llm " label="LLM Pipeline" class="mt-4" />
                     <UFormField label="Database Username" class="mt-4">
                         <UInput v-model="state.user" />
                     </UFormField>
@@ -33,12 +32,10 @@
 <script lang="ts" setup>
 import base from '~/assets/data/compose-pieces/base.yaml?raw';
 import ui from '~/assets/data/compose-pieces/ui.yaml?raw';
-import ollama from '~/assets/data/compose-pieces/llm.yaml?raw';
 import db from '~/assets/data/compose-pieces/db.yaml?raw';
 
 const state = reactive({
     ui: true,
-    llm: true,
     user: "custos_user",
     password: ""
 });
@@ -48,22 +45,10 @@ const compose = computed(() => {
     if (state.ui) {
         str += "\n" + ui;
     }
-    if (state.llm) {
-      str += "\n" + ollama;
-    }
     str += "\n" + db;
 
     str = str.replaceAll('<<user>>', state.user);
     str = str.replaceAll('<<password>>', state.password);
-
-    if (state.llm) {
-      str = str.replaceAll('<<llm_dependency>>', '\n      - ollama');
-      str = str.replaceAll('<<llm_volume>>', '\n  ollama:');
-    }
-    else {
-      str = str.replaceAll('<<llm_dependency>>', '');
-      str = str.replaceAll('<<llm_volume>>', '');
-    }
 
     return str;
 })

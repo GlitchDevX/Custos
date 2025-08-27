@@ -24,7 +24,7 @@ const coloredFlags = computed(() => {
       "profanity": 'error' as const,
       "other": 'neutral' as const,
     }[f] ?? 'error';
-    
+
     return {flag: f, color: x}
   });
 })

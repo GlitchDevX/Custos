@@ -8,12 +8,6 @@
       <template #realtimeContent>
         <PlaygroundRealtimeContentCheck />
       </template>
-      <template #deepCheck>
-        <PlaygroundDeepContentCheck />
-      </template>
-      <template #pipeline>
-        <PlaygroundPipeline />
-      </template>
     </UAccordion>
   </div>
 </template>
@@ -38,16 +32,6 @@ const endpoints = [
     icon: 'lucide-clock',
     slot: 'realtimeContent'
   },
-  {
-    label: 'Deep Content Check',
-    icon: 'lucide-brain-circuit',
-    slot: 'deepCheck'
-  },
-  {
-    label: 'Pipeline Interaction',
-    icon: 'lucide-workflow',
-    slot: 'pipeline'
-  }
 ] as AccordionItem[];
 </script>
 

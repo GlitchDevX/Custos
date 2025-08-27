@@ -30,11 +30,6 @@ const navigationItems = ref<NavigationMenuItem[]>([
     to: '/playground'
   },
   {
-    label: 'Flagged Content',
-    icon: 'lucide-flag',
-    to: '/flagged-content'
-  },
-  {
     label: 'Configuration',
     icon: 'lucide-settings',
     to: '/config'
