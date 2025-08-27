@@ -9,9 +9,6 @@
       <template #realtimeCheck>
         <ConfigRealtime :config="(contentCheck as object)" @submit="submitConfig" />
       </template>
-      <template #pipelineCheck>
-        <ConfigPipeline :config="(pipeline as object)" @submit="submitConfig"/>
-      </template>
     </UTabs>
   </div>
 </template>
@@ -36,22 +33,16 @@ const items: TabsItem[] = [
     label: 'Realtime Content Check',
     icon: 'lucide-clock',
     slot: 'realtimeCheck'
-  },
-  {
-    label: 'Deep Content Check Pipeline',
-    icon: 'lucide-workflow',
-    slot: 'pipelineCheck'
   }
 ];
 
 const mailValidation = await getConfig("mail_validation");
 const contentCheck = await getConfig("content_check");
-const pipeline = await getConfig("pipeline");
 
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || contentCheck === undefined || pipeline === undefined;
+  failed.value = mailValidation === undefined || contentCheck === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");

@@ -3,7 +3,7 @@
         <HomeHero />
         <HomeFeatureMailValidation />
         <HomeFeatureRealtimeContent />
-        <HomeFeaturePipeline />
+        <HomeFeatureDeepCheck />
         <HomeFeatureConfigurable/>
         <HomeGetStarted />
     </div>

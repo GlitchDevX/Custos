@@ -3,10 +3,10 @@
         <div class="w-3xl">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold flex flex-row gap-2 justify-start items-center">
-                    AI Powered Pipeline
+                    AI Powered Analysis
                 </h2>
                 <p class="muted-text">
-                    Deep content checks utilizing an LLM to flag user-content with a profound understanding.
+                    Deep content checks utilizing a neuronal network built to flag user-content with a profound understanding.
                 </p>
             </div>
             <UTable :data="mockData" :columns="columns" />
@@ -45,7 +45,7 @@ const mockData = reactive([
   },
 ] as FlaggedContent[]);
 
-const FlagsComponent = resolveComponent('PipelineContentFlags');
+const FlagsComponent = resolveComponent('ContentFlag');
 const CheckboxComponent = resolveComponent('UCheckbox');
 const columns = [
   {
