@@ -1,9 +1,9 @@
-from ..services.analyse.analyser import AnalyserService
-from ..services.content_check.content_checker import ContentCheckService
-from flask_restx import Resource, Namespace, fields, Model, Api
 from flask import request
+from flask_restx import Resource, Namespace
 
-ns_analyse = Namespace('analyse', description='Endpoint for deep content analysis')
+from ..services.analyse.analyser import AnalyserService
+
+ns_analyse = Namespace('analyze', description='Endpoint for deep content analysis')
 parser = ns_analyse.parser()
 parser.add_argument('content', type=str, required=True, location='json')
 
