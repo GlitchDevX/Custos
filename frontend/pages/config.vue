@@ -2,7 +2,8 @@
   <div class="p-4 flex gap-4 flex-col">
     <UAlert v-if="failed" color="error" title="Failed to load configs" />
     <ConfigSkeleton v-if="!loaded" />
-    <UTabs v-if="!failed && loaded" :items="items" :unmountOnHide="false">
+    <UTabs v-if="!failed && loaded" v-model="selectedConfig"
+      :items="items" :unmountOnHide="false">
       <template #mailValidation>
         <ConfigMailValidation :config="(mailValidation as object)" @submit="submitConfig" />
       </template>
@@ -18,7 +19,10 @@ import type { TabsItem } from '@nuxt/ui'
 import { TITLE_SUFFIX } from '~/assets/data/appData';
 import { CONFIG_PATH } from '~/assets/ts/backendConnector';
 
+const route = useRoute();
+const router = useRouter();
 const toast = useToast();
+
 useHead({
   title: 'Configure Endpoints' + TITLE_SUFFIX
 });
@@ -88,6 +92,19 @@ function showFail(description: string) {
     duration: 5000
   });
 }
+
+const selectedConfig = computed({
+  get() {
+    return (route.query.tab as string) || '0';
+  },
+  set(tab) {
+    router.push({
+      path: '/config',
+      query: { tab },
+      // hash: '#'
+    })
+  }
+})
 </script>
 
 <style>
