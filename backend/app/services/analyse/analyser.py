@@ -11,7 +11,7 @@ class AnalyserService:
     the detoxify neuronal network.
     """
 
-    config = ConfigReader("analyse")
+    config = ConfigReader("deep_analysis")
 
     def __init__(self):
         if self.config.get("enabled"):
