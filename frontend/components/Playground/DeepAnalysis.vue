@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 pb-4">
-    <EndpointSummary path="/check-content" title="Realtime Content Check"
-      summary="This endpoint is used to censor and flag user content in real time." />
+    <EndpointSummary path="/analysis" title="Deep Content Analysis"
+      summary="This endpoint is used to analyze user content utilizing a neuronal network." />
 
     <UCard>
       <div class="flex flex-row justify-between">
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { REALTIME_CONTENT_CHECK_PATH } from '~/assets/ts/backendConnector';
+import { ANALYZE_CONTENT_PATH } from '~/assets/ts/backendConnector';
 const showResponse = ref(false);
 
 const response = ref({
@@ -38,7 +38,7 @@ const loading = ref(false);
 async function submitRequest() {
   loading.value = true;
   showResponse.value = false;
-  const result = await $fetch<object>(REALTIME_CONTENT_CHECK_PATH, {
+  const result = await $fetch<object>(ANALYZE_CONTENT_PATH, {
     method: 'POST',
     body: {'content': content.value},
     ignoreResponseError: true

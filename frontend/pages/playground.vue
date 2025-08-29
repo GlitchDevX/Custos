@@ -8,6 +8,9 @@
       <template #realtimeContent>
         <PlaygroundRealtimeContentCheck />
       </template>
+      <template #deepAnalysis>
+        <PlaygroundDeepAnalysis />
+      </template>
     </UAccordion>
   </div>
 </template>
@@ -32,6 +35,11 @@ const endpoints = [
     icon: 'lucide-clock',
     slot: 'realtimeContent'
   },
+  {
+    label: 'Deep Content Analysis',
+    icon: 'lucide-brain-circuit',
+    slot: 'deepAnalysis'
+  }
 ] as AccordionItem[];
 </script>
 

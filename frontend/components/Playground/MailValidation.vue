@@ -5,9 +5,9 @@
 
     <UCard>
       <div class="flex flex-row justify-between">
-        <UForm :state="{}" @submit="(_) => submitRequest()">
+        <UForm :state="{}" @submit="() => submitRequest()">
           <UFormField label="Email">
-            <UInput v-model="email" placeholder="jonas.ringeis@gmail.com" />
+            <UInput v-model="email" placeholder="example@gmail.com" />
           </UFormField>
           <UButton label="Submit" class="mt-4" type="submit" :loading="loading" />
         </UForm>
