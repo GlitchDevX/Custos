@@ -10,6 +10,9 @@
       <template #realtimeCheck>
         <ConfigRealtime :config="(contentCheck as object)" @submit="submitConfig" />
       </template>
+      <template #deepAnalysis>
+        <ConfigDeepAnalysis :config="deepAnalysis!" @submit="submitConfig" />
+      </template>
     </UTabs>
   </div>
 </template>
@@ -18,6 +21,7 @@
 import type { TabsItem } from '@nuxt/ui'
 import { TITLE_SUFFIX } from '~/assets/data/appData';
 import { CONFIG_PATH } from '~/assets/ts/backendConnector';
+import type { DeepAnalysis } from '~/assets/types/config/deepAnalysis';
 
 const route = useRoute();
 const router = useRouter();
@@ -37,11 +41,17 @@ const items: TabsItem[] = [
     label: 'Realtime Content Check',
     icon: 'lucide-clock',
     slot: 'realtimeCheck'
+  },
+  {
+    label: 'Deep Content Analysis',
+    icon: 'lucide-brain-circuit',
+    slot: 'deepAnalysis'
   }
 ];
 
 const mailValidation = await getConfig("mail_validation");
 const contentCheck = await getConfig("content_check");
+const deepAnalysis = await getConfig<DeepAnalysis>("deep_analysis");
 
 const loaded = ref(false);
 const failed = ref(false);
@@ -54,10 +64,10 @@ onBeforeMount(() => {
   loaded.value = true;
 });
 
-async function getConfig(namespace: string) {
+async function getConfig<T>(namespace: string) {
   try {
     const path = `${CONFIG_PATH}?namespace=${namespace}`;
-    return await $fetch<object>(path);
+    return await $fetch<T>(path);
   } catch {  
     return undefined;
   }
