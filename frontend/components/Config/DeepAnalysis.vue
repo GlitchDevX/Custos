@@ -37,19 +37,19 @@
 
 <script lang="ts" setup>
 import type { DropdownMenuItem } from '@nuxt/ui';
-import type { DeepAnalysis } from '~/assets/types/config/deepAnalysis';
+import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
 
 const emit = defineEmits<{
-    submit: [config: object, namespace: string]
+    submit: [config: DeepAnalysisConfig, namespace: string]
 }>();
 const props = defineProps({
     config: {
-        type: Object as PropType<DeepAnalysis>,
+        type: Object as PropType<DeepAnalysisConfig>,
         required: true
     }
 });
 
-const state = reactive<DeepAnalysis>({
+const state = reactive<DeepAnalysisConfig>({
     enabled: true,
     threshold: 0.85,
     labelsToExclude: []
@@ -57,7 +57,6 @@ const state = reactive<DeepAnalysis>({
 
 onBeforeMount(() => {
     Object.assign(state, props.config);
-    state.labelsToExclude = props.config.labelsToExclude;
 });
 
 async function submitConfig() {

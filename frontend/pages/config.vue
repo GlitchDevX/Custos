@@ -5,10 +5,10 @@
     <UTabs v-if="!failed && loaded" v-model="selectedConfig"
       :items="items" :unmountOnHide="false">
       <template #mailValidation>
-        <ConfigMailValidation :config="(mailValidation as object)" @submit="submitConfig" />
+        <ConfigMailValidation :config="mailValidation!" @submit="submitConfig" />
       </template>
       <template #realtimeCheck>
-        <ConfigRealtime :config="(contentCheck as object)" @submit="submitConfig" />
+        <ConfigRealtimeContentCheck :config="realtimeContentCheck!" @submit="submitConfig" />
       </template>
       <template #deepAnalysis>
         <ConfigDeepAnalysis :config="deepAnalysis!" @submit="submitConfig" />
@@ -21,7 +21,10 @@
 import type { TabsItem } from '@nuxt/ui'
 import { TITLE_SUFFIX } from '~/assets/data/appData';
 import { CONFIG_PATH } from '~/assets/ts/backendConnector';
-import type { DeepAnalysis } from '~/assets/types/config/deepAnalysis';
+import type { BaseConfig } from '~/assets/types/config/baseConfig';
+import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
+import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
+import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
 
 const route = useRoute();
 const router = useRouter();
@@ -49,14 +52,14 @@ const items: TabsItem[] = [
   }
 ];
 
-const mailValidation = await getConfig("mail_validation");
-const contentCheck = await getConfig("content_check");
-const deepAnalysis = await getConfig<DeepAnalysis>("deep_analysis");
+const mailValidation = await getConfig<MailValidationConfig>("mail_validation");
+const realtimeContentCheck = await getConfig<RealtimeContentCheckConfig>("content_check");
+const deepAnalysis = await getConfig<DeepAnalysisConfig>("deep_analysis");
 
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || contentCheck === undefined;
+  failed.value = mailValidation === undefined || realtimeContentCheck === undefined || deepAnalysis === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");
@@ -73,7 +76,7 @@ async function getConfig<T>(namespace: string) {
   }
 }
 
-async function submitConfig(config: object, namespace: string) {
+async function submitConfig(config: BaseConfig, namespace: string) {
   const body = { 'namespace': namespace, 'content': config };
   try {
     const result = await $fetch<{ code: string }>(CONFIG_PATH, { method: 'POST', body: body });

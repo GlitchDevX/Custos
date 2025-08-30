@@ -28,13 +28,9 @@
 
             <UFormField label="Extra Disposable Domains" size="xl" class="pt-4" :class="{'low-opacity': !state.disposableCheck}">
                 <p class="muted-text">
-                    Comma separated list of additional domains to mark as disposable.
+                    List of additional domains to mark as disposable. You can insert a comma-separated list.
                 </p>
-                <UTextarea
-                    v-model="state.disposableDomains"
-                    spellcheck="false"
-                    placeholder="gmail.com, github.com..."
-                    :maxrows="5" :autoresize="true" class="w-lg mt-1" />
+                <UInputTags :addOnPaste="true" v-model="state.disposableDomains" class="mt-1 w-full" :spellcheck="false" />
             </UFormField>
 
             <FeatureToggle
@@ -65,23 +61,24 @@
 </template>
 
 <script lang="ts" setup>
-import type { ConfigBody } from '~/assets/types/config/mailValidation';
+import type { PropType } from 'vue';
+import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
 
 const emit = defineEmits<{
-    submit: [config: object, namespace: string]
+    submit: [config: MailValidationConfig, namespace: string]
 }>();
 const props = defineProps({
     config: {
-        type: Object,
+        type: Object as PropType<MailValidationConfig>,
         required: true
     }
 });
 
-const state = reactive({
+const state = reactive<MailValidationConfig>({
     enabled: true,
     formatCheck: true,
     disposableCheck: true,
-    disposableDomains: "",
+    disposableDomains: [],
     mxRecordCheck: true,
     smtpHelo: true,
     maxHeloChecks: 5
@@ -89,7 +86,6 @@ const state = reactive({
 
 onBeforeMount(() => {
     Object.assign(state, props.config);
-    state.disposableDomains = props.config["disposableDomains"].join(', ');
 });
 
 //#region toggle behavior
@@ -108,9 +104,7 @@ function onSmtpHeloChange() {
 //#endregion
 
 async function submitConfig() {
-    const config = { ...state } as ConfigBody;
-    config.disposableDomains = state.disposableDomains.split(', ').map(s => s.trim()).filter(s => s.length > 0);
-    emit('submit', config, 'mail_validation');
+    emit('submit', state, 'mail_validation');
 }
 </script>
 
