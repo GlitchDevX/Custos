@@ -12,7 +12,7 @@ updates:
     groups:
       dependencies:
         patterns:
-          - "*" # Group all dependencies
+          - "flask-" # can't group all dependencies, as dependabot will get stuck
       
   - package-ecosystem: "npm"
     directory: "frontend/"
