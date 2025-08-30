@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 pb-4">
     <EndpointSummary
-path="/analysis" title="Deep Content Analysis"
+      path="/analysis" title="Deep Content Analysis"
       summary="This endpoint is used to analyze user content utilizing a neuronal network." />
 
     <UCard>
@@ -13,9 +13,9 @@ path="/analysis" title="Deep Content Analysis"
           <UButton label="Submit" class="mt-4" type="submit" :loading="loading" />
         </UForm>
 
-        <UCollapsible v-model:open="showResponse" :arrow="true" class="grou">
+        <UCollapsible v-model:open="showResponse" :arrow="true" class="group">
           <UButton
-block label="Show Response" variant="ghost" icon="lucide-chevron-down"
+            block label="Show Response" variant="ghost" icon="lucide-chevron-down"
             :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
           <template #content>
             <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />

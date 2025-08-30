@@ -1,11 +1,11 @@
 <template>
     <ConfigLayout>
         <EndpointSummary
-path="/analysis" title="Deep Content Analysis"
+            path="/analysis" title="Deep Content Analysis"
             summary="This endpoint is used to analyze user content utilizing a neuronal network." />
         <div>
             <USwitch
-v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
+                v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
                 label="Endpoint enabled" size="xl" class="pb-8" />
 
             <div :class="{ 'low-opacity': !state.enabled }">
@@ -15,7 +15,7 @@ v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
                     </p>
                     <div class="flex gap-2 justify-center items-center mt-2">
                         <UInputNumber
-v-model="state.threshold" :step="0.1" :min="0.5" :max="1" class="w-24"
+                            v-model="state.threshold" :step="0.1" :min="0.5" :max="1" class="w-24"
                             :ui="{ increment: 'hidden', decrement: 'hidden', base: 'px-2' }" />
                         <USlider v-model="state.threshold" :step="0.01" :min="0.5" :max="1" />
                     </div>

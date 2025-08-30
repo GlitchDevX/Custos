@@ -1,30 +1,30 @@
 <template>
     <ConfigLayout>
         <EndpointSummary
-path="/check-content" title="Realtime Check"
+            path="/check-content" title="Realtime Check"
             summary="This endpoint is used to quickly verify or censor user-content by applying rules." />
         <div>
-            <USwitch
-v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
+            <USwitch 
+                v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
                 label="Endpoint enabled" size="xl" class="pb-8" />
 
             <div>
-                <FeatureToggle
-v-model="state.urlCheck" title="URL Check"
+                <FeatureToggle 
+                    v-model="state.urlCheck" title="URL Check"
                     description="Remove and flag valid URLs or IPs." />
 
-                <FeatureToggle
-v-model="state.blockedWordsCheck" title="Blocked Words Check"
+                <FeatureToggle 
+                    v-model="state.blockedWordsCheck" title="Blocked Words Check"
                     description="Remove and flag banned words. This includes profanity." />
 
-                <UFormField
-label="Extra Banned Words" size="xl" class="pt-4"
+                <UFormField 
+                    label="Extra Banned Words" size="xl" class="pt-4"
                     :class="{ 'low-opacity': !state.blockedWordsCheck }">
                     <p class="muted-text">
                         List of additional words to ban. You can insert a comma-separated list.
                     </p>
                     <UInputTags
-v-model="state.blockedWords" :addOnPaste="true" class="mt-1 w-full"
+                        v-model="state.blockedWords" :addOnPaste="true" class="mt-1 w-full"
                         :spellcheck="false" />
                 </UFormField>
             </div>
