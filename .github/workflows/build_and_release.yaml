@@ -9,6 +9,7 @@ on:
 
 jobs:
   get-version-tag:
+    timeout-minutes: 1
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.new_tag }}
@@ -31,6 +32,10 @@ jobs:
 
   test-backend:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -54,6 +59,7 @@ jobs:
           uv run coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
 
   build-backend:
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     needs: [get-version-tag, test-backend]
     steps:
@@ -81,6 +87,10 @@ jobs:
   build-frontend:
     runs-on: ubuntu-latest
     needs: get-version-tag
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -95,17 +105,15 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            frontend/node_modules
-            frontend/.nuxt
+            node_modules
+            .nuxt
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
       
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: |
-          cd frontend
-          npm ci
+        run: npm ci
 
       - name: Lint Code
         run: npm run lint
@@ -114,9 +122,7 @@ jobs:
         run: npx nuxt typecheck
 
       - name: Build Frontend
-        run: |
-          cd frontend
-          npm run generate
+        run: npm run generate
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -137,8 +143,8 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     needs: [get-version-tag, build-backend, build-frontend]
-    if: needs.get-version-tag.outputs.was-updated
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
