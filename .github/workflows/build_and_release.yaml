@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.tag.outputs.new_tag }}
+      was-updated: ${{ steps.tag.outputs.old_tag == '' }}
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -28,9 +29,33 @@ jobs:
         run: |
           echo ${{ steps.tag.outputs.new_tag }}
 
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Setup venv
+        run: uv venv
+
+      - name: Install dependencies
+        run: uv pip install -r pyproject.toml --extra dev
+
+      - name: Run tests
+        run: |
+          uv run coverage run -m pytest
+          echo '### Coverage Summary' >> $GITHUB_STEP_SUMMARY
+          uv run coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
   build-backend:
     runs-on: ubuntu-latest
-    needs: get-version-tag
+    needs: [get-version-tag, test-backend]
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
@@ -82,6 +107,12 @@ jobs:
           cd frontend
           npm ci
 
+      - name: Lint Code
+        run: npm run lint
+
+      - name: Run Typecheck
+        run: npx nuxt typecheck
+
       - name: Build Frontend
         run: |
           cd frontend
@@ -107,6 +138,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: [get-version-tag, build-backend, build-frontend]
+    if: needs.get-version-tag.outputs.was-updated
     steps:
       - name: Get latest code
         uses: actions/checkout@v4
