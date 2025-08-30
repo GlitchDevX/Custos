@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ConfigBody } from '~/assets/types/realtimeContentCheck';
+import type { ConfigBody } from '~/assets/types/config/realtimeContentCheck';
 
 const emit = defineEmits<{
     submit: [config: object, namespace: string]

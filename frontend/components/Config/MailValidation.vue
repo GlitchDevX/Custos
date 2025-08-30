@@ -65,7 +65,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ConfigBody } from '~/assets/types/mailValidation';
+import type { ConfigBody } from '~/assets/types/config/mailValidation';
 
 const emit = defineEmits<{
     submit: [config: object, namespace: string]
