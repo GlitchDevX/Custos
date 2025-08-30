@@ -1,6 +1,8 @@
-export type ConfigBody = {
-    blockedWordsCheck: boolean,
-    blockedWords: string[] | string,
-    enabled: boolean,
-    urlCheck: boolean,
+import type { BaseConfig } from "./baseConfig";
+
+export interface RealtimeContentCheckConfig extends BaseConfig {
+    enabled: boolean;
+    blockedWordsCheck: boolean;
+    blockedWords: string[];
+    urlCheck: boolean;
 }
