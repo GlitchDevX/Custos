@@ -2,7 +2,8 @@
   <div class="p-4 flex gap-4 flex-col">
     <UAlert v-if="failed" color="error" title="Failed to load configs" />
     <ConfigSkeleton v-if="!loaded" />
-    <UTabs v-if="!failed && loaded" v-model="selectedConfig"
+    <UTabs
+v-if="!failed && loaded" v-model="selectedConfig"
       :items="items" :unmountOnHide="false">
       <template #mailValidation>
         <ConfigMailValidation :config="mailValidation!" @submit="submitConfig" />

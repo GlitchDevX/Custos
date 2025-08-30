@@ -30,7 +30,7 @@
                 <p class="muted-text">
                     List of additional domains to mark as disposable. You can insert a comma-separated list.
                 </p>
-                <UInputTags :addOnPaste="true" v-model="state.disposableDomains" class="mt-1 w-full" :spellcheck="false" />
+                <UInputTags v-model="state.disposableDomains" :addOnPaste="true" class="mt-1 w-full" :spellcheck="false" />
             </UFormField>
 
             <FeatureToggle

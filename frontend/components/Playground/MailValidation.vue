@@ -1,6 +1,7 @@
 <template>
   <div class="px-4 pb-4">
-    <EndpointSummary path="/validate-mail" title="Validate Mail"
+    <EndpointSummary
+path="/validate-mail" title="Validate Mail"
       summary="This endpoint is used to verify if an email is valid by using different techniques." />
 
     <UCard>
