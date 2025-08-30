@@ -9,10 +9,6 @@ updates:
     directory: "backend/"
     schedule:
       interval: "weekly"
-    groups:
-      dependencies:
-        patterns:
-          - "flask-" # can't group all dependencies, as dependabot will get stuck
       
   - package-ecosystem: "npm"
     directory: "frontend/"
