@@ -16,7 +16,7 @@ jobs:
         working-directory: frontend
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Use Node.js LTS
         uses: actions/setup-node@v4
@@ -52,7 +52,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Linting Backend code
         uses: astral-sh/ruff-action@v3
@@ -69,7 +69,7 @@ jobs:
     needs: backend-linting
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       
       - name: Install uv
         uses: astral-sh/setup-uv@v5

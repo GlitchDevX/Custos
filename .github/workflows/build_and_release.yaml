@@ -16,7 +16,7 @@ jobs:
       was-updated: ${{ steps.tag.outputs.old_tag == '' }}
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Bump version and push tag
         id: tag
@@ -38,7 +38,7 @@ jobs:
         working-directory: backend
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5
@@ -64,7 +64,7 @@ jobs:
     needs: [get-version-tag, test-backend]
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
@@ -93,7 +93,7 @@ jobs:
         working-directory: frontend
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       
       - name: Use Node.js LTS
         uses: actions/setup-node@v4
@@ -147,7 +147,7 @@ jobs:
     needs: [get-version-tag, build-backend, build-frontend]
     steps:
       - name: Get latest code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
