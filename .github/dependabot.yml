@@ -18,3 +18,8 @@ updates:
       dependencies:
         patterns:
           - "*" # Group all dependencies
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
