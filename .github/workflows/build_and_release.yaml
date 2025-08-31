@@ -139,6 +139,7 @@ jobs:
         env:
           CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
         run: |
+          cd ..
           docker buildx bake frontend --push
 
   release:
