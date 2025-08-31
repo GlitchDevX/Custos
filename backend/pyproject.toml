@@ -23,3 +23,8 @@ dev = [
     "pytest>=8.3.5",
 ]
 
+[tool.coverage.run]
+omit = [
+    # omit pytorch-generated files in /tmp
+    "/tmp/*",
+]

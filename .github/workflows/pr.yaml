@@ -66,13 +66,14 @@ jobs:
     defaults:
       run:
         working-directory: backend
-    needs: backend-linting
     steps:
       - name: Get latest code
         uses: actions/checkout@v5
       
       - name: Install uv
         uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
       - name: Set up Python
         run: uv python install
