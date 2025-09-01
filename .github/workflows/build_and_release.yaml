@@ -150,6 +150,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     needs: [get-version-tag, build-backend, build-frontend]
+    if: ${{ needs.get-version-tag.outputs.was-updated }}
     steps:
       - name: Get latest code
         uses: actions/checkout@v5
