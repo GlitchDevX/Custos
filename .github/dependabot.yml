@@ -5,10 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "uv"
+  - package-ecosystem: "pip"
     directory: "backend/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Group all dependencies
       
   - package-ecosystem: "npm"
     directory: "frontend/"
@@ -23,3 +27,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Group all dependencies
