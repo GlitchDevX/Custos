@@ -29,6 +29,10 @@ jobs:
       - name: Echo Tag to output
         run: |
           echo ${{ steps.tag.outputs.new_tag }}
+          echo ${{ steps.tag.outputs.part }}
+          echo ${{ steps.tag.outputs.tag }}
+          echo ${{ steps.tag.outputs.old_tag }}
+          echo ${{ steps.tag.outputs.old_tag == '' }}
 
   test-backend:
     runs-on: ubuntu-latest
