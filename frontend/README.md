@@ -11,16 +11,16 @@ You need to have `Node` installed to work in this repository.
 To start the local development server.
 ```bash
 # install dependencies (once)
-npm install
+pnpm install
 
 # start development server
-npm run dev
+pnpm run dev
 ```
 
 ## Build Website
 To build the website run the following command. You'll receive static files that can be deployed on any Web-host.
 ```
-npm run generate
+pnpm run generate
 ```
 
 ## Icons

@@ -3,9 +3,9 @@
 #
 #COPY . .
 #
-#RUN npm ci
+#RUN pnpm ci
 #
-#RUN npm run generate
+#RUN pnpm run generate
 
 
 # Stage 2: Build Final Image

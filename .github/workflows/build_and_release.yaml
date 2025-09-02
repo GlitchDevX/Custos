@@ -99,34 +99,28 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v5
       
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Use Node.js LTS
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      
-      - name: Cache npm Dependencies
-        id: cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-            .nuxt
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: "pnpm"
       
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci
+        run: pnpm i
 
       - name: Lint Code
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run Typecheck
         run: npx nuxt typecheck
 
       - name: Build Frontend
-        run: npm run generate
+        run: pnpm run generate
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
