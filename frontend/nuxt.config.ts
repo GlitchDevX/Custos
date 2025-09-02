@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     dir: "assets/img/"
   },
 
+  fonts: {
+    defaults: {
+      weights: [400, 700]
+    }
+  },
+
   icon: {
     serverBundle: {
       collections: ['lucide']
