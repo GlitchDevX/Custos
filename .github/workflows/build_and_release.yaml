@@ -115,13 +115,13 @@ jobs:
         run: pnpm i
 
       - name: Lint Code
-        run: pnpm run lint
+        run: pnpm lint
 
       - name: Run Typecheck
-        run: npx nuxt typecheck
+        run: pnpm typecheck
 
       - name: Build Frontend
-        run: pnpm run generate
+        run: pnpm generate
 
       - name: Login to DockerHub
         uses: docker/login-action@v3

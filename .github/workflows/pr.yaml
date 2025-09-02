@@ -35,10 +35,10 @@ jobs:
           pnpm i
         
       - name: Lint Code
-        run: pnpm run lint
+        run: pnpm lint
 
       - name: Run Typecheck
-        run: npx nuxt typecheck
+        run: pnpm typecheck
 
       # possibly execute test later on
 

@@ -5,7 +5,7 @@
 #
 #RUN pnpm ci
 #
-#RUN pnpm run generate
+#RUN pnpm generate
 
 
 # Stage 2: Build Final Image

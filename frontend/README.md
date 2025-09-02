@@ -14,13 +14,13 @@ To start the local development server.
 pnpm install
 
 # start development server
-pnpm run dev
+pnpm dev
 ```
 
 ## Build Website
 To build the website run the following command. You'll receive static files that can be deployed on any Web-host.
 ```
-pnpm run generate
+pnpm generate
 ```
 
 ## Icons
