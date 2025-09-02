@@ -1,9 +1,10 @@
 # Todos
 
 ## Frontend
-- Switch to pnpm
 - Upgrade to Nuxt 4
+- Make landing page more responsive
 
+- Split uis into docs and ui
 
 ## Backend
 - Somehow add prometheus metrics export (https://grafana.com/docs/grafana-cloud/monitor-applications/asserts/enable-prom-metrics-collection/application-frameworks/flask/)
