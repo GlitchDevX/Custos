@@ -16,7 +16,7 @@ updates:
   #         - "*" # Group all dependencies
       
   - package-ecosystem: "npm"
-    directory: "frontend/**"
+    directory: "frontend/"
     schedule:
       interval: "daily"
     groups:
