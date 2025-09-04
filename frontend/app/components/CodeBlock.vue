@@ -7,18 +7,18 @@
 
 <script lang="ts" setup>
 const props = defineProps({
-    content: {
-        type: String,
-        required: true
-    },
-    showCopy: {
-      type: Boolean,
-      default: false
-    },
-    language: {
-      type: String,
-      default: ""
-    }
+  content: {
+    type: String,
+    required: true
+  },
+  showCopy: {
+    type: Boolean,
+    default: false
+  },
+  language: {
+    type: String,
+    default: ""
+  }
 });
 
 const icon = ref("lucide-copy");
@@ -36,6 +36,7 @@ function toClipboard() {
 .codeblock-wrapper {
   background: #1b1e28;
 }
+
 .thin-scrollbar {
   scrollbar-width: thin;
 }
