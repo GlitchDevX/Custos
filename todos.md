@@ -1,7 +1,6 @@
 # Todos
 
 ## Frontend
-- Upgrade to Nuxt 4
 - Make landing page more responsive
 
 - Split uis into docs and ui
