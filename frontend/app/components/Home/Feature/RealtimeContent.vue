@@ -16,7 +16,7 @@
                 <div class="flex justify-center">
                     <UIcon class="sm:-rotate-45" name="lucide-arrow-down" :size="50" />
                 </div>
-                <div class="flex justify-end">
+                <div class="flex justify-end max-sm:justify-start">
                     <CodeBlock :content="JSON.stringify(realtimeOutput, null, 4)" language="json" />
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div id="get-started" class="flex justify-center items-center">
-        <div class="w-3xl">
+        <div class="w-3xl max-w-full">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold">
                     Start with Docker Compose
@@ -10,8 +10,8 @@
                 </p>
             </div>
 
-            <div class="flex flex-row gap-2 mt-4">
-                <UCard>
+            <div class="flex flex-row gap-2 mt-4 max-sm:flex-col">
+                <UCard class="max-sm:flex max-sm:justify-center">
                     <span class="text-xl font-bold">
                         Configure Compose
                     </span>
