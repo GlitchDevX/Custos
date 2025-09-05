@@ -2,7 +2,7 @@
 
 ## Frontend
 - Make landing page more responsive
-
+- Add footer to landing (with gh link)
 - Split uis into docs and ui
 
 ## Backend
