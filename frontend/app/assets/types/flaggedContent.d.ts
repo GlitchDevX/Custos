@@ -1,2 +1,2 @@
-export type Tag = "profanity" | "spam" | "harassment" | "misinformation" | "other";
-export type FlaggedContent = {reportId: string, userId: string, falseReport: boolean, flags: Tag[], content: string};
+export type Tag = "toxicity" | "severe_toxicity" | "obscene" | "identity_attack" | "insult" | "threat" | "sexual_explicit";
+export type FlaggedContent = {flags: Tag[], content: string};

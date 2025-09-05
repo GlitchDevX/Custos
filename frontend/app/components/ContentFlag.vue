@@ -2,7 +2,7 @@
   <div class="flex flex-row gap-2">
     <UBadge
       v-for="({flag, color}, index) in coloredFlags" :key="index"
-      :label="flag" :color="color" variant="subtle" class="capitalize" />
+      :label="flag" :color="color" variant="subtle" />
   </div>
 </template>
 
@@ -18,11 +18,11 @@ const coloredFlags = computed(() => {
   return props.flags.map((f) => {
     f = f.toLowerCase();
     const x = {
-      "spam": 'warning' as const,
-      "misinformation": 'info' as const,
-      "harassment": 'error' as const,
-      "profanity": 'error' as const,
-      "other": 'neutral' as const,
+      "toxicity": 'success' as const,
+      "obscene": 'info' as const,
+      "insult": 'warning' as const,
+      "sexual_explicit": 'error' as const,
+      "threat": 'error' as const,
     }[f] ?? 'error';
 
     return {flag: f, color: x}

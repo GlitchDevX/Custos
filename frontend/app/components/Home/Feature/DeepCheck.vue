@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-center">
-        <div class="w-3xl">
+        <div class="w-3xl max-w-full">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold flex flex-row gap-2 justify-start items-center">
                     AI Powered Analysis
@@ -20,47 +20,25 @@ import type { FlaggedContent } from '~/assets/types/flaggedContent';
 
 const mockData = reactive([
   {
-    userId: "TechGuru",
-    falseReport: false,
-    flags: ["profanity"],
+    flags: ["obscene", "insult", "toxicity"],
     content: "You're all a bunch of worthless cunts.",
   },
   {
-    userId: "PixelArtist",
-    falseReport: false,
-    flags: ["harassment"],
-    content: "I hope you all choke on your own vomit.",
+    flags: ["toxicity", "obscene", "sexual_explicit"],
+    content: "I hope you all choke on your own cum.",
   },
   {
-    userId: "GamerPro",
-    falseReport: false,
-    flags: ["profanity", "harassment"],
+    flags: ["insult", "threat", "toxicity"],
     content: "Kill yourselves, fags!",
   },
   {
-    userId: "DataDynamo",
-    falseReport: false,
-    flags: ["spam", "misinformation"],
-    content: "Join my MLM scheme and get rich quick!",
+    flags: ["toxicity"],
+    content: "Hahaha d@mb b!tch",
   },
 ] as FlaggedContent[]);
 
 const FlagsComponent = resolveComponent('ContentFlag');
-const CheckboxComponent = resolveComponent('UCheckbox');
 const columns = [
-  {
-    accessorKey: 'userId',
-    header: 'User Id',
-    meta: { class: { th: 'max-w-28', td: 'max-w-28 truncate' } }
-  },
-  {
-    accessorKey: 'falseReport',
-    header: 'False Report',
-    cell: ({ row }) => {
-      return h(CheckboxComponent, { modelValue: row.getValue<boolean>('falseReport'), class: 'pointer-events-none' })
-    },
-    meta: { class: { th: 'max-w-18', td: 'max-w-18 truncate' } }
-  },
   {
     accessorKey: 'flags',
     header: 'Flags',
