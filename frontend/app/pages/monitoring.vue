@@ -5,7 +5,7 @@
       v-for="(metrics, namespace_index) in metricNamespaces"
       :key="'monitoring_metric_namespace' + namespace_index"
       class="flex flex-wrap gap-4 justify-center px-8">
-      <USeparator :label="metrics[0].namespace" size="xl" />
+      <USeparator :label="metrics[0]?.namespace" size="xl" />
       <MetricsBigNumber
         v-for="(metric, metric_index) in metrics" :key="metric.id"
         :title="metric.name" :number="metric.value"
@@ -50,7 +50,7 @@ function mapMetrics(metrics: Metric[]): EnhancedMetric[][] {
       orderedMetrics.push([]);
     }
 
-    orderedMetrics[namespaces.indexOf(namespace)].push({
+    orderedMetrics[namespaces.indexOf(namespace)]?.push({
       namespace: namespace,
       name: name.toLowerCase().replaceAll('_', ' ').replace(/(^\w|\s\w)/g, m => m.toUpperCase()),
       id: m.metric_name,
