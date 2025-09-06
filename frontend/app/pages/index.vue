@@ -6,6 +6,7 @@
         <HomeFeatureDeepCheck />
         <HomeFeatureConfigurable/>
         <HomeGetStarted />
+        <HomeFooter />
     </div>
 </template>
 
