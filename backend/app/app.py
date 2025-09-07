@@ -1,8 +1,8 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api
+from prometheus_flask_exporter import RESTfulPrometheusMetrics
 
-from app.services.metrics.metrics_initializer import MetricsManager
 from .resources.analyse import ns_analyse
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
@@ -25,14 +25,14 @@ class FlaskApplication:
 
     def __init__(self, config):
         self.db = SQLAlchemySingleton()
-        self.metrics = MetricsManager(self.db)
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
         CORS(self.flask_app, origins="*")
         api = Api(self.flask_app, version='1.0.0', title='Custos',
                   description='Modular user-content management system written in Python.')
+        self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
-        api.add_namespace(ns_metric)
+        # api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
@@ -42,7 +42,12 @@ class FlaskApplication:
 
         with self.flask_app.app_context():
             self.db.create_all()
-            self.metrics.create_all()
+            self.metrics.init_app(self.flask_app)
+            # self.metrics.register_default(
+            #     self.metrics.counter('by_path_counter', 'Requests count by request paths',
+            #          labels={'path': lambda: request.path, 'method': lambda: request.method}
+            #     )
+            # )
 
         if not self.flask_app.config["TESTING"]:
             self.flask_app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
