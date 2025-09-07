@@ -1,4 +1,4 @@
-export const BASE_PATH = "http://localhost:5365";
+export const BASE_PATH = "http://localhost:3060";
 
 export const VALIDATE_MAIL_PATH = BASE_PATH + "/mail/";
 export const REALTIME_CONTENT_CHECK_PATH = BASE_PATH + "/content/";

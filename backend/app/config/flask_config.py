@@ -3,7 +3,7 @@ from secrets import token_urlsafe
 
 class FlaskBaseConfig:
     HOST = "0.0.0.0"
-    PORT = 5365
+    PORT = 3060
     SECRET_KEY = os.environ.get('SECRET_KEY', token_urlsafe(32))
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URI")
