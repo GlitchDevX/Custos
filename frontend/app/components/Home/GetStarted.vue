@@ -23,7 +23,7 @@
                         <UInput v-model="state.password" />
                     </UFormField>
                 </UCard>
-                <CodeBlock :content="compose" :showCopy="true" language="yaml" class="max-w-[500px]" />
+                <CodeBlock :content="compose" :showCopy="true" language="yaml" class="max-w-[500px] grow" />
            </div>
         </div>
     </div>
