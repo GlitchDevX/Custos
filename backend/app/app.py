@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api
 from prometheus_flask_exporter import RESTfulPrometheusMetrics
@@ -43,11 +43,14 @@ class FlaskApplication:
         with self.flask_app.app_context():
             self.db.create_all()
             self.metrics.init_app(self.flask_app)
-            # self.metrics.register_default(
-            #     self.metrics.counter('by_path_counter', 'Requests count by request paths',
-            #          labels={'path': lambda: request.path, 'method': lambda: request.method}
-            #     )
-            # )
+            self.metrics.register_default(
+                self.metrics.counter('by_path_counter', 'Requests count by request paths',
+                     labels={'path': lambda: request.path, 'method': lambda: request.method }
+                )
+            )
+
+            # use this function in custom metrics endpoint to fix weird format
+            print(self.metrics.generate_metrics())
 
         if not self.flask_app.config["TESTING"]:
             self.flask_app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
