@@ -32,7 +32,7 @@ class FlaskApplication:
                   description='Modular user-content management system written in Python.')
         self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
-        # api.add_namespace(ns_metric)
+        api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
@@ -44,13 +44,12 @@ class FlaskApplication:
             self.db.create_all()
             self.metrics.init_app(self.flask_app)
             self.metrics.register_default(
-                self.metrics.counter('by_path_counter', 'Requests count by request paths',
+                self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
                      labels={'path': lambda: request.path, 'method': lambda: request.method }
                 )
             )
+            self.flask_app.metrics_exporter = self.metrics # type: ignore
 
-            # use this function in custom metrics endpoint to fix weird format
-            print(self.metrics.generate_metrics())
 
         if not self.flask_app.config["TESTING"]:
             self.flask_app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)
