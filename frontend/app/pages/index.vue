@@ -5,6 +5,7 @@
         <HomeFeatureRealtimeContent />
         <HomeFeatureDeepCheck />
         <HomeFeatureConfigurable/>
+        <HomeFeatureMetrics />
         <HomeGetStarted />
         <HomeFooter />
     </div>
