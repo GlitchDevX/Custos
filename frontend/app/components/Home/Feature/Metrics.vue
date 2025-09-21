@@ -9,27 +9,29 @@
                     Exports prometheus metrics to easily monitor Custos out of the box.
                 </p>
             </div>
-            <div class="flex flex-col justify-end items-center pt-4">
-                <div class="grow relative w-full min-h-64 overflow-hidden">
+            <div class="flex flex-col justify-end items-center pt-4 overflow-hidden">
+                <div class="grow relative w-[505px] min-h-64">
                     <div>
-                        <div v-for="{ dotClass, lineClass} in positionDotLineClasses"
+                        <div
+                            v-for="{ dotClass, lineClass} in positionDotLineClasses"
                             :key="'animation-metric-pos-dot-' + dotClass">
-                            <div class="bg-neutral-800 w-1 absolute" :class="lineClass + ' ' + dotClass" />
-                            <div class="bg-neutral-700 top-4 h-3 w-3 rounded-full absolute"
-                                :class="dotClass" />
-                            <div class="bg-neutral-700 top-4 h-3 w-3 rounded-full absolute animate-ping"
-                                :class="dotClass" />
+                            <div class="bg-neutral-800 w-1 rounded" :class="lineClass + ' ' + dotClass" />
+                            <div class="bg-neutral-700 top-4 h-3 w-3 rounded-full" :class="dotClass" />
+                            <div class="bg-neutral-700 top-4 h-3 w-3 rounded-full animate-ping" :class="dotClass" />
                         </div>
+                        <div class="bg-error bottom-4 h-3 w-3 rounded-full absolute metric-pos-center-dot" />
+                        <div class="bg-error bottom-4 h-3 w-3 rounded-full absolute animate-ping metric-pos-center-dot" />
                     </div>
                     <TransitionGroup name="animate-metric">
-                        <UBadge v-for="{ name, active, posClass } in metrics" v-show="active"
-                            :key="'metric-animation-' + name" variant="subtle" size="lg" class="absolute top-2"
-                            :class="posClass">
+                        <UBadge
+                            v-for="{ name, active, posClass } in metrics" v-show="active"
+                            :key="'metric-animation-' + name" variant="subtle" size="lg"
+                            class="absolute top-2" :class="posClass">
                             {{ name }}
                         </UBadge>
                     </TransitionGroup>
                 </div>
-                <NuxtImg src="/prometheus_logo.png" class="rounded-2xl w-[50%]" />
+                <NuxtImg src="/prometheus_logo.png" alt="Prometheus Logo" class="rounded-2xl w-[50%]" />
             </div>
         </div>
     </div>
@@ -37,6 +39,8 @@
 
 <script lang="ts" setup>
 import { randomInt } from '~/assets/ts/math-utils';
+
+const router = useRouter();
 
 const metrics = ref([
     { name: "MAIL_OK", active: false, posClass: '' },
@@ -85,9 +89,17 @@ async function animateMetricsRec(currentIndex: number, posCounter: number) {
         metrics.value[index]!.active = false;
     }, 500);
 
-    // add check if page is left
+    console.log("animating");
+
+    // user left page
+    if (router.currentRoute.value.path !== "/") {
+        return;
+    }    
+
     const timeout = randomInt(500, 2000);
-    setTimeout(animateMetricsRec, timeout, index, posIndex); //maybe randomise metrics
+    requestAnimationFrame(() => {
+        setTimeout(animateMetricsRec, timeout, index, posIndex);
+    });
 }
 </script>
 
@@ -95,14 +107,17 @@ async function animateMetricsRec(currentIndex: number, posCounter: number) {
 .metric-pos-left {
     left: 25%;
     transform: translateX(-50%);
+    position: absolute;
 }
 .metric-pos-center {
     left: 50%;
     transform: translateX(-50%);
+    position: absolute;
 }
 .metric-pos-right {
     left: 75%;
     transform: translateX(-50%);
+    position: absolute;
 }
 
 .metric-pos-left-dot {
@@ -119,7 +134,7 @@ async function animateMetricsRec(currentIndex: number, posCounter: number) {
     transition: 0.3s;
 }
 .animate-metric-leave-active {
-    transition: 5s;
+    transition: 5s ease-out;
 }
 .animate-metric-enter-from {
     opacity: 0;
