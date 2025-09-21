@@ -3,8 +3,9 @@
     <UAlert v-if="failed" color="error" title="Failed to load configs" />
     <ConfigSkeleton v-if="!loaded" />
     <UTabs
-v-if="!failed && loaded" v-model="selectedConfig"
-      :items="items" :unmountOnHide="false">
+      v-if="!failed && loaded" v-model="selectedConfig"
+      :items="items" :unmountOnHide="false"
+      :ui="{list: '[&>button]:basis-0'}">
       <template #mailValidation>
         <ConfigMailValidation :config="mailValidation!" @submit="submitConfig" />
       </template>
@@ -13,6 +14,9 @@ v-if="!failed && loaded" v-model="selectedConfig"
       </template>
       <template #deepAnalysis>
         <ConfigDeepAnalysis :config="deepAnalysis!" @submit="submitConfig" />
+      </template>
+      <template #metrics>
+        <ConfigMetrics :config="metrics!" @submit="submitConfig" />
       </template>
     </UTabs>
   </div>
@@ -25,6 +29,7 @@ import { CONFIG_PATH } from '~/assets/ts/backendConnector';
 import type { BaseConfig } from '~/assets/types/config/baseConfig';
 import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
 import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
+import type { MetricsConfig } from '~/assets/types/config/metrics';
 import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
 
 const route = useRoute();
@@ -38,29 +43,38 @@ useHead({
 const items: TabsItem[] = [
   {
     label: 'Mail Validation',
-    icon: 'lucide-mail',
+    icon: 'lucide:mail',
     slot: 'mailValidation'
   },
   {
     label: 'Realtime Content Check',
-    icon: 'lucide-clock',
+    icon: 'lucide:clock',
     slot: 'realtimeCheck'
   },
   {
     label: 'Deep Content Analysis',
-    icon: 'lucide-brain-circuit',
+    icon: 'lucide:brain-circuit',
     slot: 'deepAnalysis'
+  },
+  {
+    label: 'Metrics',
+    icon: 'lucide:chart-column',
+    slot: 'metrics'
   }
 ];
 
 const mailValidation = await getConfig<MailValidationConfig>("mail_validation");
 const realtimeContentCheck = await getConfig<RealtimeContentCheckConfig>("content_check");
 const deepAnalysis = await getConfig<DeepAnalysisConfig>("deep_analysis");
+const metrics = await getConfig<MetricsConfig>("metrics");
 
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || realtimeContentCheck === undefined || deepAnalysis === undefined;
+  failed.value = mailValidation === undefined
+                  || realtimeContentCheck === undefined
+                  || deepAnalysis === undefined
+                  || metrics === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");
