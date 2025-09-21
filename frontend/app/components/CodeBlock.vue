@@ -2,6 +2,7 @@
   <div class="codeblock-wrapper p-4 rounded-lg relative highlighted-code">
     <UButton v-if="showCopy" :icon="icon" variant="ghost" class="absolute top-4 right-4" @click="toClipboard" />
     <Shiki :lang="(language as any)" :code="props.content" class="overflow-x-auto thin-scrollbar" :class="`text-${props.textSize}`" />
+    <slot />
   </div>
 </template>
 
