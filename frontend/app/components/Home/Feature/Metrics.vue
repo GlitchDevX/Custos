@@ -120,12 +120,15 @@ async function animateMetricsRec(currentIndex: number, posCounter: number) {
 
 .metric-pos-left-dot {
     left: 25%;
+    position: absolute;
 }
 .metric-pos-center-dot {
     left: 50%;
+    position: absolute;
 }
 .metric-pos-right-dot {
     left: 75%;
+    position: absolute;
 }
 
 .animate-metric-enter-active {
