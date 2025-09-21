@@ -89,8 +89,6 @@ async function animateMetricsRec(currentIndex: number, posCounter: number) {
         metrics.value[index]!.active = false;
     }, 500);
 
-    console.log("animating");
-
     // user left page
     if (router.currentRoute.value.path !== "/") {
         return;
