@@ -19,7 +19,7 @@
         <CodeBlock class="mt-2" lang="yaml" :showCopy="true" content="scrape_configs:
   - job_name: 'custos'
     static_configs:
-      - targets: ['localhost:5365']  # assuming your Custos instance is running on port 5365" />
+      - targets: ['localhost:3060']  # assuming your Custos instance is running on port 3060" />
       </template>
     </UCard>
 
