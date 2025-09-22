@@ -3,7 +3,7 @@ services:
     image: glitchdevx/custos:latest
     restart: always
     ports:
-      - "127.0.0.1:3060:"
+      - "127.0.0.1:3060:3060"
     depends_on:
       - db
     environment:
