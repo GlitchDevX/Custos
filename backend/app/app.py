@@ -14,7 +14,6 @@ class FlaskApplication:
     A class to initialize and configure a Flask application with RESTful API capabilities.
 
     Attributes:
-        db (SQLAlchemySingleton): Singleton instance for database management.
         flask_app (Flask): The Flask application instance.
         
     :param config (Config): Configuration object containing application settings such as HOST, PORT, and DEBUG.

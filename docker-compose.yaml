@@ -4,10 +4,6 @@ services:
     restart: always
     ports:
       - "5365:5365/tcp"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URI: 'mysql+pymysql://user:password@db:5385/custos'
   custos-ui:
     image: glitchdevx/custos-ui:latest
     restart: always
