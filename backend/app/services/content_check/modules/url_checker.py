@@ -1,12 +1,12 @@
+from app.services.metrics.metrics_counter import count_metric
 import urllib.request
 from http.client import HTTPResponse
 from typing import List
 
 from .content_check_module import ContentCheckModule
-from ....utils.singleton_meta import SingletonMeta
+from app.utils.singleton_meta import SingletonMeta
 import re
 import urllib
-from ....models.metric import Metric
 
 class TopLevelDomainList(metaclass=SingletonMeta):
     top_level_domains = []
@@ -45,7 +45,7 @@ class URLContentChecker(ContentCheckModule):
         re.IGNORECASE,
     )
 
-    def execute_check(self, content, **kwargs):
+    def execute_check(self, content: str, **kwargs):
         censored_content = content
         has_url = False
         matches = self.pattern.finditer(content)
@@ -57,6 +57,6 @@ class URLContentChecker(ContentCheckModule):
                 has_url = True
 
         if has_url:
-            Metric.increase(f"CONTENT_URL_DETECTED")
+            count_metric('REALTIME_URL_DETECTED')
 
         return self.flag_name, has_url, censored_content
