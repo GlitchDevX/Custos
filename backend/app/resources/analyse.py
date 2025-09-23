@@ -16,8 +16,8 @@ class AnalyseResource(Resource):
 
     @ns_analyse.expect(parser)
     def post(self):
-        parser.parse_args(strict=True)
-        content = request.json["content"]
+        args = parser.parse_args(strict=True)
+        content = args["content"]
         result = self.analyser_service.analyse_content(content)
         return result
     

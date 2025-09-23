@@ -15,8 +15,8 @@ class ContentCheckResource(Resource):
 
     @ns_content_check.expect(parser)
     def post(self):
-        parser.parse_args(strict=True)
-        content = request.json["content"]
+        args = parser.parse_args(strict=True)
+        content = args["content"]
         result = self.content_service.check_content(content)
         return result
     

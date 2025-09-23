@@ -22,10 +22,10 @@ class ConfigResource(Resource):
 
     @ns_config.expect(post_parser)
     def post(self):
-        post_parser.parse_args(strict=True)
+        args = post_parser.parse_args(strict=True)
         
-        filename = request.json["namespace"]
-        content = request.json["content"]
+        filename = args["namespace"]
+        content = args["content"]
 
         return self.setter.set_file(filename, content)
     
