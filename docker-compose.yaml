@@ -15,19 +15,3 @@ services:
       - custos
     ports:
       - "3000:80/tcp"
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'custos'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports: # required for dev
-      - '5385:3306'
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-    volumes:
-      - mysql:/var/lib/mysql
-volumes:
-  mysql:

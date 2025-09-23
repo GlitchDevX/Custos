@@ -8,9 +8,6 @@ from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
 from .resources.content_check import ns_content_check
-from .utils.sqlalchemy_utils import SQLAlchemySingleton
-
-# Imports to generate tables
 
 class FlaskApplication:
     """
@@ -24,7 +21,6 @@ class FlaskApplication:
     """
 
     def __init__(self, config):
-        self.db = SQLAlchemySingleton()
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
         CORS(self.flask_app, origins="*")
@@ -38,10 +34,8 @@ class FlaskApplication:
         api.add_namespace(ns_content_check)
         api.add_namespace(ns_analyse)
 
-        self.db.init_app(self.flask_app)
 
         with self.flask_app.app_context():
-            self.db.create_all()
             self.metrics.init_app(self.flask_app)
             self.metrics.register_default(
                 self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
