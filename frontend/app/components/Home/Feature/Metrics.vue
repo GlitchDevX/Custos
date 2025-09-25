@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-center items-center">
-        <div class="w-3xl relative">
+        <div class="w-3xl max-w-full relative">
             <div class="max-w-xl">
                 <h2 class="text-3xl font-bold flex flex-row gap-2 justify-start items-center">
                     Prometheus Metrics

@@ -52,7 +52,7 @@ const compose = computed(() => {
     }
 
     str = str.replace("<<BACKEND_PORT>>", state.backendPort.toString());
-    str = str.replace("<<FRONTEND_PORT>>", "3070");
+    str = str.replace("<<FRONTEND_PORT>>", state.frontendPort.toString());
 
     return str;
 })
