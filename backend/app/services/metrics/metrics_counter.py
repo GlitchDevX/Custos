@@ -1,9 +1,6 @@
-from typing import Callable
-from typing import Any
-from typing import Dict
 from app.utils.singleton_meta import SingletonMeta
-from .metrics_helper import get_metrics_exporter
 from typing import Literal
+from prometheus_client import Counter
 
 type Metric = Literal[
     "MAIL_OK",
@@ -44,29 +41,14 @@ all_metrics: list[Metric] = [
 
 class MetricsCounter(metaclass=SingletonMeta):
     def __init__(self):
-        print("Creating metrics")
         self._init_metrics()
 
     def _init_metrics(self):
-        self.counters: Dict[Metric, Callable] = dict()
-        for metric in all_metrics:
-            self.create_metric(metric)
-            print(f"Created metric: {metric}")
-
-    def create_metric(self, metric: Metric):
-        exporter = get_metrics_exporter()
-        # add check if exporter not present and then log the metric and not count it because in dev mode
-        namespace, label = metric.split('_', 1)
-        metric_counter = exporter.counter(
-            name="custos_service_metrics",
-            description=f"Total Custos service metrics",
-            labels={'namespace': namespace, 'label': label}
-        )
-        self.counters[metric] = metric_counter
-        
+        self.counter = Counter("custos_service_metrics", "Total Custos service metrics", ['namespace',  'label'])
 
     def count_metric(self, metric: Metric):
-        self.counters[metric]()
+        namespace, label = metric.split('_', 1)
+        self.counter.labels(namespace=namespace, label=label).inc()
 
 def count_metric(metric: Metric):
     MetricsCounter().count_metric(metric)
