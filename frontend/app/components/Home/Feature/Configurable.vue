@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import mailValidation from '~/assets/data/mail_validation.json?raw';
+import mailValidation from '~/assets/data/mail-validation.json?raw';
 
 </script>
 
