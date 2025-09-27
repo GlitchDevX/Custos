@@ -8,47 +8,40 @@
       <div class="flex flex-row justify-between">
         <UForm :state="{}" @submit="() => submitRequest()">
           <UFormField label="Email">
-            <UInput v-model="email" placeholder="example@gmail.com" />
+            <UInput v-model="state.email" placeholder="example@gmail.com" />
           </UFormField>
-          <UButton label="Submit" class="mt-4" type="submit" :loading="loading" />
+          <UButton label="Submit" class="mt-4" type="submit" :loading="state.loading" />
         </UForm>
 
-        <UCollapsible v-model:open="showResponse" :arrow="true" class="group">
-          <UButton
-            block label="Show Response" variant="ghost" leading-icon="lucide-chevron-down"
-            :ui="{ leadingIcon: 'group-data-[state=open]:rotate-180 transition-transform duration-200' }" />
-          <template #content>
-            <CodeBlock :content="JSON.stringify(response, null, 4)" language="json" />
-          </template>
-        </UCollapsible>
+        <CollapsibleCodeBlock v-model="state.showResponse" :content="state.response" />
       </div>
     </UCard>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { VALIDATE_MAIL_PATH } from '~/assets/ts/backendConnector';
-const showResponse = ref(false);
+import type { MailValidationResponse } from '~/assets/types/responses';
 
-const response = ref({
-  code: "",
-  text: ""
+const backend = useBackend();
+
+const state = reactive({
+  loading: false,
+  showResponse: false,
+  email: "",
+  response: {
+    code: "",
+    text: ""
+  } satisfies MailValidationResponse
 });
-const email = ref("");
-const loading = ref(false);
 
 async function submitRequest() {
-  loading.value = true;
-  showResponse.value = false;
-  const result = await $fetch<object>(VALIDATE_MAIL_PATH, {
-    method: 'POST',
-    body: {'mail': email.value},
-    ignoreResponseError: true
-  });
+  state.loading = true;
+  state.showResponse = false;
+
+  state.response = await backend.validateMail(state.email);
   
-  loading.value = false;
-  response.value = result as any;
-  showResponse.value = true;
+  state.loading = false;
+  state.showResponse = true;
 }
 </script>
 
