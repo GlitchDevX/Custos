@@ -62,7 +62,7 @@ async function loadMetrics() {
 }
 
 useHead({
-  title: 'Monitoring Dashboard' + TITLE_SUFFIX
+  title: 'Metrics' + TITLE_SUFFIX
 });
 </script>
 
