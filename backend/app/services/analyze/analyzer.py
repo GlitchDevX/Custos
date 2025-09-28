@@ -1,3 +1,4 @@
+from app.utils.singleton_meta import SingletonMeta
 from app.services.metrics.metrics_counter import count_metric
 from detoxify import Detoxify
 
@@ -5,7 +6,7 @@ from app.config_reader import ConfigReader
 from app.utils.common_responses import ENDPOINT_DISABLED
 
 
-class AnalyserService:
+class AnalyzerService(metaclass=SingletonMeta):
     """
     A service class for analyzing and labeling user content using
     the detoxify neuronal network.
@@ -17,7 +18,7 @@ class AnalyserService:
         if self.config.get("enabled"):
             self.model = Detoxify("multilingual")
 
-    def analyse_content(self, content: str):
+    def analyze_content(self, content: str):
         if not self.config.get("enabled"):
             return ENDPOINT_DISABLED
 

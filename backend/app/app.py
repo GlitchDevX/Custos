@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_restx import Api
 from prometheus_flask_exporter import RESTfulPrometheusMetrics
 
-from .resources.analyse import ns_analyse
+from .resources.analyze import ns_analyze
 from .resources.metrics import ns_metric
 from .resources.mail_adress import ns_mail
 from .resources.config import ns_config
@@ -32,7 +32,7 @@ class FlaskApplication:
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
-        api.add_namespace(ns_analyse)
+        api.add_namespace(ns_analyze)
 
 
         if not self.flask_app.config["TESTING"]:
