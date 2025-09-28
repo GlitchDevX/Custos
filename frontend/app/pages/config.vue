@@ -3,8 +3,9 @@
     <UAlert v-if="failed" color="error" title="Failed to load configs" />
     <ConfigSkeleton v-if="!loaded" />
     <UTabs
-v-if="!failed && loaded" v-model="selectedConfig"
-      :items="items" :unmountOnHide="false">
+      v-if="!failed && loaded" v-model="selectedConfig"
+      :items="items" :unmountOnHide="false"
+      :ui="{list: '[&>button]:basis-0'}">
       <template #mailValidation>
         <ConfigMailValidation :config="mailValidation!" @submit="submitConfig" />
       </template>
@@ -14,6 +15,9 @@ v-if="!failed && loaded" v-model="selectedConfig"
       <template #deepAnalysis>
         <ConfigDeepAnalysis :config="deepAnalysis!" @submit="submitConfig" />
       </template>
+      <template #metrics>
+        <ConfigMetrics :config="metrics!" @submit="submitConfig" />
+      </template>
     </UTabs>
   </div>
 </template>
@@ -21,15 +25,12 @@ v-if="!failed && loaded" v-model="selectedConfig"
 <script lang="ts" setup>
 import type { TabsItem } from '@nuxt/ui'
 import { TITLE_SUFFIX } from '~/assets/data/appData';
-import { CONFIG_PATH } from '~/assets/ts/backendConnector';
-import type { BaseConfig } from '~/assets/types/config/baseConfig';
-import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
-import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
-import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
+import type { BaseConfig, DeepAnalysisConfig, MailValidationConfig, MetricsConfig, RealtimeContentCheckConfig } from '~/assets/types/configs';
 
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
+const backend = useBackend();
 
 useHead({
   title: 'Configure Endpoints' + TITLE_SUFFIX
@@ -38,29 +39,38 @@ useHead({
 const items: TabsItem[] = [
   {
     label: 'Mail Validation',
-    icon: 'lucide-mail',
+    icon: 'lucide:mail',
     slot: 'mailValidation'
   },
   {
     label: 'Realtime Content Check',
-    icon: 'lucide-clock',
+    icon: 'lucide:clock',
     slot: 'realtimeCheck'
   },
   {
     label: 'Deep Content Analysis',
-    icon: 'lucide-brain-circuit',
+    icon: 'lucide:brain-circuit',
     slot: 'deepAnalysis'
+  },
+  {
+    label: 'Metrics',
+    icon: 'lucide:chart-column',
+    slot: 'metrics'
   }
 ];
 
 const mailValidation = await getConfig<MailValidationConfig>("mail_validation");
 const realtimeContentCheck = await getConfig<RealtimeContentCheckConfig>("content_check");
 const deepAnalysis = await getConfig<DeepAnalysisConfig>("deep_analysis");
+const metrics = await getConfig<MetricsConfig>("metrics");
 
 const loaded = ref(false);
 const failed = ref(false);
 onBeforeMount(() => {
-  failed.value = mailValidation === undefined || realtimeContentCheck === undefined || deepAnalysis === undefined;
+  failed.value = mailValidation === undefined
+                  || realtimeContentCheck === undefined
+                  || deepAnalysis === undefined
+                  || metrics === undefined;
   
   if (failed.value) {
     showFail("Failed to load config from backend.");
@@ -68,19 +78,17 @@ onBeforeMount(() => {
   loaded.value = true;
 });
 
-async function getConfig<T>(namespace: string) {
+async function getConfig<T extends BaseConfig>(namespace: string) {
   try {
-    const path = `${CONFIG_PATH}?namespace=${namespace}`;
-    return await $fetch<T>(path);
+    return await backend.getConfig<T>(namespace);
   } catch {  
     return undefined;
   }
 }
 
 async function submitConfig(config: BaseConfig, namespace: string) {
-  const body = { 'namespace': namespace, 'content': config };
   try {
-    const result = await $fetch<{ code: string }>(CONFIG_PATH, { method: 'POST', body: body });
+    const result = await backend.setConfig(namespace, config);
     if (result.code === "OK") {
       showSuccess();
       return

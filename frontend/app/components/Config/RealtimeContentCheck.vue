@@ -8,7 +8,7 @@
                 v-model="state.enabled" unchecked-icon="lucide-x" checked-icon="lucide-check"
                 label="Endpoint enabled" size="xl" class="pb-8" />
 
-            <div>
+            <div :class="{ 'low-opacity': !state.enabled }">
                 <FeatureToggle 
                     v-model="state.urlCheck" title="URL Check"
                     description="Remove and flag valid URLs or IPs." />
@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { UInputTags } from '#components';
-import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
+import type { RealtimeContentCheckConfig } from '~/assets/types/configs';
 
 const emit = defineEmits<{
     submit: [config: RealtimeContentCheckConfig, namespace: string]

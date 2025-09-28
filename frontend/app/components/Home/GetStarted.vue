@@ -16,11 +16,17 @@
                         Configure Compose
                     </span>
                     <USwitch v-model="state.ui" label="User Interface" class="mt-4" />
-                    <UFormField label="Database Username" class="mt-4">
-                        <UInput v-model="state.user" />
+                    <UFormField label="Backend Port" class="mt-4">
+                        <UInputNumber
+                        v-model="state.backendPort"
+                        orientation="vertical"
+                        :formatOptions="{ useGrouping: false, style: 'decimal' }" />
                     </UFormField>
-                    <UFormField label="Database Password" class="mt-2">
-                        <UInput v-model="state.password" />
+                    <UFormField label="Frontend Port" class="mt-2" :class="{ 'low-opacity': !state.ui }">
+                        <UInputNumber
+                        v-model="state.frontendPort"
+                        orientation="vertical"
+                        :formatOptions="{ useGrouping: false, style: 'decimal' }" />
                     </UFormField>
                 </UCard>
                 <CodeBlock :content="compose" :showCopy="true" language="yaml" class="max-w-[500px] grow" />
@@ -32,12 +38,11 @@
 <script lang="ts" setup>
 import base from '~/assets/data/compose-pieces/base.yaml?raw';
 import ui from '~/assets/data/compose-pieces/ui.yaml?raw';
-import db from '~/assets/data/compose-pieces/db.yaml?raw';
 
 const state = reactive({
     ui: true,
-    user: "custos_user",
-    password: ""
+    backendPort: 3060,
+    frontendPort: 3070,
 });
 
 const compose = computed(() => {
@@ -45,10 +50,9 @@ const compose = computed(() => {
     if (state.ui) {
         str += "\n" + ui;
     }
-    str += "\n" + db;
 
-    str = str.replaceAll('<<user>>', state.user);
-    str = str.replaceAll('<<password>>', state.password);
+    str = str.replace("<<BACKEND_PORT>>", state.backendPort.toString());
+    str = str.replace("<<FRONTEND_PORT>>", state.frontendPort.toString());
 
     return str;
 })

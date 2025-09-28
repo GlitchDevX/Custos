@@ -1,3 +1,4 @@
+from app.services.metrics.metrics_counter import count_metric
 import smtplib
 import socket
 from typing import Set
@@ -6,7 +7,6 @@ import dns.resolver
 from ..mail_utils import get_domain_from_email
 from ..validation_result import ValidationResult
 from .validator_module import ValidatorModule
-from ....models.metric import Metric
 
 class MailserverValidator(ValidatorModule):
 
@@ -19,10 +19,10 @@ class MailserverValidator(ValidatorModule):
     def __init__(self, config):
         self.config = config
     
-    def _get_mail_servers(_, domain):
+    def _get_mail_servers(_, domain) -> list[str]:
         try:
             mail_servers = dns.resolver.resolve(domain, 'MX', raise_on_no_answer=False)
-            servers_dict = {}
+            servers_dict: dict[str, int] = {}
             for server in mail_servers:
                 priority, host = server.to_text().split(' ')
                 servers_dict[host] = int(priority)
@@ -33,7 +33,7 @@ class MailserverValidator(ValidatorModule):
             return sorted_servers
         
         except dns.resolver.NXDOMAIN:
-            Metric.increase("MAIL_INVALID_DOMAIN")
+            count_metric('MAIL_INVALID_DOMAIN')
         
         return []
 
@@ -45,7 +45,7 @@ class MailserverValidator(ValidatorModule):
             server.set_debuglevel(0)
 
             server.connect(mail_host)
-            server.helo("custus.com")
+            server.helo("custos.com")
             server.mail("me@custos.com")
             code, message = server.rcpt(email)
             server.quit()
@@ -58,18 +58,18 @@ class MailserverValidator(ValidatorModule):
         
         except smtplib.SMTPServerDisconnected as e:
             print(e)
-            Metric.increase("MAIL_SMTP_DISCONNECT")
+            count_metric('MAIL_SMTP_DISCONNECT')
         except smtplib.SMTPConnectError as e:
             print(e)
-            Metric.increase("MAIL_SMTP_CONNECTION_ERROR")
+            count_metric('MAIL_SMTP_CONNECTION_ERROR')
         except socket.timeout as e:
             print(e)
-            Metric.increase("MAIL_SMTP_TIMEOUT")
+            count_metric('MAIL_SMTP_TIMEOUT')
 
         return "ERROR"
 
 
-    def execute_check(self, email):
+    def execute_check(self, email: str):
         domain = get_domain_from_email(email)
         
         servers = self._get_mail_servers(domain)
@@ -83,7 +83,7 @@ class MailserverValidator(ValidatorModule):
             print(f"Email found in valid cache: {email}")
             return self._ok_result
         
-        result = False
+        result = "ERROR"
         counter = 0
         for server in servers:
             counter += 1
@@ -101,3 +101,5 @@ class MailserverValidator(ValidatorModule):
             return self._no_mailserver
         if result == "NOT_FOUND":
             return self._mail_not_existing
+
+        return self._no_mailserver

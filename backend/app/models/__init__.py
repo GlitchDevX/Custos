@@ -1,1 +1,0 @@
-# Database models with SQLAlchemy

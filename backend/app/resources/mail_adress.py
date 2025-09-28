@@ -15,6 +15,6 @@ class MailValidationResource(Resource):
 
     @ns_mail.expect(parser)
     def post(self):
-        parser.parse_args(strict=True)
-        email = request.json["mail"]
+        args = parser.parse_args(strict=True)
+        email = args["mail"]
         return self.validator_manager.validate_mail(email)

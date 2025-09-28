@@ -4,4 +4,4 @@
     depends_on:
       - custos
     ports:
-      - "127.0.0.1:3070:80"
+      - "127.0.0.1:<<FRONTEND_PORT>>:80"

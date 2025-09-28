@@ -1,11 +1,10 @@
+from app.services.metrics.metrics_counter import count_metric
 from typing import List
 
 from app.utils.common_responses import ENDPOINT_DISABLED
-from ...models.metric import Metric
 from ...config_reader import ConfigReader
 from .modules.content_check_module import ContentCheckModule
 from .modules.url_checker import URLContentChecker
-from ...models.metric import Metric
 from .modules.blocked_words_checker import BlockedWordsContentChecker
 
 class ContentCheckService:
@@ -25,7 +24,7 @@ class ContentCheckService:
         if not self.config.get("enabled"):
             return ENDPOINT_DISABLED
 
-        Metric.increase("CONTENT_EXECUTED_CHECK")
+        count_metric('REALTIME_EXECUTED_CHECK')
 
         flags, censored_content = [], content
         for (configName, check) in self.content_checks:

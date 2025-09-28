@@ -7,6 +7,6 @@ RUN uv sync
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 3060
 
 ENTRYPOINT ["uv", "run", "main.py", "--config=prd"]

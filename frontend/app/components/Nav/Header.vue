@@ -20,9 +20,9 @@ const navigationItems = ref<NavigationMenuItem[]>([
     to: '/',
   },
   {
-    label: 'Monitoring',
+    label: 'Metrics',
     icon: 'lucide-chart-column',
-    to: '/monitoring'
+    to: '/metrics'
   },
   {
     label: 'Playground',

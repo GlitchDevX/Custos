@@ -62,7 +62,7 @@
 
 <script lang="ts" setup>
 import type { PropType } from 'vue';
-import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
+import type { MailValidationConfig } from '~/assets/types/configs';
 
 const emit = defineEmits<{
     submit: [config: MailValidationConfig, namespace: string]

@@ -1,18 +1,11 @@
 import argparse
 from app.app import FlaskApplication
 from app.config.flask_config import FlaskDevConfig, FlaskTstConfig, FlaskPrdConfig
-from app.config.app_config import DevConfig, PrdConfig, TstConfig
-from app.config import app_config
 
 flask_configs = {
     "dev": FlaskDevConfig,
     "tst": FlaskTstConfig,
     "prd": FlaskPrdConfig
-}
-app_configs = {
-    "dev": DevConfig,
-    "tst": TstConfig,
-    "prd": PrdConfig,
 }
 
 def run(config):
@@ -24,7 +17,5 @@ if __name__ == "__main__":
                         default='dev', help='Choose the configuration to use')
 
     args = parser.parse_args()
-
-    app_config.config = app_configs.get(args.config)
 
     run(flask_configs.get(args.config))

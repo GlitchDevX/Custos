@@ -1,5 +1,5 @@
+from app.services.metrics.metrics_counter import count_metric
 from .content_check_module import ContentCheckModule
-from ....models.metric import Metric
 import re
 import urllib.request
 from ....utils.singleton_meta import SingletonMeta
@@ -54,6 +54,6 @@ class BlockedWordsContentChecker(ContentCheckModule):
         censored_content = pattern.sub(censor_match, content)
 
         if has_blocked_word:
-            Metric.increase(f"CONTENT_BLOCKED_WORD_DETECTED")
+            count_metric('REALTIME_BLOCKED_WORD_DETECTED')
 
         return self.flag_name, has_blocked_word, censored_content
