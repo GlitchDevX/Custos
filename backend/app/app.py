@@ -25,7 +25,8 @@ class FlaskApplication:
         CORS(self.flask_app, origins="*")
         api = Api(self.flask_app, version='1.0.0', title='Custos',
                   description='Modular user-content management system written in Python.')
-        self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
+        if not self.flask_app.config["TESTING"]:
+            self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
         api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
@@ -34,14 +35,15 @@ class FlaskApplication:
         api.add_namespace(ns_analyse)
 
 
-        with self.flask_app.app_context():
-            self.metrics.init_app(self.flask_app)
-            self.metrics.register_default(
-                self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
-                     labels={'path': lambda: request.path, 'method': lambda: request.method }
+        if not self.flask_app.config["TESTING"]:
+            with self.flask_app.app_context():
+                self.metrics.init_app(self.flask_app)
+                self.metrics.register_default(
+                    self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
+                         labels={'path': lambda: request.path, 'method': lambda: request.method }
+                    )
                 )
-            )
-            self.flask_app.metrics_exporter = self.metrics # type: ignore
+                self.flask_app.metrics_exporter = self.metrics # type: ignore
 
 
         if not self.flask_app.config["TESTING"]:
