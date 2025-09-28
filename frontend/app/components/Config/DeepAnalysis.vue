@@ -40,7 +40,7 @@
 
 <script lang="ts" setup>
 import type { DropdownMenuItem } from '@nuxt/ui';
-import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
+import type { DeepAnalysisConfig } from '~/assets/types/configs';
 
 const emit = defineEmits<{
     submit: [config: DeepAnalysisConfig, namespace: string]
@@ -79,7 +79,7 @@ const labels = ref<DropdownMenuItem[]>(
         return {
             label,
             onSelect: () => addExclusion(label)
-        }
+        } satisfies DropdownMenuItem
     })
 );
 function addExclusion(name: string) {

@@ -13,7 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { MetricsConfig } from '~/assets/types/config/metrics';
+import type { MetricsConfig } from '~/assets/types/configs';
+
 
 const emit = defineEmits<{
     submit: [config: MetricsConfig, namespace: string]

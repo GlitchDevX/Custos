@@ -5,9 +5,9 @@ from app.services.configure.config_setter import ConfigSetter
 from app.config_reader import ConfigReader
 
 ns_config = Namespace('config', description='Endpoint to set config files')
-post_parser = ns_config.parser()
-post_parser.add_argument('namespace', type=str, required=True, location='json')
-post_parser.add_argument('content', type=any, required=True, location='json')
+put_parser = ns_config.parser()
+put_parser.add_argument('namespace', type=str, required=True, location='json')
+put_parser.add_argument('content', type=dict, required=True, location='json')
 
 get_parser = ns_config.parser()
 get_parser.add_argument('namespace', type=str, required=True)
@@ -20,9 +20,9 @@ class ConfigResource(Resource):
     """
     setter = ConfigSetter()
 
-    @ns_config.expect(post_parser)
-    def post(self):
-        args = post_parser.parse_args(strict=True)
+    @ns_config.expect(put_parser)
+    def put(self):
+        args = put_parser.parse_args(strict=True)
         
         filename = args["namespace"]
         content = args["content"]

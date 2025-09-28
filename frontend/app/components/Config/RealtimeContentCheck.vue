@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { UInputTags } from '#components';
-import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
+import type { RealtimeContentCheckConfig } from '~/assets/types/configs';
 
 const emit = defineEmits<{
     submit: [config: RealtimeContentCheckConfig, namespace: string]

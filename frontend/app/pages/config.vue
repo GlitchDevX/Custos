@@ -25,16 +25,12 @@
 <script lang="ts" setup>
 import type { TabsItem } from '@nuxt/ui'
 import { TITLE_SUFFIX } from '~/assets/data/appData';
-import { CONFIG_PATH } from '~/assets/ts/backendConnector';
-import type { BaseConfig } from '~/assets/types/config/baseConfig';
-import type { DeepAnalysisConfig } from '~/assets/types/config/deepAnalysis';
-import type { MailValidationConfig } from '~/assets/types/config/mailValidation';
-import type { MetricsConfig } from '~/assets/types/config/metrics';
-import type { RealtimeContentCheckConfig } from '~/assets/types/config/realtimeContentCheck';
+import type { BaseConfig, DeepAnalysisConfig, MailValidationConfig, MetricsConfig, RealtimeContentCheckConfig } from '~/assets/types/configs';
 
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
+const backend = useBackend();
 
 useHead({
   title: 'Configure Endpoints' + TITLE_SUFFIX
@@ -82,19 +78,17 @@ onBeforeMount(() => {
   loaded.value = true;
 });
 
-async function getConfig<T>(namespace: string) {
+async function getConfig<T extends BaseConfig>(namespace: string) {
   try {
-    const path = `${CONFIG_PATH}?namespace=${namespace}`;
-    return await $fetch<T>(path);
+    return await backend.getConfig<T>(namespace);
   } catch {  
     return undefined;
   }
 }
 
 async function submitConfig(config: BaseConfig, namespace: string) {
-  const body = { 'namespace': namespace, 'content': config };
   try {
-    const result = await $fetch<{ code: string }>(CONFIG_PATH, { method: 'POST', body: body });
+    const result = await backend.setConfig(namespace, config);
     if (result.code === "OK") {
       showSuccess();
       return

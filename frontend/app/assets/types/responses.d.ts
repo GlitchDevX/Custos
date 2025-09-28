@@ -11,3 +11,8 @@ export interface ContentCheckResponse {
     flags: string[],
     censored: string
 }
+
+export interface UpdateConfigResponse {
+    code: string,
+    text?: string
+}
