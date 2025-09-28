@@ -31,8 +31,7 @@ jobs:
           cache-dependency-path: frontend/pnpm-lock.yaml
       
       - name: Install dependencies
-        run: |
-          pnpm i
+        run: pnpm i
         
       - name: Lint Code
         run: pnpm lint
