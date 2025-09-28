@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api
+from waitress import serve
 from prometheus_flask_exporter import RESTfulPrometheusMetrics
 
 from .resources.analyze import ns_analyze
@@ -45,6 +46,9 @@ class FlaskApplication:
                 )
                 self.flask_app.metrics_exporter = self.metrics # type: ignore
 
-
-        if not self.flask_app.config["TESTING"]:
+        if self.flask_app.config["PRODUCTION"]:
+            # use waitress as prod server
+            serve(self.flask_app, host="0.0.0.0", port=config.PORT)
+        elif not self.flask_app.config["TESTING"]:
+            # use flask built in server as dev server
             self.flask_app.run(host=config.HOST, port=config.PORT, debug=config.DEBUG)

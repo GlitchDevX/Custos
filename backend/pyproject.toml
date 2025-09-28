@@ -15,6 +15,7 @@ dependencies = [
     "prometheus-flask-exporter>=0.23.2",
     "requests>=2.28.1",
     "torch>=2.8.0",
+    "waitress>=3.0.2",
 ]
 
 [tool.uv.sources]
