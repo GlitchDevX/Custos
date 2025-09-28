@@ -22,20 +22,20 @@ def around_tests():
 
 # set
 def test_should_throw_bad_request_on_wrong_body(client):
-    response = client.post(API_PATH, json={"WRONG_FIELD": "WRONG_VALUE"})
+    response = client.put(API_PATH, json={"WRONG_FIELD": "WRONG_VALUE"})
     assert response.status_code == 400
 
 def test_should_modify_test_config(client):
     with open(CONFIG_PATH) as file:
         assert file.read() == json.dumps(base_content)
-    response = client.post(API_PATH, json={"namespace": "test", "content": {"file": "was_modified"}})
+    response = client.put(API_PATH, json={"namespace": "test", "content": {"file": "was_modified"}})
     assert response.status_code == 200
     assert response.json["code"] == "OK"
     with open(CONFIG_PATH) as file:
         assert file.read() == json.dumps({"file": "was_modified"}, indent=4)
 
 def test_should_get_namespace_not_exists(client):
-    response = client.post(API_PATH, json={"namespace": "non_existent_file", "content": {"not": "relevant"}})
+    response = client.put(API_PATH, json={"namespace": "non_existent_file", "content": {"not": "relevant"}})
     assert response.status_code == 404
     assert response.json["code"] == "NAMESPACE_NOT_FOUND"
     with open(CONFIG_PATH) as file:
