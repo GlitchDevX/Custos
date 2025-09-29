@@ -1,3 +1,4 @@
+from app.utils.logger import logger
 from app.services.metrics.metrics_counter import count_metric
 from .content_check_module import ContentCheckModule
 import re
@@ -17,7 +18,7 @@ class ProfanityList(metaclass=SingletonMeta):
             raw_json = response.read().decode('utf-8')
             self._update_file(raw_json)
         except Exception as err:
-            print("Failed to get newest blocked words, will read from file\nException:", err)
+            logger.warning(f"Failed to get newest blocked words, will try to read from file\n{err}")
             raw_json = self._read_file()
 
         self.profanities = json.loads(raw_json)

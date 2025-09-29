@@ -1,3 +1,4 @@
+from app.utils.logger import logger
 from app.utils.singleton_meta import SingletonMeta
 from app.services.metrics.metrics_counter import count_metric
 from detoxify import Detoxify
@@ -15,7 +16,11 @@ class AnalyzerService(metaclass=SingletonMeta):
     config = ConfigReader("deep_analysis")
 
     def __init__(self):
-        self.model = Detoxify("multilingual")
+        try:
+            self.model = Detoxify("multilingual")
+        except Exception as err:
+            logger.warning(f"Could not get detoxify model.\n{err}")
+
 
     def analyze_content(self, content: str):
         if not self.config.get("enabled"):

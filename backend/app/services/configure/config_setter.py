@@ -1,3 +1,4 @@
+from app.utils.logger import logger
 from genericpath import isfile
 from ntpath import join
 from os import listdir
@@ -25,7 +26,7 @@ class ConfigSetter:
 
             return {"code": "OK"}, 200
         else:
-            print(f"Tried to write config to non existent file. Filename: {namespace}.json")
+            logger.warning(f"Tried writing config to non existent namespace '{namespace}'")
             return {"code": "NAMESPACE_NOT_FOUND", "text": "Config Namespace not found" }, 404 
 
     def update_file(self, namespace, content):

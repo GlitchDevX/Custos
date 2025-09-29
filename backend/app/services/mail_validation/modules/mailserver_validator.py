@@ -1,3 +1,4 @@
+from app.utils.logger import logger
 from app.services.metrics.metrics_counter import count_metric
 import smtplib
 import socket
@@ -38,7 +39,7 @@ class MailserverValidator(ValidatorModule):
         return []
 
     def _check_mail_servers(_, mail_host: str, email: str):
-        print(f"Will check mail server with host: {mail_host}")
+        logger.debug(f"Will check mail server with host: {mail_host}")
         
         try:
             server = smtplib.SMTP()
@@ -50,20 +51,20 @@ class MailserverValidator(ValidatorModule):
             code, message = server.rcpt(email)
             server.quit()
         
-            print(f"Got Code {code} when testing mail host: {mail_host}. Response Message: '{message.decode()}'")
+            logger.debug(f"Got Code {code} when testing mail host: {mail_host}. Response Message: '{message.decode()}'")
             if code == 250:
                 return "SUCCESS"
             else:
                 return "NOT_FOUND"
         
         except smtplib.SMTPServerDisconnected as e:
-            print(e)
+            logger.debug(e)
             count_metric('MAIL_SMTP_DISCONNECT')
         except smtplib.SMTPConnectError as e:
-            print(e)
+            logger.debug(e)
             count_metric('MAIL_SMTP_CONNECTION_ERROR')
         except socket.timeout as e:
-            print(e)
+            logger.debug(e)
             count_metric('MAIL_SMTP_TIMEOUT')
 
         return "ERROR"
@@ -80,7 +81,7 @@ class MailserverValidator(ValidatorModule):
             return self._ok_result
         
         if email in self._successful_cache:
-            print(f"Email found in valid cache: {email}")
+            logger.debug(f"Email found in valid cache: {email}")
             return self._ok_result
         
         result = "ERROR"
