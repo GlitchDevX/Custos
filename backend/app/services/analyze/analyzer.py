@@ -15,8 +15,7 @@ class AnalyzerService(metaclass=SingletonMeta):
     config = ConfigReader("deep_analysis")
 
     def __init__(self):
-        if self.config.get("enabled"):
-            self.model = Detoxify("multilingual")
+        self.model = Detoxify("multilingual")
 
     def analyze_content(self, content: str):
         if not self.config.get("enabled"):
