@@ -19,7 +19,7 @@ class AnalyzerService(metaclass=SingletonMeta):
         try:
             self.model = Detoxify("multilingual")
         except Exception as err:
-            logger.warning(f"Could not get detoxify model.\n{err}")
+            logger.warning(f"Could not get detoxify model. {err}")
 
 
     def analyze_content(self, content: str):
