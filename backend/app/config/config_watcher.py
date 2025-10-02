@@ -1,4 +1,5 @@
 from app.config_reader import reload_readers_with_namespace
+from app.utils.list_helpers import map_as_list, filter_as_list
 from app.utils.singleton_meta import SingletonMeta
 from watchdog.observers.api import BaseObserver
 from app.utils.logger import logger
@@ -17,12 +18,12 @@ class ConfigWatcher(metaclass=SingletonMeta):
     def __init__(self):
         conf_dir = "config/"
         self.configs = [(f.split('.')[0], join(conf_dir, f)) for f in listdir(conf_dir) if isfile(join(conf_dir, f))]
-        self.configs = list(filter(lambda c: c[0] != '', self.configs)) # filter out some swap files
+        self.configs = filter_as_list(lambda c: c[0] != '', self.configs) # filter out some swap files
 
         self.observers: list[BaseObserver] = []
         for (namespace, conf_file) in self.configs:
             self.observers.append(self._init_watcher(conf_file, namespace))
-        logger.info(f"started watching config files for changes: {str(self.configs)}")
+        logger.info(f"started watching config files for changes: {str(map_as_list(lambda c: c[1], self.configs))}")
 
         atexit.register(self._stop_all_observers)
 
