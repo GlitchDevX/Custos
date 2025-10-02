@@ -23,7 +23,6 @@ class ConfigWatcher(metaclass=SingletonMeta):
         for (namespace, conf_file) in self.configs:
             self.observers.append(self._init_watcher(conf_file, namespace))
         logger.info(f"started watching config files for changes: {str(self.configs)}")
-        print(f"started watching config files for changes: {str(self.configs)}")
 
         atexit.register(self._stop_all_observers)
 
@@ -44,9 +43,8 @@ class ConfigWatcher(metaclass=SingletonMeta):
         if namespace == "":
             return
         if not self.allow_reporting:
-            print("api caused file update event was prevented")
             return
-        print(f"Reloading config readers in namespace: {namespace}")
+        logger.info(f"Detected config file update. Reloading config readers in namespace: {namespace}")
         reload_readers_with_namespace(namespace)
 
     # used to prevent redundant configReader reloads when updating config via api
