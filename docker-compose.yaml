@@ -3,11 +3,17 @@ services:
     image: glitchdevx/custos:latest
     restart: always
     ports:
-      - "5365:5365/tcp"
+      - "127.0.0.1:3060:3060/tcp"
+    volumes:
+      - type: bind
+        source: custos-config
+        target: /config
   custos-ui:
     image: glitchdevx/custos-ui:latest
     restart: always
     depends_on:
       - custos
     ports:
-      - "3000:80/tcp"
+      - "127.0.0.1:3000:80/tcp"
+volumes:
+  custos:
