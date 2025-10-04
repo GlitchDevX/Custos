@@ -33,6 +33,11 @@ Then to start it run `docker compose up -d`.
 
 And to stop it `docker compose down`.
 
+### Configuration
+You can configure Custos mainly in two ways, either by directly editing the config files located 
+inside the ``custos-config/`` dir, or by using the API per HTTP call or the Web-UI.
+
+
 ### Metrics
 Custos has a Prometheus exporter, meaning you can scrape the metrics from custos using Prometheus and them use them in a grafana dashboard.
 
