@@ -4,6 +4,7 @@ from os.path import isfile, join
 
 import pytest
 
+from app.config_reader import reload_readers_with_namespace
 
 API_PATH= "/config/"
 CONFIG_DIR= "config"
@@ -22,6 +23,7 @@ def reset_config_files(all_configs: list[tuple[str, str]]):
     for config_path, content in all_configs:
         with open(config_path, "w") as file:
             file.write(content)
+        reload_readers_with_namespace(config_path.split("/")[1].split(".")[0])
 
 @pytest.fixture(autouse=True)
 def around_tests():
