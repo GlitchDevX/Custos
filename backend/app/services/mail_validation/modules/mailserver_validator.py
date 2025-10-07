@@ -1,3 +1,4 @@
+from app.utils.list_helpers import map_as_list
 from app.utils.logger import logger
 from app.services.metrics.metrics_counter import count_metric
 import smtplib
@@ -29,7 +30,7 @@ class MailserverValidator(ValidatorModule):
                 servers_dict[host] = int(priority)
 
             sorted_servers_tuples = sorted(servers_dict.items(), key=lambda x: x[1])
-            sorted_servers = list(map(lambda tuple: tuple[0], sorted_servers_tuples))
+            sorted_servers = map_as_list(lambda st: st[0], sorted_servers_tuples)
 
             return sorted_servers
         

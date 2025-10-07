@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import base from '~/assets/data/compose-pieces/base.yaml?raw';
-import ui from '~/assets/data/compose-pieces/ui.yaml?raw';
+import uiPart from '~/assets/data/compose-pieces/ui.yaml?raw';
 
 const state = reactive({
     ui: true,
@@ -47,9 +47,8 @@ const state = reactive({
 
 const compose = computed(() => {
     let str = base;
-    if (state.ui) {
-        str += "\n" + ui;
-    }
+    const ui = state.ui ? uiPart + "\n" : "";
+    str = str.replace("<<UI_PART>>", ui);
 
     str = str.replace("<<BACKEND_PORT>>", state.backendPort.toString());
     str = str.replace("<<FRONTEND_PORT>>", state.frontendPort.toString());

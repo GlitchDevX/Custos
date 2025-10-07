@@ -21,7 +21,7 @@ class TopLevelDomainList(metaclass=SingletonMeta):
             _domain_list = response_text.splitlines()
             self._update_file(response_text)
         except Exception as err:
-            logger.warning(f"Failed to get newest top level domain list, will try to read from file.\n{err}")
+            logger.warning(f"Failed to get newest top level domain list, will try to read from file. {err}")
             _domain_list = self._read_file()
 
         self._process_and_add_domains(_domain_list)

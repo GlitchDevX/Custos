@@ -18,7 +18,7 @@ class ProfanityList(metaclass=SingletonMeta):
             raw_json = response.read().decode('utf-8')
             self._update_file(raw_json)
         except Exception as err:
-            logger.warning(f"Failed to get newest blocked words, will try to read from file\n{err}")
+            logger.warning(f"Failed to get newest blocked words, will try to read from file. {err}")
             raw_json = self._read_file()
 
         self.profanities = json.loads(raw_json)

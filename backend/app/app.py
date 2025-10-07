@@ -1,3 +1,5 @@
+from app.config.config_watcher import ConfigWatcher
+
 from flask import Flask, request
 from flask_cors import CORS
 from flask_restx import Api
@@ -29,12 +31,13 @@ class FlaskApplication:
         if not self.flask_app.config["TESTING"]:
             self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
+        ConfigWatcher()
+
         api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
         api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
         api.add_namespace(ns_analyze)
-
 
         if not self.flask_app.config["TESTING"]:
             with self.flask_app.app_context():

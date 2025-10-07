@@ -6,7 +6,8 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync
 
 COPY . .
+RUN mv config/ default_config/
 
 EXPOSE 3060
 
-ENTRYPOINT ["uv", "run", "main.py", "--config=prd"]
+ENTRYPOINT ["./start_production.sh"]
