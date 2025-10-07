@@ -37,7 +37,7 @@ And to stop it `docker compose down`.
 You can configure Custos mainly in two ways, either by directly editing the config files located 
 inside the ``custos-config/`` dir, or by using the API per HTTP call or the Web-UI.
 
-> [!TIP]
+> [!HINT]
 > Custos works with hot-reload configurations, which means that as soon as you update your configuration, whether via 
 > the API or by editing the configuration files, Custos automatically uses the configuration without requiring a restart.
 
