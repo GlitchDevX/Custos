@@ -9,10 +9,6 @@ updates:
     directory: "backend/"
     schedule:
       interval: "daily"
-    groups:
-      dependencies:
-        patterns:
-          - "*" # Group all dependencies
       
   - package-ecosystem: "npm"
     directory: "frontend/"
