@@ -1,6 +1,12 @@
 <template>
   <div>
-    
+    <!-- <ClientOnly>
+        <ScalarApiReference :configuration="{
+            spec: {
+                url: apiSpecUrl,
+            },
+        }" />
+    </ClientOnly> -->
   </div>
 </template>
 

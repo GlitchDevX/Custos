@@ -26,7 +26,7 @@ class FlaskApplication:
         self.flask_app = Flask(__name__)
         self.flask_app.config.from_object(config)
         CORS(self.flask_app, origins="*")
-        api = Api(self.flask_app, version='1.0.0', title='Custos',
+        api = Api(self.flask_app, version='1.0.0', title='Custos', doc="/docs",
                   description='Modular user-content management system written in Python.')
         if not self.flask_app.config["TESTING"]:
             self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
