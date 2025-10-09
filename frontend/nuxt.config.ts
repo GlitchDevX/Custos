@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     'nuxt-shiki',
+    '@scalar/nuxt',
   ],
 
   css: ['~/assets/css/main.css'],
@@ -50,4 +51,4 @@ export default defineNuxtConfig({
       "poimandres"
     ]
   },
-})
+});
