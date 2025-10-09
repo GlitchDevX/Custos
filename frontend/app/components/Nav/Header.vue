@@ -16,22 +16,38 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 const navigationItems = ref<NavigationMenuItem[]>([
   {
     label: 'Home',
-    icon: 'lucide-home',
+    icon: 'lucide:home',
     to: '/',
   },
   {
     label: 'Metrics',
-    icon: 'lucide-chart-column',
+    icon: 'lucide:chart-column',
     to: '/metrics'
   },
   {
+    label: 'Docs',
+    icon: 'lucide:book',
+    children: [
+      {
+        icon: 'lucide:book-user',
+        label: "Guide",
+        to: '/docs/get-started'
+      },
+      {
+        icon: 'lucide:boxes',
+        label: "API Reference",
+        to: '/docs/api'
+      }
+    ]
+  },
+  {
     label: 'Playground',
-    icon: 'lucide-send',
+    icon: 'lucide:send',
     to: '/playground'
   },
   {
     label: 'Configuration',
-    icon: 'lucide-settings',
+    icon: 'lucide:settings',
     to: '/config'
   }
 ]);
