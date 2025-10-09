@@ -84,10 +84,48 @@ jobs:
           targets: backend
           push: ${{ needs.get-version-tag.outputs.was-updated }}
           pull: true
-        
+
+  update-swagger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Setup venv
+        run: uv venv
+
+      - name: Install dependencies
+        run: uv pip install -r pyproject.toml
+
+      - name: Extract swagger.json
+        run: |
+          uv run main.py &
+          p_id=$!
+          sleep 5s
+          curl http://localhost:3060/swagger.json > swagger.json
+          kill -KILL $p_id
+
+      - name: Update swagger.json in frontend
+        run: mv swagger.json ../frontend/app/assets/data/swagger.json
+      
+      - name: Push changes
+        run: |
+          git add ../frontend/app/assets/data/swagger.json
+          git diff --staged --quiet || git commit -m "[ci skip] Updated swagger.json" && git push
+
   build-frontend:
     runs-on: ubuntu-latest
-    needs: get-version-tag
+    needs: [ get-version-tag, update-swagger ]
     timeout-minutes: 20
     defaults:
       run:
@@ -113,7 +151,7 @@ jobs:
 
       - name: Lint Code
         run: pnpm lint
-
+  
       - name: Run Typecheck
         run: pnpm typecheck
 
