@@ -1,4 +1,5 @@
 # Todos
+Improve auto generated docs with better docstrings and annotations
 
 ## Frontend
 - Split uis into docs and ui
