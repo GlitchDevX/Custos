@@ -52,4 +52,11 @@ export default defineNuxtConfig({
       "poimandres"
     ]
   },
+
+  scalar: {
+    telemetry: false,
+    pathRouting: {
+      basePath: "/docs/api"
+    }
+  }
 });
