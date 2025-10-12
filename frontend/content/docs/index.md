@@ -1,0 +1,6 @@
+# Custos Documentation
+
+Custos is a User Content Moderation System which aims to prevent spam and helps to moderate users.
+
+Custos has a Web UI and API Backend. The Web UI to manage the application, configure the endpoints and experiment.
+And the API where user content can be validated and checked in real time either using effective rulesets or the detoxify neuronal network.
