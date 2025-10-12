@@ -5,7 +5,13 @@
                 Custos
             </UButton>
 
-            <UNavigationMenu :items="navigationItems"/>
+            <UNavigationMenu :items="navigationItems" />
+            <!--
+              <tailwind-include class="
+                [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
+                [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
+              " />
+            -->
         </div>
     </div>
 </template>
@@ -13,7 +19,26 @@
 <script lang="ts" setup>
 import type { NavigationMenuItem } from '@nuxt/ui'
 
-const navigationItems = ref<NavigationMenuItem[]>([
+const route = useRoute();
+
+const navigationItems = computed<NavigationMenuItem[]>(() => baseHeaderContent.map(markPageWhenChildActive));
+
+function markPageWhenChildActive(navItem: NavigationMenuItem): NavigationMenuItem {
+  if (navItem.children !== undefined) {
+    const currentPath = route.path;
+    const activeChildIndex = navItem.children.findIndex(c => c.to === currentPath);
+    
+    return {
+      ...navItem,
+      active: activeChildIndex !== -1,
+      ui: activeChildIndex !== -1 ? { childList: `[&>li:nth-child(${activeChildIndex + 1})>a]:text-primary [&>li:nth-child(${activeChildIndex + 1})>a>svg]:text-primary` } : {}
+    } satisfies NavigationMenuItem;
+  }
+
+  return navItem;
+}
+
+const baseHeaderContent: NavigationMenuItem[] = [
   {
     label: 'Home',
     icon: 'lucide:home',
@@ -50,7 +75,7 @@ const navigationItems = ref<NavigationMenuItem[]>([
     icon: 'lucide:settings',
     to: '/config'
   }
-]);
+];
 </script>
 
 <style scoped>
