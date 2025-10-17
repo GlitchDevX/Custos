@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@nuxt/content',
+    '@nuxtjs/mdc',
     'nuxt-shiki',
     '@scalar/nuxt',
   ],
@@ -37,6 +38,16 @@ export default defineNuxtConfig({
       }
     ],
     mode: 'svg'
+  },
+
+  content: {
+    build: {
+      markdown: {
+        toc: {
+          depth: 3
+        }
+      }
+    }
   },
 
   shiki: {

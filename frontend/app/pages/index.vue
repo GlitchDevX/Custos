@@ -1,5 +1,5 @@
 <template>
-    <div class="p-4 flex gap-16 flex-col">
+    <div class="p-4 pb-0 flex gap-16 flex-col">
         <HomeHero />
         <HomeFeatureMailValidation />
         <HomeFeatureRealtimeContent />
