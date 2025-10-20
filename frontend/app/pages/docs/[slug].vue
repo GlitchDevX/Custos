@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-[calc(100dvh-64px)] flex flex-col">
+  <div class="min-h-[calc(100dvh-64px)] flex flex-col px-4">
     <UPage class="grow">
       <template #left>
-        <UPageAside :ui="{root: 'pl-4 pr-0'}">
+        <UPageAside>
           <!-- <div class="flex flex-col"> -->
             <span class="text-lg font-bold">Pages</span>
             <UContentNavigation v-if="allPages" :navigation="allPages" :collapsible="false" highlight class="pt-2" />
@@ -24,7 +24,7 @@
         <UContentToc :links="page?.body.toc?.links" highlight />
       </template>
     </UPage>
-    <HomeFooter />
+    <HomeFooter class="mt-4" />
   </div>
 </template>
 
@@ -81,8 +81,8 @@ useSeoMeta({
 })
 </script>
 
-<style>
-div {
+<style scoped>
+body {
   --ui-header-heigt: calc(var(--spacing)*16);
 }
 </style>
