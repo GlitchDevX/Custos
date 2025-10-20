@@ -17,6 +17,12 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  routeRules: {
+    '/docs': {
+      redirect: '/docs/introduction'
+    }
+  },
+
   image: {
     dir: "assets/img/"
   },
