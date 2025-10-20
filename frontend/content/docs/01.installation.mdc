@@ -54,4 +54,7 @@ To update Custos, you need to pull the newest image by running:
 docker compose pull
 ```
 
-Then stop and start Custos.
+Then stop and start Custos:
+```sh [Terminal]
+docker compose down && docker compose up -d
+```
