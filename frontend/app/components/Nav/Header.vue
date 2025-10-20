@@ -26,7 +26,7 @@ const navigationItems = computed<NavigationMenuItem[]>(() => baseHeaderContent.m
 function markPageWhenChildActive(navItem: NavigationMenuItem): NavigationMenuItem {
   if (navItem.children !== undefined) {
     const currentPath = route.path;
-    const activeChildIndex = navItem.children.findIndex(c => c.to === currentPath);
+    const activeChildIndex = navItem.children.findIndex(c => currentPath.startsWith(c.to));
     
     return {
       ...navItem,
@@ -52,16 +52,17 @@ const baseHeaderContent: NavigationMenuItem[] = [
   {
     label: 'Docs',
     icon: 'lucide:book',
+    exact: false,
     children: [
-      {
-        icon: 'lucide:book-user',
-        label: "Guide",
-        to: '/docs/get-started'
-      },
       {
         icon: 'lucide:boxes',
         label: "API Reference",
         to: '/docs/api'
+      },  
+      {
+        icon: 'lucide:book-user',
+        label: "Guide",
+        to: '/docs'
       }
     ]
   },
