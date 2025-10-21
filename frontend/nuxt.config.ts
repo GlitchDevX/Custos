@@ -46,6 +46,12 @@ export default defineNuxtConfig({
     mode: 'svg'
   },
 
+  mdc: {
+    highlight: {
+      theme: 'poimandres',
+    }
+  },
+
   content: {
     build: {
       markdown: {
