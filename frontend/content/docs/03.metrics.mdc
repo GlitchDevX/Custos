@@ -16,11 +16,7 @@ scrape_configs:
       - targets: ['localhost:3060']  # assuming your Custos instance is running on port 3060
 ```
 
-This data could then be used in a Grafana dashboard, you can use [this dashboard](/assets/data/metric-configs/grafana-dashboard.json) as a base.
+This data could then be used in a Grafana dashboard, you can use this dashboard:
 
-::CodeBlockSrc{src=/swagger.json}
-
-::
-
-::ProsePre{src="~/assets/data/metric-configs/grafana-dashboard.json"}
+::GrafanaDashboardCode
 ::
