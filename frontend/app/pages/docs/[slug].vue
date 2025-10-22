@@ -63,7 +63,6 @@ const breadcrumb = computed<BreadcrumbItem[]>(() =>
   route.path.split("/")
     .filter(x => x !== "")
     .map((label) => {
-      console.log(label);
       
       return {
         label: label
