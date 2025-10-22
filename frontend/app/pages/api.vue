@@ -16,7 +16,7 @@ useHead({
 const scalarConfig = {
   spec: {
     defaultOpenAllTags: true,
-    url: '/swagger.json',
+    url: '../../public/swagger.json',
     baseServerURL: 'http://localhost:3060',
     hideDarkModeToggle: true,
     showToolbar: "never",
