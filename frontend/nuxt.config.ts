@@ -23,6 +23,12 @@ export default defineNuxtConfig({
     }
   },
 
+  imports: {
+    transform: {
+      exclude: [/scalar/],
+    },
+  },
+
   image: {
     dir: "assets/img/"
   },
