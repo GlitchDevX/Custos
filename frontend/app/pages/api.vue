@@ -1,24 +1,26 @@
 <template>
   <div class="mt-0 sm:-mt-16">
-    <ClientOnly>
-      <ScalarApiReference :configuration="scalarConfig" />
-    </ClientOnly>
+    <ApiReference :configuration="scalarConfig" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ApiReference } from '@scalar/api-reference';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
+import swaggerFile from '../../public/swagger.json';
 
 useHead({
   title: "API Reference" + TITLE_SUFFIX
 });
 
 const scalarConfig = {
+  content: swaggerFile,
   spec: {
+    telemetry: false,
     defaultOpenAllTags: true,
-    url: '../../public/swagger.json',
     baseServerURL: 'http://localhost:3060',
     hideDarkModeToggle: true,
+    hideClientButton: true,
     showToolbar: "never",
   }
 }

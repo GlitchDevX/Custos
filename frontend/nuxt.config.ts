@@ -12,7 +12,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxtjs/mdc',
     'nuxt-shiki',
-    '@scalar/nuxt',
   ],
 
   css: ['~/assets/css/main.css'],
@@ -81,11 +80,4 @@ export default defineNuxtConfig({
       "poimandres"
     ]
   },
-
-  scalar: {
-    telemetry: false,
-    pathRouting: {
-      basePath: "/docs/api"
-    }
-  }
 });

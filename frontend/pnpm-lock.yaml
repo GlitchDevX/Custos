@@ -29,9 +29,9 @@ importers:
       '@nuxt/ui':
         specifier: ^4.0.1
         version: 4.0.1(@babel/parser@7.28.4)(@netlify/blobs@9.1.2)(change-case@5.4.4)(db0@0.3.4(better-sqlite3@12.4.1))(embla-carousel@8.6.0)(focus-trap@7.6.5)(ioredis@5.8.1)(jwt-decode@4.0.0)(magicast@0.3.5)(typescript@5.9.3)(vite@7.1.9(@types/node@24.3.0)(jiti@2.6.1)(lightningcss@1.30.1)(terser@5.44.0)(yaml@2.8.1))(vue-router@4.5.1(vue@3.5.22(typescript@5.9.3)))(vue@3.5.22(typescript@5.9.3))(zod@4.1.11)
-      '@scalar/nuxt':
-        specifier: ^0.5.20
-        version: 0.5.21(change-case@5.4.4)(jwt-decode@4.0.0)(magicast@0.3.5)(tailwindcss@4.1.14)(typescript@5.9.3)
+      '@scalar/api-reference':
+        specifier: ^1.38.1
+        version: 1.38.1(change-case@5.4.4)(jwt-decode@4.0.0)(tailwindcss@4.1.14)(typescript@5.9.3)
       better-sqlite3:
         specifier: ^12.4.1
         version: 12.4.1
@@ -1660,10 +1660,6 @@ packages:
 
   '@scalar/json-magic@0.6.1':
     resolution: {integrity: sha512-HJMPY5dUU3EXVS4EkjAFXo+uCrby/YFu/gljKDQnhYWRy5zQ0sJWrOEDcHS8nLoJRCIRD5tiVpCxnUnSb6OoAQ==}
-    engines: {node: '>=20'}
-
-  '@scalar/nuxt@0.5.21':
-    resolution: {integrity: sha512-wP7K6pm/7yBJfH4dLJ3dmVMscxjDbPHTzT9SeeMY45oKYo2sL2ezCuR4jpoM2VY2u8NVFjHYBM8GpnW0W7Xguw==}
     engines: {node: '>=20'}
 
   '@scalar/oas-utils@0.5.2':
@@ -8409,32 +8405,6 @@ snapshots:
     dependencies:
       '@scalar/helpers': 0.0.12
       yaml: 2.8.0
-
-  '@scalar/nuxt@0.5.21(change-case@5.4.4)(jwt-decode@4.0.0)(magicast@0.3.5)(tailwindcss@4.1.14)(typescript@5.9.3)':
-    dependencies:
-      '@nuxt/kit': 4.1.3(magicast@0.3.5)
-      '@scalar/api-client': 2.8.1(change-case@5.4.4)(jwt-decode@4.0.0)(tailwindcss@4.1.14)(typescript@5.9.3)
-      '@scalar/api-reference': 1.38.1(change-case@5.4.4)(jwt-decode@4.0.0)(tailwindcss@4.1.14)(typescript@5.9.3)
-      '@scalar/types': 0.3.2
-      '@scalar/use-hooks': 0.2.5(typescript@5.9.3)
-      '@scalar/workspace-store': 0.17.1(typescript@5.9.3)
-      vue: 3.5.22(typescript@5.9.3)
-    transitivePeerDependencies:
-      - '@vue/composition-api'
-      - async-validator
-      - axios
-      - change-case
-      - drauu
-      - idb-keyval
-      - jwt-decode
-      - magicast
-      - nprogress
-      - qrcode
-      - sortablejs
-      - supports-color
-      - tailwindcss
-      - typescript
-      - universal-cookie
 
   '@scalar/oas-utils@0.5.2(typescript@5.9.3)':
     dependencies:
