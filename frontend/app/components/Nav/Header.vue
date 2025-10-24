@@ -57,7 +57,8 @@ const baseHeaderContent: NavigationMenuItem[] = [
       {
         icon: 'lucide:boxes',
         label: "API Reference",
-        to: '/api'
+        to: '/api',
+        prefetch: false, // prevent scalar loading css on other pages 
       },  
       {
         icon: 'lucide:book-user',
