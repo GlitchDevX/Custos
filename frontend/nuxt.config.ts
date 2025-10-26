@@ -22,10 +22,10 @@ export default defineNuxtConfig({
     }
   },
 
-  imports: {
-    transform: {
-      exclude: [/scalar/],
-    },
+  nitro: {
+    prerender: {
+      routes: ["/docs/introduction"]
+    }
   },
 
   image: {
