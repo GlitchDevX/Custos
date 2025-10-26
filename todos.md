@@ -1,7 +1,5 @@
 # Todos
 Improve auto generated docs with better docstrings and annotations
-Create documentation guide
-add not found docu page
 add next & prev page buttons below doc content
 
 ## Frontend

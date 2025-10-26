@@ -9,17 +9,20 @@
       </template>
 
       <template #default>
-        <UPageHeader v-bind="page">
+        <UPageHeader v-if="page" v-bind="page">
           <template #headline>
             <UBreadcrumb :items="breadcrumb" />
           </template>
         </UPageHeader>
 
-        <ContentRenderer v-if="page" :value="page.body" :prose="true" class="mt-8" />
+        <div v-if="page">
+          <ContentRenderer v-if="page" :value="page.body" :prose="true" class="mt-8" />
+        </div>
+        <ErrorNotFound v-else />
       </template>
 
       <template #right>
-        <UContentToc :links="page?.body.toc?.links" highlight />
+        <UContentToc v-if="page" :links="page?.body.toc?.links" highlight />
       </template>
     </UPage>
     <HomeFooter class="mt-4" />
@@ -72,8 +75,15 @@ const breadcrumb = computed<BreadcrumbItem[]>(() =>
     })
 );
 
+
+let pageTitle: string = page.value?.title ?? "";
+if (page.value?.title === "") {
+  pageTitle = "Documentation not found" + TITLE_SUFFIX
+} else {
+  pageTitle += ' Documentation' + TITLE_SUFFIX
+}
 useSeoMeta({
-  title: page.value?.title + ' Documentation' + TITLE_SUFFIX,
+  title: pageTitle,
   description: page.value?.description
 })
 </script>
