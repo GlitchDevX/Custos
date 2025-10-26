@@ -1,12 +1,10 @@
 <template>
-  <div class="min-h-[calc(100dvh-64px)] flex flex-col px-4">
+  <UContainer class="min-h-[calc(100dvh-64px)] flex flex-col px-4 sm:px-6 lg:px-8">
     <UPage class="grow">
       <template #left>
         <UPageAside>
-          <!-- <div class="flex flex-col"> -->
-            <span class="text-lg font-bold">Pages</span>
-            <UContentNavigation v-if="allPages" :navigation="allPages" :collapsible="false" highlight class="pt-2" />
-          <!-- </div> -->
+          <span class="text-lg font-bold">Pages</span>
+          <UContentNavigation v-if="allPages" :navigation="allPages" :collapsible="false" highlight class="pt-2" />
         </UPageAside>
       </template>
 
@@ -17,7 +15,7 @@
           </template>
         </UPageHeader>
 
-        <ContentRenderer v-if="page" :value="page.body" :prose="true" />
+        <ContentRenderer v-if="page" :value="page.body" :prose="true" class="mt-8" />
       </template>
 
       <template #right>
@@ -25,7 +23,7 @@
       </template>
     </UPage>
     <HomeFooter class="mt-4" />
-  </div>
+  </UContainer>
 </template>
 
 <script lang="ts" setup>
