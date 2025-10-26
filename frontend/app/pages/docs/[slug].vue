@@ -16,7 +16,14 @@
         </UPageHeader>
 
         <div v-if="page">
-          <ContentRenderer v-if="page" :value="page.body" :prose="true" class="mt-8" />
+          <ContentRenderer :value="page.body" :prose="true" class="mt-8" />
+
+          <USeparator v-if="surround.length !== 0" class="mt-6 mb-6" />
+
+          <UContentSurround
+            :surround="(surround as any)"
+            prev-icon="lucide:chevron-left"
+            next-icon="lucide:chevron-right" />
         </div>
         <ErrorNotFound v-else />
       </template>
@@ -55,9 +62,30 @@ const { data: allPages } = await useAsyncData(async () => {
       title: nav.title,
       icon: nav.icon,
       path: d.path,
+      description: d.description
     } satisfies ContentNavigationItem
   }).filter(x => x !== undefined);
   return allNav;
+});
+
+const surround = computed(() => {
+  if (page.value === undefined || page === null) {
+    return [];
+  }
+  const currentIndex = allPages.value?.findIndex(p => p.path === route.path) ?? -2;
+  return [
+    allPages.value?.[currentIndex - 1],
+    allPages.value?.[currentIndex + 1]
+  ].map(p => {
+    if (p === undefined) {
+      return undefined
+    }
+    return {
+      title: p.title,
+      description: p.description,
+      path: p.path
+    }
+  });
 });
 
 const breadcrumb = computed<BreadcrumbItem[]>(() => 

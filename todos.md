@@ -1,6 +1,5 @@
 # Todos
 Improve auto generated docs with better docstrings and annotations
-add next & prev page buttons below doc content
 
 ## Frontend
 - Create docs
