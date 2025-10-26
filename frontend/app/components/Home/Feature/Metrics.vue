@@ -31,7 +31,13 @@
                         </UBadge>
                     </TransitionGroup>
                 </div>
-                <NuxtImg src="/prometheus_logo.png" alt="Prometheus Logo" class="rounded-2xl w-[50%]" />
+                <NuxtImg
+                    src="/prometheus_logo.png"
+                    format="webp"
+                    loading="lazy"
+                    fetch-priority="low"
+                    alt="Prometheus Logo"
+                    class="rounded-2xl w-[50%]" />
             </div>
         </div>
     </div>

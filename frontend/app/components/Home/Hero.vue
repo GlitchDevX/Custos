@@ -15,7 +15,13 @@
             <UButton size="xl" variant="subtle" label="Test Endpoints" to="/playground" />
         </div>
     </div>
-    <NuxtImg src="/hero_pages.png" :placeholder="[16, 9, 85, 50]" class="rounded-lg sm:w-[90%] mt-4"/>
+    <NuxtImg 
+        src="/hero_pages.png"
+        :placeholder="[16, 9, 85, 50]"
+        preload
+        loading="eager"
+        fetch-priority="high"
+        class="rounded-lg sm:w-[90%] mt-4"/>
 </div>
 </template>
 

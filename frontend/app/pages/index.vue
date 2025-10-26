@@ -2,12 +2,12 @@
     <div class="p-4 pb-0 flex gap-16 flex-col">
         <HomeHero />
         <HomeFeatureMailValidation />
-        <HomeFeatureRealtimeContent />
-        <HomeFeatureDeepCheck />
-        <HomeFeatureConfigurable/>
-        <HomeFeatureMetrics />
-        <HomeGetStarted />
-        <HomeFooter />
+        <LazyHomeFeatureRealtimeContent hydrate-on-visible />
+        <LazyHomeFeatureDeepCheck hydrate-on-visible />
+        <LazyHomeFeatureConfigurable hydrate-on-visible/>
+        <LazyHomeFeatureMetrics hydrate-on-visible />
+        <LazyHomeGetStarted hydrate-on-visible />
+        <LazyHomeFooter hydrate-on-visible />
     </div>
 </template>
 

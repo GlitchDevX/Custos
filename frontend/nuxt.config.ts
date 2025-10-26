@@ -29,7 +29,15 @@ export default defineNuxtConfig({
   },
 
   image: {
-    dir: "assets/img/"
+    dir: "assets/img/",
+    quality: 80,
+    format: ["webp"],
+    ipx: {
+      modifiers: {
+        quality: 85,
+        format: "webp"
+      }
+    }
   },
 
   fonts: {
