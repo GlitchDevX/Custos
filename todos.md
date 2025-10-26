@@ -9,6 +9,7 @@ add next & prev page buttons below doc content
 - Split uis into docs and ui
 - Ability to change port of backend (maybe not necessary when directy talking to the backend as service not via localhost)
 - Add mobile header
+- Fix hydration issues with metrics animation
 
 ## Backend
 - Add phone number validation endpoint using phonenumbers lib
