@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     customCollections: [
       {
         prefix: 'ci',
-        dir: './assets/custom-icons'
+        dir: 'app/assets/custom-icons'
       }
     ],
     mode: 'svg'
