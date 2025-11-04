@@ -27,7 +27,10 @@ class AnalyzeResource(Resource):
         """
         /analyze
 
-        Returns a list of labels detected by the detoxify model.
+        Returns a list of labels detected by the detoxify multilingual model.
+
+        Available labels are:
+        `toxicity`, `severe_toxicity`, `obscene`, `threat`, `insult`, `identity_attack`, `sexual_explicit`
         """
         args = parser.parse_args(strict=True)
         content = args["content"]
