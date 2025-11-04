@@ -6,7 +6,7 @@ ns_content_check = Namespace('content', description='Endpoint for Content Check'
 parser = ns_content_check.parser()
 parser.add_argument('content', type=str, required=True, location='json')
 
-@ns_content_check.route('/')
+@ns_content_check.route('/', strict_slashes=False)
 class ContentCheckResource(Resource):
     """
     A resource class for checking content against certain criteria.

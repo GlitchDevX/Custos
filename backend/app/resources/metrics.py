@@ -8,7 +8,7 @@ ns_metric = Namespace('Metrics', description='Endpoint for getting metrics for P
 
 endpoint_disabled_model = ns_metric.model("endpoint_disabled", ENDPOINT_DISABLED_MODEL)
 
-@ns_metric.route('') # no trailing slash to match prometheus metrics path style
+@ns_metric.route('/', strict_slashes=False)
 class MetricsResource(Resource):
     """
     A resource class for reporting prometheus metrics.

@@ -13,7 +13,7 @@ analyze_result_model = ns_analyze.model("analyze_result", {
 })
 endpoint_disabled_model = ns_analyze.model("endpoint_disabled", ENDPOINT_DISABLED_MODEL)
 
-@ns_analyze.route('/')
+@ns_analyze.route('/', strict_slashes=False)
 class AnalyzeResource(Resource):
     """
     A resource class for analysing content with the detoxify model.
@@ -25,7 +25,7 @@ class AnalyzeResource(Resource):
     @ns_analyze.expect(parser)
     def post(self):
         """
-        /analyze/
+        /analyze
 
         Returns a list of labels detected by the detoxify model.
         """

@@ -6,7 +6,7 @@ ns_mail = Namespace('mail', description='Endpoint for Email Validation')
 parser = ns_mail.parser()
 parser.add_argument('mail', type=str, required=True, location='json')
 
-@ns_mail.route('/')
+@ns_mail.route('/', strict_slashes=False)
 class MailValidationResource(Resource):
     """
     A resource class for validating email addresses.

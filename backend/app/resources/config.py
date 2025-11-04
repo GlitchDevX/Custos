@@ -12,7 +12,7 @@ put_parser.add_argument('content', type=dict, required=True, location='json')
 get_parser = ns_config.parser()
 get_parser.add_argument('namespace', type=str, required=True)
 
-@ns_config.route('/')
+@ns_config.route('/', strict_slashes=False)
 class ConfigResource(Resource):
     """
     A resource class for managing configuration files.

@@ -27,7 +27,7 @@ class FlaskApplication:
         self.flask_app.config.from_object(config)
         CORS(self.flask_app, origins="*")
         api = Api(self.flask_app, version='1.0.0', title='Custos', doc="/docs",
-                  description='Modular user-content management system written in Python.')
+                  description='Modular user-content management system written in Python.\n\nAll endpoints in this documentation will be displayed with a trailing slash, but they will also work without it.')
         if not self.flask_app.config["TESTING"]:
             self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
@@ -42,11 +42,11 @@ class FlaskApplication:
         if not self.flask_app.config["TESTING"]:
             with self.flask_app.app_context():
                 self.metrics.init_app(self.flask_app)
-                self.metrics.register_default(
-                    self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
-                         labels={'path': lambda: request.path, 'method': lambda: request.method }
-                    )
-                )
+                # self.metrics.register_default(
+                #     self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
+                #          labels={'path': lambda: request.path, 'method': lambda: request.method }
+                #     )
+                # )
                 self.flask_app.metrics_exporter = self.metrics # type: ignore
 
         if self.flask_app.config["PRODUCTION"]:
