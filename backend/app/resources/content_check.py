@@ -4,7 +4,7 @@ from flask import request
 
 from ..utils.common_responses import ENDPOINT_DISABLED_MODEL
 
-ns_content_check = Namespace('Content', description='Endpoint checking content against certain criteria.', path='/content')
+ns_content_check = Namespace('Content', description='Endpoint for checking content against certain criteria.', path='/content')
 parser = ns_content_check.parser()
 parser.add_argument('content', type=str, required=True, location='json')
 
