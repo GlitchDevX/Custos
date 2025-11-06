@@ -11,7 +11,16 @@ parser.add_argument('content', type=str, required=True, location='json')
 analyze_result_model = ns_analyze.model("analyze_result", {
     'labels': fields.List(fields.String())
 })
+analyze_loading_model = ns_analyze.model("analyze_loading", {
+    'code': fields.String("MODEL_TEMPORARY_UNAVAILABLE"),
+    'text': fields.String("The detoxify model is still loading, please try again in a minute.")
+})
+analyze_unavailable_model = ns_analyze.model("analyze_unavailable", {
+    'code': fields.String("MODEL_UNAVAILABLE"),
+    'text': fields.String("The detoxify model is missing.")
+})
 endpoint_disabled_model = ns_analyze.model("endpoint_disabled", ENDPOINT_DISABLED_MODEL)
+
 
 @ns_analyze.route('/', strict_slashes=False)
 class AnalyzeResource(Resource):
@@ -21,6 +30,8 @@ class AnalyzeResource(Resource):
     analyzer_service = AnalyzerService()
 
     @ns_analyze.response(503, "Endpoint Disabled", endpoint_disabled_model)
+    @ns_analyze.response(425, "Loading Model", analyze_loading_model)
+    @ns_analyze.response(500, "Model Missing", analyze_unavailable_model)
     @ns_analyze.response(200, "Labels", analyze_result_model)
     @ns_analyze.expect(parser)
     def post(self):
