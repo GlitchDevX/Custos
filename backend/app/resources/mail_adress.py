@@ -1,10 +1,9 @@
 from app.services.mail_validation.validator_manager import ValidatorManager
-from flask_restx import Resource, Namespace, fields, Model, Api
-from flask import request
+from flask_restx import Resource, Namespace, fields
 
 from app.utils.common_responses import ENDPOINT_DISABLED_MODEL
 
-ns_mail = Namespace('mail', description='Endpoint for validating emails.')
+ns_mail = Namespace('Mail', description='Endpoint for validating emails.', path="/mail")
 parser = ns_mail.parser()
 parser.add_argument('mail', type=str, required=True, location='json')
 
