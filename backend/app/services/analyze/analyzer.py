@@ -36,10 +36,10 @@ class AnalyzerService(metaclass=SingletonMeta):
         if self.model is None:
             if self.loading_thread.is_alive():
                 logger.warning("Could not analyze content, still waiting to load detoxify model")
-                return {'code': "MODEL_TEMPORARY_UNAVAILABLE", 'text': "The detoxify model is still loading, please try again in a minute."}, 503
+                return {'code': "MODEL_TEMPORARY_UNAVAILABLE", 'text': "The detoxify model is still loading, please try again in a minute."}, 425
             else:
                 logger.error("Could not analyze content, detoxify model is missing")
-                return {'code': "MODEL_UNAVAILABLE", 'text': "The detoxify model is missing."}, 503
+                return {'code': "MODEL_UNAVAILABLE", 'text': "The detoxify model is missing."}, 500
 
         count_metric('ANALYZER_EXECUTED')
 
