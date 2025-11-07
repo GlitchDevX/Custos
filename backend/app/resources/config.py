@@ -36,6 +36,6 @@ class ConfigResource(Resource):
         config = ConfigReader(namespace).get_all()
 
         if config is None:
-            return {}, 404
+            return {"error": "NAMESPACE_NOT_FOUND", "text": "Config Namespace not found" }, 404
         else:
             return config, 200
