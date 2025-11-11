@@ -14,6 +14,12 @@ export default defineNuxtConfig({
     'nuxt-shiki',
   ],
 
+  runtimeConfig: {
+    public: {
+      docsDev: false
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
   routeRules: {

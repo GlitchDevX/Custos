@@ -14,15 +14,21 @@ useHead({
   title: "API Reference" + TITLE_SUFFIX
 });
 
+const runtimeConfig = useRuntimeConfig();
+
 const scalarConfig = {
-  content: swaggerFile,
+  ... runtimeConfig.public.docsDev ? {
+    url: 'http://localhost:3060/swagger.json',
+  } : {
+    content: swaggerFile,
+  },
   telemetry: false,
   defaultOpenAllTags: true,
   baseServerURL: 'http://localhost:3060',
   hideDarkModeToggle: true,
   hideClientButton: true,
   showToolbar: "never",
-  customCss: 'body { background: var(--scalar-background-1); }'
+  customCss: 'body { background: var(--scalar-background-1); }' // fallback when scalar is loaded on pages other then /api
 } satisfies AnyApiReferenceConfiguration;
 </script>
 
