@@ -7,7 +7,7 @@
         <LazyHomeFeatureConfigurable hydrate-on-visible/>
         <LazyHomeFeatureMetrics hydrate-on-visible />
         <LazyHomeGetStarted hydrate-on-visible />
-        <LazyHomeFooter hydrate-on-visible />
+        <LazyNavFooter hydrate-on-visible />
     </div>
 </template>
 

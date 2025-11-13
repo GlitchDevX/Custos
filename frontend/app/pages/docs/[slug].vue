@@ -32,7 +32,7 @@
         <UContentToc v-if="page" :links="page?.body.toc?.links" highlight />
       </template>
     </UPage>
-    <HomeFooter class="mt-4" />
+    <NavFooter class="mt-4" />
   </UContainer>
 </template>
 
