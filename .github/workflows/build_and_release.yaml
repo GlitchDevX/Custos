@@ -114,7 +114,7 @@ jobs:
         run: |
           uv run main.py --config prd &
           p_id=$!
-          sleep 5s
+          sleep 10s
           curl http://localhost:3060/swagger.json > swagger.json
           kill -KILL $p_id
 
