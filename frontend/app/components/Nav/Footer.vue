@@ -1,7 +1,7 @@
 <template>
     <div>
         <USeparator class="w-full" />
-        <div class="flex justify-center items-center flex-row gap-4 mt-4">
+        <div class="flex justify-center items-center flex-row gap-4 mt-4 mb-4">
             <UButton variant="soft" color="neutral" to="https://github.com/GlitchDevX/custos" target="_blank">
                 <UIcon name="lucide:github" />
             </UButton>

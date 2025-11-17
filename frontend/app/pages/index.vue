@@ -1,24 +1,8 @@
 <template>
-    <div class="p-4 flex gap-16 flex-col">
-        <HomeHero />
-        <HomeFeatureMailValidation />
-        <HomeFeatureRealtimeContent />
-        <HomeFeatureDeepCheck />
-        <HomeFeatureConfigurable/>
-        <HomeFeatureMetrics />
-        <HomeGetStarted />
-        <HomeFooter />
-    </div>
+    <PagePromo v-if="runtimeConfig.public.promoMode" />
+    <PageWelcome v-else />
 </template>
 
 <script lang="ts" setup>
-import { TITLE_SUFFIX } from '~/assets/data/appData';
-
-useHead({
-    title: 'Home' + TITLE_SUFFIX
-});
+const runtimeConfig = useRuntimeConfig();
 </script>
-
-<style scoped>
-
-</style>

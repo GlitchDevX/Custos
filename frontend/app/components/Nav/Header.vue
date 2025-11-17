@@ -1,11 +1,17 @@
 <template>
     <div class="w-full h-16">
-        <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-50 w-full">
+        <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-1001  w-full">
             <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
                 Custos
             </UButton>
 
-            <UNavigationMenu :items="navigationItems"/>
+            <UNavigationMenu :items="navigationItems" />
+            <!--
+              <tailwind-include class="
+                [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
+                [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
+              " />
+            -->
         </div>
     </div>
 </template>
@@ -13,28 +19,61 @@
 <script lang="ts" setup>
 import type { NavigationMenuItem } from '@nuxt/ui'
 
-const navigationItems = ref<NavigationMenuItem[]>([
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+
+const navigationItems = computed<NavigationMenuItem[]>(() => baseHeaderContent.map(markPageWhenChildActive));
+
+function markPageWhenChildActive(navItem: NavigationMenuItem): NavigationMenuItem {
+  if (navItem.children !== undefined) {
+    const currentPath = route.path;
+    const activeChildIndex = navItem.children.findIndex(c => currentPath.startsWith(c.to));
+    
+    return {
+      ...navItem,
+      active: activeChildIndex !== -1,
+      ui: activeChildIndex !== -1 ? { childList: `[&>li:nth-child(${activeChildIndex + 1})>a]:text-primary [&>li:nth-child(${activeChildIndex + 1})>a>svg]:text-primary` } : {}
+    } satisfies NavigationMenuItem;
+  }
+
+  return navItem;
+}
+
+const baseHeaderContent: NavigationMenuItem[] = [
   {
     label: 'Home',
-    icon: 'lucide-home',
+    icon: 'lucide:home',
     to: '/',
   },
   {
-    label: 'Metrics',
-    icon: 'lucide-chart-column',
-    to: '/metrics'
+    label: 'Docs',
+    icon: 'lucide:book',
+    exact: false,
+    children: [
+      {
+        icon: 'lucide:boxes',
+        label: "API Reference",
+        to: '/api',
+        prefetch: false, // prevent scalar loading css on other pages 
+      },  
+      {
+        icon: 'lucide:book-user',
+        label: "Guide",
+        to: '/docs'
+      }
+    ]
   },
   {
     label: 'Playground',
-    icon: 'lucide-send',
+    icon: 'lucide:send',
     to: '/playground'
   },
-  {
+  ...runtimeConfig.public.promoMode ? [] : [{
     label: 'Configuration',
-    icon: 'lucide-settings',
+    icon: 'lucide:settings',
     to: '/config'
-  }
-]);
+  }]
+];
 </script>
 
 <style scoped>

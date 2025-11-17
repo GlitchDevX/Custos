@@ -12,3 +12,9 @@ uv sync
 # start backend
 uv run main.py
 ```
+
+## Update Documentation
+To update the swagger config and see the changes in the ui start the frontend with this command.
+```bash
+pn run dev:docs
+```

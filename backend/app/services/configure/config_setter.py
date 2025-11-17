@@ -29,7 +29,7 @@ class ConfigSetter:
             return {"code": "OK"}, 200
         else:
             logger.warning(f"Tried writing config to non existent namespace '{namespace}'")
-            return {"code": "NAMESPACE_NOT_FOUND", "text": "Config Namespace not found" }, 404 
+            return {"error": "NAMESPACE_NOT_FOUND", "text": "Config Namespace not found" }, 404
 
     def update_file(self, namespace, content):
         self.config_watcher.prevent_update_reporting()

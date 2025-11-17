@@ -9,13 +9,43 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@nuxt/image',
     '@nuxt/ui',
+    '@nuxt/content',
+    '@nuxtjs/mdc',
     'nuxt-shiki',
   ],
 
+  runtimeConfig: {
+    public: {
+      docsDev: false,
+      promoMode: false,
+      version: "PLACEHOLDER"
+    }
+  },
+
   css: ['~/assets/css/main.css'],
 
+  routeRules: {
+    '/docs': {
+      redirect: '/docs/introduction'
+    }
+  },
+
+  nitro: {
+    prerender: {
+      routes: ["/docs/introduction"]
+    }
+  },
+
   image: {
-    dir: "assets/img/"
+    dir: "assets/img/",
+    quality: 80,
+    format: ["webp"],
+    ipx: {
+      modifiers: {
+        quality: 85,
+        format: "webp"
+      }
+    }
   },
 
   fonts: {
@@ -31,10 +61,26 @@ export default defineNuxtConfig({
     customCollections: [
       {
         prefix: 'ci',
-        dir: './assets/custom-icons'
+        dir: 'app/assets/custom-icons'
       }
     ],
     mode: 'svg'
+  },
+
+  mdc: {
+    highlight: {
+      theme: 'poimandres',
+    }
+  },
+
+  content: {
+    build: {
+      markdown: {
+        toc: {
+          depth: 3
+        }
+      }
+    }
   },
 
   shiki: {
@@ -50,4 +96,4 @@ export default defineNuxtConfig({
       "poimandres"
     ]
   },
-})
+});
