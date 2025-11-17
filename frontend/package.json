@@ -10,6 +10,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "dev:docs": "NUXT_PUBLIC_DOCS_DEV=true nuxt dev",
+    "dev:promo": "NUXT_PUBLIC_PROMO_MODE=true nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",

@@ -17,6 +17,11 @@ pnpm install
 pnpm dev
 ```
 
+### Promo Mode
+The UI can be launched in "promoMode", meaning it is used for presenting custos features.
+
+To start custos in "promoMode", simply run `pnpm dev:promo` which, in the background, sets a runtimeConfig variable to true.
+
 ## Build Website
 To build the website run the following command. You'll receive static files that can be deployed on any Web-host.
 ```
