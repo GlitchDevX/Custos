@@ -45,11 +45,6 @@ const baseHeaderContent: NavigationMenuItem[] = [
     icon: 'lucide:home',
     to: '/',
   },
-  ...runtimeConfig.public.promoMode ? [] : [{
-    label: 'Metrics',
-    icon: 'lucide:chart-column',
-    to: '/metrics',
-  }],
   {
     label: 'Docs',
     icon: 'lucide:book',
