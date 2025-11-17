@@ -6,7 +6,7 @@ title: Metrics
 description: How to set up a Grafana dashboard for Custos Metrics.
 ---
 
-Custos has a Prometheus exporter built in, meaning you can scrape the metrics from custos using Prometheus and them use them in a grafana dashboard.
+Custos has a Prometheus exporter built in, meaning you can scrape the metrics from Custos using Prometheus and them use them in a Grafana dashboard.
 
 To let Prometheus scrape Custos you can add this simple config to `/etc/prometheus/prometheus.yml`
 ```yml [prometheus.yml]
@@ -16,7 +16,7 @@ scrape_configs:
       - targets: ['localhost:3060']  # assuming your Custos instance is running on port 3060
 ```
 
-This data could then be used in a Grafana dashboard, you can use this dashboard:
+This data could then be used in a Grafana dashboard, you can import htis dashboard as a base:
 
 ::GrafanaDashboardCode
 ::
