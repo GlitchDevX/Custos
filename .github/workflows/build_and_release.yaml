@@ -207,3 +207,42 @@ jobs:
             ```bash
             docker pull glitchdevx/custos-ui:${{ needs.get-version-tag.outputs.tag }}
             ```
+
+  deploy-promo-page:
+    needs: [release, get-version-tag]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v5
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v5
+        with:
+          node-version: lts/*
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      
+      - name: Install dependencies
+        run: pnpm i
+      
+      - name: Build promo app
+        run: pnpm generate
+        env:
+          NUXT_PUBLIC_VERSION: ${{ needs.get-version-tag.outputs.tag }}
+          NUXT_PUBLIC_PROMO_MODE: true
+      
+      - name: 📂 Sync files
+        uses: swillner/sftp-sync-action@v1.0
+        with:
+          server: ${{ secrets.SFTP_SERVER }}
+          port: ${{ secrets.SFTP_PORT }}
+          user: ${{ secrets.SFTP_USER }}
+          user_private_key: ${{ secrets.SFTP_PRIV_KEY }}
+          host_public_key: ${{ secrets.SFTP_PUB_KEY }}
+          local: ./.output/public
+          remote: ${{ secrets.SFTP_TARGET_DIR }}
