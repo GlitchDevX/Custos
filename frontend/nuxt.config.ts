@@ -16,7 +16,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      docsDev: false
+      docsDev: false,
+      version: "PLACEHOLDER"
     }
   },
 

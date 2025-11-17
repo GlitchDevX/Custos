@@ -160,6 +160,8 @@ jobs:
 
       - name: Build Frontend
         run: pnpm generate
+        env:
+          NUXT_PUBLIC_VERSION: ${{ needs.get-version-tag.outputs.tag }}
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
