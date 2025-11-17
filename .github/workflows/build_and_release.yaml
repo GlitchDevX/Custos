@@ -110,7 +110,7 @@ jobs:
 
       - name: Extract swagger.json
         run: |
-          uv run main.py &
+          uv run main.py --config prd &
           p_id=$!
           sleep 5s
           curl http://localhost:3060/swagger.json > swagger.json
