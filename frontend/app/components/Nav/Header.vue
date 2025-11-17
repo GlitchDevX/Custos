@@ -20,6 +20,7 @@
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
 
 const navigationItems = computed<NavigationMenuItem[]>(() => baseHeaderContent.map(markPageWhenChildActive));
 
@@ -44,11 +45,11 @@ const baseHeaderContent: NavigationMenuItem[] = [
     icon: 'lucide:home',
     to: '/',
   },
-  {
+  ...runtimeConfig.public.promoMode ? [] : [{
     label: 'Metrics',
     icon: 'lucide:chart-column',
-    to: '/metrics'
-  },
+    to: '/metrics',
+  }],
   {
     label: 'Docs',
     icon: 'lucide:book',
@@ -72,11 +73,11 @@ const baseHeaderContent: NavigationMenuItem[] = [
     icon: 'lucide:send',
     to: '/playground'
   },
-  {
+  ...runtimeConfig.public.promoMode ? [] : [{
     label: 'Configuration',
     icon: 'lucide:settings',
     to: '/config'
-  }
+  }]
 ];
 </script>
 
