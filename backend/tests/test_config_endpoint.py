@@ -49,7 +49,7 @@ def test_should_modify_test_config(client):
 def test_should_get_namespace_not_exists(client):
     response = client.put(API_PATH, json={"namespace": "non_existent_file", "content": {"not": "relevant"}})
     assert response.status_code == 404
-    assert response.json["code"] == "NAMESPACE_NOT_FOUND"
+    assert response.json["error"] == "NAMESPACE_NOT_FOUND"
 
 # get
 def test_should_get_config_in_namespace(client):
@@ -65,4 +65,4 @@ def test_should_get_config_in_namespace(client):
 def test_should_get_config_not_found(client):
     response = client.get(API_PATH + "?namespace=non_existent_namespace")
     assert response.status_code == 404
-    assert response.json == {}
+    assert response.json["error"] == "NAMESPACE_NOT_FOUND"
