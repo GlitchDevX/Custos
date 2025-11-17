@@ -89,6 +89,8 @@ jobs:
   update-swagger:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      commit-ref: ${{ steps.push.outputs.commitRef }}
     defaults:
       run:
         working-directory: backend
@@ -120,11 +122,13 @@ jobs:
         run: mv swagger.json ../frontend/app/assets/data/swagger.json
       
       - name: Push changes
+        id: push
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
           git add ../frontend/app/assets/data/swagger.json
           git diff --staged --quiet || git commit -m "[ci skip] Updated swagger.json" && git push
+          echo "commitRef=$(git log --pretty=format:'%h' -n 1)" >> "$GITHUB_OUTPUT"
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -136,6 +140,8 @@ jobs:
     steps:
       - name: Get latest code
         uses: actions/checkout@v5
+        with:
+          ref: ${{ needs.update-swagger.outputs.commit-ref }}
       
       - name: Install pnpm
         uses: pnpm/action-setup@v4
