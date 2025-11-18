@@ -42,11 +42,11 @@ class FlaskApplication:
         if not self.flask_app.config["TESTING"]:
             with self.flask_app.app_context():
                 self.metrics.init_app(self.flask_app)
-                # self.metrics.register_default(
-                #     self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
-                #          labels={'path': lambda: request.path, 'method': lambda: request.method }
-                #     )
-                # )
+                self.metrics.register_default(
+                    self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
+                         labels={'path': lambda: request.path, 'method': lambda: request.method }
+                    )
+                )
                 self.flask_app.metrics_exporter = self.metrics # type: ignore
 
         if self.flask_app.config["PRODUCTION"]:
