@@ -217,6 +217,9 @@ jobs:
   deploy-promo-page:
     needs: [release, get-version-tag]
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/
     steps:
       - name: Get latest code
         uses: actions/checkout@v5
@@ -250,5 +253,5 @@ jobs:
           user: ${{ secrets.SFTP_USER }}
           user_private_key: ${{ secrets.SFTP_PRIV_KEY }}
           host_public_key: ${{ secrets.SFTP_PUB_KEY }}
-          local: ./.output/public
+          local: ./frontend/.output/public
           remote: ${{ secrets.SFTP_TARGET_DIR }}
