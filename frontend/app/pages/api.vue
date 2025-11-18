@@ -8,7 +8,7 @@
 import { ApiReference } from '@scalar/api-reference';
 import type { AnyApiReferenceConfiguration } from '@scalar/types';
 import { TITLE_SUFFIX } from '~/assets/data/appData';
-import swaggerFile from '../../public/swagger.json';
+import swaggerFile from '~/assets/data/swagger.json';
 
 useHead({
   title: "API Reference" + TITLE_SUFFIX
