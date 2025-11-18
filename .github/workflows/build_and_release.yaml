@@ -111,12 +111,7 @@ jobs:
         run: uv sync
 
       - name: Extract swagger.json
-        run: |
-          uv run main.py --config prd &
-          p_id=$!
-          sleep 10s
-          curl http://localhost:3060/swagger.json > swagger.json
-          kill -KILL $p_id
+        run: ../scripts/extract-swagger-file.sh
 
       - name: Update swagger.json in frontend
         run: mv swagger.json ../frontend/app/assets/data/swagger.json
