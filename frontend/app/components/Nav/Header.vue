@@ -1,15 +1,25 @@
 <template>
     <div class="w-full h-16">
         <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-1001  w-full">
-            <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
+            <div class="flex flex-row items-center gap-1">
+              <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
                 Custos
-            </UButton>
+              </UButton>
+              <UBadge
+                v-if="runtimeConfig.public.promoMode"
+                variant="outline"
+                :label="runtimeConfig.public.version"
+                class="mt-1"/>
+            </div>
 
-            <UNavigationMenu :items="navigationItems" />
+            <div class="flex flex-row items-center gap-2">
+              <GitHubStarButton v-if="runtimeConfig.public.promoMode" />
+              <UNavigationMenu :items="navigationItems" />
+            </div>
             <!--
               <tailwind-include class="
-                [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
-                [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
+              [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
+              [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
               " />
             -->
         </div>
