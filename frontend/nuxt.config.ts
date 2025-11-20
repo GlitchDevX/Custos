@@ -56,7 +56,11 @@ export default defineNuxtConfig({
 
   icon: {
     serverBundle: {
+      remote: false,
       collections: ['lucide']
+    },
+    clientBundle: {
+      scan: true
     },
     customCollections: [
       {
@@ -64,6 +68,7 @@ export default defineNuxtConfig({
         dir: 'app/assets/custom-icons'
       }
     ],
+    provider: 'none',
     mode: 'svg'
   },
 
