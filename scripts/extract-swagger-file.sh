@@ -16,7 +16,7 @@ do
   sleep 1
 done
 
-curl -s http://localhost:3060/swagger.json > swagger.json
+curl -s http://localhost:3060/swagger.json | jq > swagger.json
 echo "Extracted swagger.json"
 
 kill $p_id
