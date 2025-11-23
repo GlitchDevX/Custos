@@ -54,6 +54,42 @@
       }
     },
     "/config/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Config Content",
+            "schema": {
+              "$ref": "#/definitions/config_retrieve_successful"
+            }
+          },
+          "404": {
+            "description": "Namespace not Found",
+            "schema": {
+              "$ref": "#/definitions/namespace_not_found"
+            }
+          },
+          "503": {
+            "description": "Endpoint Disabled",
+            "schema": {
+              "$ref": "#/definitions/endpoint_disabled"
+            }
+          }
+        },
+        "summary": "/config",
+        "description": "Retrieve the configuration for the specified namespace.",
+        "operationId": "get_config_resource",
+        "parameters": [
+          {
+            "name": "namespace",
+            "in": "query",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Config"
+        ]
+      },
       "put": {
         "responses": {
           "200": {
@@ -94,42 +130,6 @@
                 }
               }
             }
-          }
-        ],
-        "tags": [
-          "Config"
-        ]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Config Content",
-            "schema": {
-              "$ref": "#/definitions/config_retrieve_successful"
-            }
-          },
-          "404": {
-            "description": "Namespace not Found",
-            "schema": {
-              "$ref": "#/definitions/namespace_not_found"
-            }
-          },
-          "503": {
-            "description": "Endpoint Disabled",
-            "schema": {
-              "$ref": "#/definitions/endpoint_disabled"
-            }
-          }
-        },
-        "summary": "/config",
-        "description": "Retrieve the configuration for the specified namespace.",
-        "operationId": "get_config_resource",
-        "parameters": [
-          {
-            "name": "namespace",
-            "in": "query",
-            "type": "string",
-            "required": true
           }
         ],
         "tags": [
@@ -298,11 +298,11 @@
       },
       "type": "object"
     },
-    "config_update_successful": {
+    "config_retrieve_successful": {
       "properties": {
-        "CODE": {
+        "property_name*": {
           "type": "string",
-          "default": "OK"
+          "default": "Any"
         }
       },
       "type": "object"
@@ -320,11 +320,11 @@
       },
       "type": "object"
     },
-    "config_retrieve_successful": {
+    "config_update_successful": {
       "properties": {
-        "property_name*": {
+        "CODE": {
           "type": "string",
-          "default": "Any"
+          "default": "OK"
         }
       },
       "type": "object"
