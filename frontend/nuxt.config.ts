@@ -60,7 +60,8 @@ export default defineNuxtConfig({
       collections: ['lucide']
     },
     clientBundle: {
-      scan: true
+      scan: true,
+      icons: ["lucide:loader-circle"]
     },
     customCollections: [
       {
@@ -68,7 +69,7 @@ export default defineNuxtConfig({
         dir: 'app/assets/custom-icons'
       }
     ],
-    provider: 'none',
+    provider: 'server',
     mode: 'svg'
   },
 
