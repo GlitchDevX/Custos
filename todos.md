@@ -9,9 +9,5 @@
 - Add phone number validation endpoint using phonenumbers lib
 - Maybe option to make config endpoint only usable via web ui
 - Maybe add option to change censoring character
-<<<<<<< Updated upstream
 - Add config (besides enabled) as optional param to endpoints
-=======
-- Add config (besides enabled) as optional param to 
 - Add option to disable config endpoint
->>>>>>> Stashed changes
