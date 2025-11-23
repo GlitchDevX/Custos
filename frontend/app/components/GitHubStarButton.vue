@@ -1,5 +1,5 @@
 <template>
-  <UButton to="https://github.com/glitchdevx/custos" color="neutral" icon="lucide:github" class="invert rounded-lg px-1.5">
+  <UButton to="https://github.com/glitchdevx/custos" target="_blank" color="neutral" icon="lucide:github" class="invert rounded-lg px-1.5">
     <UBadge variant="soft" color="warning" class="flex items-center gap-1 invert">
       {{ starsText }}
       <UIcon name="lucide:star" />
