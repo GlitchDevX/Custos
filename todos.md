@@ -2,7 +2,6 @@
 
 ## Frontend
 - Ability to change port of backend (maybe not necessary when directy talking to the backend as service not via localhost)
-- Add mobile header
 - Fix hydration issues with metrics animation
 
 ## Backend

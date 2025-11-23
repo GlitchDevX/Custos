@@ -18,7 +18,7 @@ const { data: stars } = useFetch<PartialResponse>("https://api.github.com/repos/
 })
 
 const starsText = computed(() => {
-  return stars.value?.stargazers_count ?? "Star on GitHub"
+  return stars.value?.stargazers_count ?? "N/A"
 });
 
 </script>

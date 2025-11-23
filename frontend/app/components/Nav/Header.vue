@@ -1,29 +1,49 @@
 <template>
-    <div class="w-full h-16">
-        <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-1001  w-full">
-            <div class="flex flex-row items-center gap-1">
-              <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
-                Custos
-              </UButton>
-              <UBadge
-                v-if="runtimeConfig.public.promoMode"
-                variant="outline"
-                :label="runtimeConfig.public.version"
-                class="mt-1"/>
-            </div>
+  <div class="w-full h-16">
+    <div class="flex flex-row justify-between align-middle px-2 fixed header-container z-1001  w-full">
+      <div class="flex flex-row items-center gap-1">
+        <UButton variant="ghost" href="/" size="md" icon="ci:custos-logo" class="my-2 text-2xl font-bold">
+          Custos
+        </UButton>
+        <UBadge
+          v-if="runtimeConfig.public.promoMode"
+          variant="outline"
+          :label="runtimeConfig.public.version"
+          class="mt-1"/>
+      </div>
 
-            <div class="flex flex-row items-center gap-2">
-              <GitHubStarButton v-if="runtimeConfig.public.promoMode" />
-              <UNavigationMenu :items="navigationItems" />
-            </div>
-            <!--
-              <tailwind-include class="
-              [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
-              [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
-              " />
-            -->
-        </div>
+      <div class="flex flex-row items-center gap-2 max-sm:hidden">
+        <GitHubStarButton v-if="runtimeConfig.public.promoMode" />
+        <UNavigationMenu :items="navigationItems" />
+      </div>
+      <div class="flex flex-row items-center sm:hidden">
+        <UButton
+          variant="ghost" color="neutral"
+          icon="lucide:menu" size="xl"
+          @click="sidebarExpanded = !sidebarExpanded" />
+
+        <UDashboardSidebar v-model:open="sidebarExpanded" mode="drawer">
+          <UNavigationMenu
+            :items="navigationItems"
+            orientation="vertical"
+          />
+          <div class="flex justify-center items-center gap-2">
+            <span class="font-bold">
+              Star on Github
+            </span>
+            <UIcon name="lucide:arrow-right" />
+            <GitHubStarButton v-if="runtimeConfig.public.promoMode" />
+          </div>
+        </UDashboardSidebar>
+      </div>
     </div>
+  </div>
+  <!--
+    <tailwind-include class="
+    [&>li:nth-child(1)>a]:text-primary [&>li:nth-child(1)>a>svg]:text-primary
+    [&>li:nth-child(2)>a]:text-primary [&>li:nth-child(2)>a>svg]:text-primary
+    " />
+  -->
 </template>
 
 <script lang="ts" setup>
@@ -33,6 +53,8 @@ const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
 const navigationItems = computed<NavigationMenuItem[]>(() => baseHeaderContent.map(markPageWhenChildActive));
+
+const sidebarExpanded = ref(false);
 
 function markPageWhenChildActive(navItem: NavigationMenuItem): NavigationMenuItem {
   if (navItem.children !== undefined) {
