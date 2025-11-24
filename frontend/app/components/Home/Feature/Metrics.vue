@@ -48,7 +48,7 @@ import { randomInt } from '~/assets/ts/math-utils';
 
 const router = useRouter();
 
-const metrics = ref([
+const metrics = useState('randomized-metrics', () => [
     { name: "MAIL_OK", active: false, posClass: '' },
     { name: "MAIL_FORMAT_INVALID", active: false, posClass: '' },
     { name: "MAIL_DISPOSABLE", active: false, posClass: '' },
