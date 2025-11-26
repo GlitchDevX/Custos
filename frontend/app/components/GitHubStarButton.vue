@@ -14,7 +14,9 @@ interface PartialResponse {
 
 const { data: stars } = useFetch<PartialResponse>("https://api.github.com/repos/glitchdevx/custos", {
   cache: 'reload',
-  ignoreResponseError: true
+  ignoreResponseError: true,
+  dedupe: "defer",
+  key: 'github-stars'
 })
 
 const starsText = computed(() => {
