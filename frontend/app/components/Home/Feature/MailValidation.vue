@@ -10,7 +10,7 @@
                 </p>
             </div>
             <div class="flex flex-row justify-end pt-2">
-                <UStepper :items="mailValidationSteps" class="max-w-2xl" />
+                <UStepper :items="mailValidationSteps" :model-value="-1" class="max-w-2xl" />
             </div>
         </div>
     </div>
