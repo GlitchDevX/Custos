@@ -33,6 +33,10 @@ const scalarConfig = {
 </script>
 
 <style>
+body {
+  background: var(--ui-bg) !important;
+}
+
 .dark-mode, .light-mode {
   --scalar-background-1: var(--ui-bg);
   --scalar-background-2: var(--ui-bg-elevated);
