@@ -24,7 +24,7 @@ updates:
         patterns:
           - "*" # Group all dependencies
     commit-message:
-      prefix: "#minor"
+      prefix: "#patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -35,4 +35,4 @@ updates:
         patterns:
           - "*" # Group all dependencies
     commit-message:
-      prefix: "#minor"
+      prefix: "#patch"
