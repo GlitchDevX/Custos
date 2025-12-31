@@ -3,6 +3,7 @@
 ## Frontend
 - Ability to change port of backend (maybe not necessary when directy talking to the backend as service not via localhost)
 - Fix hydration issues with metrics animation
+- Add legal pages
 
 ## Backend
 - Add phone number validation endpoint using phonenumbers lib
