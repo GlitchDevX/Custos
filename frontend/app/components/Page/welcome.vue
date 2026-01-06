@@ -4,9 +4,14 @@
       <span class="text-5xl opacity-100">
         {{ daytimeGreeting.emoji }}
       </span>
-      <h1 class="text-3xl font-black inline">
-        {{ daytimeGreeting.text }}
-      </h1>
+      <div class="flex flex-col">
+        <h1 class="text-3xl font-black inline">
+          {{ daytimeGreeting.text }}
+        </h1>
+        <span class="text-muted">
+          {{ new Date().toDateString() }}
+        </span>
+      </div>
     </UCard>
 
     <div class="flex min-h-64 mt-4 gap-4 md:flex-row flex-col">
