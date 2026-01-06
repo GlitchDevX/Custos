@@ -1,17 +1,21 @@
 <template>
-  <div class="py-4 px-8 flex gap-4 flex-col">
-    <PageTitle>Endpoint Playground</PageTitle>
-    <UAccordion v-model="active" :items="endpoints" :unmountOnHide="false">
-      <template #mailValidation>
-        <PlaygroundMailValidation />
-      </template>
-      <template #realtimeContent>
-        <PlaygroundRealtimeContentCheck />
-      </template>
-      <template #deepAnalysis>
-        <PlaygroundDeepAnalysis />
-      </template>
-    </UAccordion>
+  <div class="px-8 flex flex-col justify-between min-h-[calc(100dvh-64px)]">
+    <div class="py-4 flex gap-4 flex-col">
+      <PageTitle>Endpoint Playground</PageTitle>
+      <UAccordion v-model="active" :items="endpoints" :unmountOnHide="false">
+        <template #mailValidation>
+          <PlaygroundMailValidation />
+        </template>
+        <template #realtimeContent>
+          <PlaygroundRealtimeContentCheck />
+        </template>
+        <template #deepAnalysis>
+          <PlaygroundDeepAnalysis />
+        </template>
+      </UAccordion>
+    </div>
+    
+    <NavFooter />
   </div>
 </template>
 
