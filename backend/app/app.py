@@ -1,4 +1,8 @@
+from os import environ
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from app.config.config_watcher import ConfigWatcher
+from app.utils.logger import logger
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -32,15 +36,29 @@ class FlaskApplication:
             self.metrics = RESTfulPrometheusMetrics(app=None, api=api)
 
         ConfigWatcher()
+        promo_mode = environ.get("PROMO_MODE", "false").lower() == "true"
+
+        if promo_mode:
+            logger.info("Starting app in promo mode. Enables ratelimits and removes /config endpoint")
+        else:
+            api.add_namespace(ns_config)
 
         api.add_namespace(ns_metric)
         api.add_namespace(ns_mail)
-        api.add_namespace(ns_config)
         api.add_namespace(ns_content_check)
         api.add_namespace(ns_analyze)
 
-        if not self.flask_app.config["TESTING"]:
-            with self.flask_app.app_context():
+        with self.flask_app.app_context():
+            if promo_mode:
+                limiter = Limiter(
+                    get_remote_address,
+                    app=self.flask_app,
+                    default_limits=["200/day", "10/minute"],
+                    storage_uri="memory://",
+                    default_limits_exempt_when=lambda: request.method == "OPTIONS",
+                )
+
+            if not self.flask_app.config["TESTING"]:
                 self.metrics.init_app(self.flask_app)
                 self.metrics.register_default(
                     self.metrics.counter('flask_http_request_by_path_counter', 'Requests count by request paths',
