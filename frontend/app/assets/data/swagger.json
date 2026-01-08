@@ -369,16 +369,16 @@
   "swagger": "2.0",
   "tags": [
     {
+      "description": "\nEndpoints to modify and retrieve configuration.\n\nAll settings are split into namespaces reflecting the individual endpoints.\n\nAvailable namespaces:\n- `content_check`\n- `deep_analysis`\n- `mail_validation`\n- `metrics`\n",
+      "name": "Config"
+    },
+    {
       "description": "Endpoint for getting metrics for Prometheus.",
       "name": "Metrics"
     },
     {
       "description": "Endpoint for validating emails.",
       "name": "Mail"
-    },
-    {
-      "description": "\nEndpoints to modify and retrieve configuration.\n\nAll settings are split into namespaces reflecting the individual endpoints.\n\nAvailable namespaces:\n- `content_check`\n- `deep_analysis`\n- `mail_validation`\n- `metrics`\n",
-      "name": "Config"
     },
     {
       "description": "Endpoint for checking content against certain criteria.",
