@@ -1,7 +1,7 @@
 <template>
   <UContainer>
     <h1>Privacy Policy</h1>
-    <p>Last updated: January 06, 2026</p>
+    <p>Last updated: January 14, 2026</p>
     <p>This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your
       information when You use the Service and tells You about Your privacy rights and how the law protects You.</p>
     <p>We use Your Personal data to provide and improve the Service. By using the Service, You agree to the collection
@@ -239,7 +239,29 @@
     <h3>Security of Your Personal Data</h3>
     <p>The security of Your Personal Data is important to Us, but remember that no method of transmission over the
       Internet, or method of electronic storage is 100% secure. While We strive to use commercially reasonable means to
-      protect Your Personal Data, We cannot guarantee its absolute security.</p>
+      protect Your Personal Data, We cannot guarantee its absolute security.
+    </p>
+    
+    <h2>Hosting & DNS</h2>
+    <p>
+      In this section, we will disclose which providers are used to host and provide our services.
+    </p>
+    <h3>Hosting via Strato</h3>
+    <p>
+      We host our website on a server provided by Strato AG (Otto-Ostrowski-Straße 7, 10249 Berlin, Germany).
+      <br><br>
+      The server infrastructure is provided by Strato, but the server environment and the data stored upon it are managed and administered directly by us. Strato merely provides the physical infrastructure and network connection. When you visit our website, technical data (such as your IP address, time of access, and browser configuration) is processed to deliver the content to you.
+    </p>
+
+    <h3>Cloudflare (DNS and Security)</h3>
+    <p>
+      We use services provided by Cloudflare, Inc. (101 Townsend St, San Francisco, CA 94107, USA) primarily as our Domain Name System (DNS) provider and to secure our website.
+      <br><br>
+      Cloudflare acts as a filter between your device and our server (at Strato). Technically, the traffic is routed through Cloudflare's network. This allows Cloudflare to analyze data traffic to prevent attacks (such as DDoS attacks) and to resolve the domain name. In this context, data such as your IP address may be processed by Cloudflare.
+      <br><br>
+      Cloudflare processes data in data centers worldwide. To ensure data protection compliance for data transfers to the USA, Cloudflare relies on the EU-US Data Privacy Framework and Standard Contractual Clauses (SCCs).
+    </p>
+
     <h2>Children's Privacy</h2>
     <p>Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable
       information from anyone under the age of 13. If You are a parent or guardian and You are aware that Your child has
