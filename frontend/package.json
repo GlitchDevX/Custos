@@ -20,20 +20,20 @@
     "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "@iconify-json/lucide": "^1.2.82",
-    "@nuxt/content": "^3.10.0",
+    "@iconify-json/lucide": "^1.2.86",
+    "@nuxt/content": "^3.11.0",
     "@nuxt/eslint": "^1.12.1",
-    "@nuxt/fonts": "^0.12.1",
-    "@nuxt/icon": "^2.1.1",
+    "@nuxt/fonts": "^0.13.0",
+    "@nuxt/icon": "^2.2.1",
     "@nuxt/image": "^2.0.0",
-    "@nuxt/ui": "^4.3.0",
+    "@nuxt/ui": "^4.4.0",
     "@scalar/api-reference": "1.38.1",
-    "better-sqlite3": "^12.5.0",
+    "better-sqlite3": "^12.6.2",
     "eslint": "^9.39.2",
-    "nuxt": "^4.2.2",
+    "nuxt": "^4.3.0",
     "nuxt-shiki": "^0.3.2",
     "typescript": "^5.9.3",
-    "vue": "^3.5.26",
+    "vue": "^3.5.27",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
