@@ -240,13 +240,10 @@ jobs:
           NUXT_PUBLIC_VERSION: ${{ needs.get-version-tag.outputs.tag }}
           NUXT_PUBLIC_PROMO_MODE: true
       
-      - name: 📂 Sync files
-        uses: swillner/sftp-sync-action@v1.0
+      - name: Deploy Website
+        uses: glitchdevx/pull-deployment/client/website@main
         with:
-          server: ${{ secrets.SFTP_SERVER }}
-          port: ${{ secrets.SFTP_PORT }}
-          user: ${{ secrets.SFTP_USER }}
-          user_private_key: ${{ secrets.SFTP_PRIV_KEY }}
-          host_public_key: ${{ secrets.SFTP_PUB_KEY }}
-          local: ./frontend/.output/public
-          remote: ${{ secrets.SFTP_TARGET_DIR }}
+          target-dir: ./frontend/.output/public
+          deployment-id: ${{ secrets.DEPLOYMENT_ID }}
+          deployment-secret: ${{ secrets.DEPLOYMENT_SECRET }}
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
