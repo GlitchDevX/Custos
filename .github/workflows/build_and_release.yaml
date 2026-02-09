@@ -247,3 +247,5 @@ jobs:
           deployment-id: ${{ secrets.DEPLOYMENT_ID }}
           deployment-secret: ${{ secrets.DEPLOYMENT_SECRET }}
           webhook-url: ${{ secrets.WEBHOOK_URL }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
