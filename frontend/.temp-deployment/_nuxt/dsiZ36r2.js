@@ -1,0 +1,1 @@
+import{b as t}from"./CrZCX3n8.js";import{i as e,q as r,o as i,w as a,d as n}from"./C5MHcV20.js";import"./B-w2PmyG.js";import"./CtBxx05M.js";import"./B45bc6ym.js";import"./CV4Hssdo.js";const x=e({__name:"CollectionSync",setup(m){return(p,o)=>(i(),r(t,null,{title:a(()=>o[0]||(o[0]=[n("Sync")])),_:1}))}});export{x as default};
