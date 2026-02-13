@@ -1,0 +1,38 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # seemingly something with the pyproject is broken, as it doesn't work with pip or uv as eco system
+  # - package-ecosystem: "pip"
+  #   directory: "backend/"
+  #   schedule:
+  #     interval: "daily"
+  #   groups:
+  #     dependencies:
+  #       patterns:
+  #         - "*" # Group all dependencies
+      
+  - package-ecosystem: "npm"
+    directory: "frontend/"
+    schedule:
+      interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Group all dependencies
+    commit-message:
+      prefix: "#patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Group all dependencies
+    commit-message:
+      prefix: "#patch"

@@ -1,0 +1,1 @@
+import{_ as t,c as o,o as s,s as n}from"./C5MHcV20.js";const _={},c={class:"text-3xl font-bold"};function a(e,r){return s(),o("h1",c,[n(e.$slots,"default")])}const f=Object.assign(t(_,[["render",a]]),{__name:"PageTitle"});export{f as _};

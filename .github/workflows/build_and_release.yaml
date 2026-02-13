@@ -1,0 +1,251 @@
+name: Build and Release
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  get-version-tag:
+    timeout-minutes: 1
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.new_tag }}
+      was-updated: ${{ steps.tag.outputs.old_tag != steps.tag.outputs.new_tag }}
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+
+      - name: Bump version and push tag
+        id: tag
+        uses: anothrNick/github-tag-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          PRERELEASE: true
+      
+      - name: Echo Tag to output
+        run: |
+          echo "New Tag: ${{ steps.tag.outputs.new_tag }}"
+          echo "Was Updated: ${{ steps.tag.outputs.old_tag != steps.tag.outputs.new_tag }}"
+
+  test-backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Setup venv
+        run: uv venv
+
+      - name: Install dependencies
+        run: uv pip install -r pyproject.toml --extra dev
+
+      - name: Run tests
+        run: |
+          uv run coverage run -m pytest
+          echo '### Coverage Summary' >> $GITHUB_STEP_SUMMARY
+          uv run coverage report --format=markdown >> $GITHUB_STEP_SUMMARY
+
+  build-backend:
+    timeout-minutes: 20
+    runs-on: ubuntu-latest
+    needs: [get-version-tag, test-backend]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/bake-action@v6
+        env:
+          CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
+        with:
+          targets: backend
+          push: ${{ needs.get-version-tag.outputs.was-updated }}
+          pull: true
+
+  update-swagger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      commit-ref: ${{ steps.push.outputs.commitRef }}
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Setup venv
+        run: uv venv
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Extract swagger.json
+        run: ../scripts/extract-swagger-file.sh
+
+      - name: Update swagger.json in frontend
+        run: mv swagger.json ../frontend/app/assets/data/swagger.json
+      
+      - name: Push changes
+        id: push
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git add ../frontend/app/assets/data/swagger.json
+          git diff --staged --quiet || git commit -m "[ci skip] Updated swagger.json" && git push
+          echo "commitRef=$(git log --pretty=format:'%H' -n 1)" >> "$GITHUB_OUTPUT"
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    needs: [ get-version-tag, update-swagger ]
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.update-swagger.outputs.commit-ref }}
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Lint Code
+        run: pnpm lint
+  
+      - name: Run Typecheck
+        run: pnpm typecheck
+
+      - name: Build Frontend
+        run: pnpm generate
+        env:
+          NUXT_PUBLIC_VERSION: ${{ needs.get-version-tag.outputs.tag }}
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push
+        uses: docker/bake-action@v6
+        env:
+          CUSTOS_TAG: ${{ needs.get-version-tag.outputs.tag }}
+        with:
+          source: .
+          targets: frontend
+          push: ${{ needs.get-version-tag.outputs.was-updated }}
+          pull: true
+
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [get-version-tag, build-backend, build-frontend]
+    if: ${{ needs.get-version-tag.outputs.was-updated == 'true' }}
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.get-version-tag.outputs.tag }}
+          body: |
+            ## Images on Dockerhub
+
+            ### [Backend](https://hub.docker.com/repository/docker/glitchdevx/custos/general)
+            ```bash
+            docker pull glitchdevx/custos:${{ needs.get-version-tag.outputs.tag }}
+            ```
+
+            ### [Frontend](https://hub.docker.com/repository/docker/glitchdevx/custos-ui/general)
+            ```bash
+            docker pull glitchdevx/custos-ui:${{ needs.get-version-tag.outputs.tag }}
+            ```
+
+  deploy-promo-page:
+    needs: [release, get-version-tag]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend/
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@v6
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
+      
+      - name: Install dependencies
+        run: pnpm i
+      
+      - name: Build promo app
+        run: pnpm generate
+        env:
+          NUXT_PUBLIC_VERSION: ${{ needs.get-version-tag.outputs.tag }}
+          NUXT_PUBLIC_PROMO_MODE: true
+      
+      - name: Deploy Website
+        uses: glitchdevx/pull-deployment/client/website@main
+        with:
+          target-dir: ./frontend/.output/public
+          deployment-id: ${{ secrets.DEPLOYMENT_ID }}
+          deployment-secret: ${{ secrets.DEPLOYMENT_SECRET }}
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

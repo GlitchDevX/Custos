@@ -1,0 +1,7 @@
+  custos-ui:
+    image: glitchdevx/custos-ui:latest
+    restart: always
+    depends_on:
+      - custos
+    ports:
+      - "127.0.0.1:<<FRONTEND_PORT>>:80"

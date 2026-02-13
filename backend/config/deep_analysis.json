@@ -1,0 +1,5 @@
+{
+  "enabled": true,
+  "threshold": 0.85,
+  "labelsToExclude": []
+}

@@ -1,0 +1,35 @@
+---
+navigation:
+  title: Configuration
+  icon: lucide:cog
+title: Configuration
+description: Configure Custos to fit your needs.
+---
+
+You can configure Custos mainly in two ways, either by directly editing the config files,
+or by using the API via HTTP call or Web-UI.
+
+
+
+::note
+Custos works with hot-reload configurations, which means that as soon as you update your configuration, whether via 
+the API or by editing the configuration files, Custos automatically uses the configuration without requiring a restart.
+::
+
+## Namespaces
+
+Custos configurations are split into namespaces according to their usage.
+This is represented by the different config files you can see in the `custos-config` dir.
+
+
+## Update Configurations
+
+### API
+To update the custos config via API either see the [api reference for the config endpoint](/docs/api#tag/config/put/config/)
+or the Configuration page in the Web-UI.
+
+
+### File
+Docker compose will automatically create a directory called `custos-config` containing all the configuration files
+next to the `docker-compose.yml` file.
+

@@ -1,0 +1,1 @@
+import{b as t}from"./CrZCX3n8.js";import{i as e,q as i,o as r,w as m,d as a}from"./C5MHcV20.js";import"./B-w2PmyG.js";import"./CtBxx05M.js";import"./B45bc6ym.js";import"./CV4Hssdo.js";const k=e({__name:"CollectionCookies",setup(p){return(s,o)=>(r(),i(t,null,{title:m(()=>o[0]||(o[0]=[a("Cookies")])),_:1}))}});export{k as default};
