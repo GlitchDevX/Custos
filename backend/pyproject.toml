@@ -40,6 +40,11 @@ omit = [
     "/tmp/*",
 ]
 
+[tool.coverage.report]
+omit = [
+    "_remote_module_non_scriptable"
+]
+
 [tool.pyrefly]
 project-includes = ["app/**"]
 project-excludes = [
