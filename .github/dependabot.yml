@@ -6,14 +6,14 @@
 version: 2
 updates:
   # seemingly something with the pyproject is broken, as it doesn't work with pip or uv as eco system
-  # - package-ecosystem: "pip"
-  #   directory: "backend/"
-  #   schedule:
-  #     interval: "daily"
-  #   groups:
-  #     dependencies:
-  #       patterns:
-  #         - "*" # Group all dependencies
+  - package-ecosystem: "uv"
+    directory: "backend/"
+    schedule:
+      interval: "daily"
+    groups:
+      dependencies:
+        patterns:
+          - "*" # Group all dependencies
       
   - package-ecosystem: "npm"
     directory: "frontend/"
