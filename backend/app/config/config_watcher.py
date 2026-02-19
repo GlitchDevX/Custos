@@ -35,8 +35,6 @@ class ConfigWatcher(metaclass=SingletonMeta):
         return observer
 
     def _stop_all_observers(self):
-        logger.info("stopping all config file observers")
-        
         for observer in self.observers:
             observer.stop()
 
