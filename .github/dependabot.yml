@@ -13,6 +13,8 @@ updates:
     ignore:
       - dependency-name: detoxify
       - dependency-name: torch
+    exclude-paths:
+      - data/*
     groups:
       dependencies:
         patterns:
