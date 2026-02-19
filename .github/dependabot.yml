@@ -12,6 +12,7 @@ updates:
       interval: "daily"
     ignore:
       - dependency-name: detoxify
+      - dependency-name: torch
     groups:
       dependencies:
         patterns:
