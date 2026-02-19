@@ -4,6 +4,12 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+
+registries:
+  pypi-standard:
+    type: python-index
+    url: "https://pypi.org/simple"
+
 updates:
   # seemingly something with the pyproject is broken, as it doesn't work with pip or uv as eco system
   - package-ecosystem: "uv"
@@ -13,6 +19,7 @@ updates:
     ignore:
       - dependency-name: detoxify
       - dependency-name: torch
+    registries: [ "pypi-standard" ]
     groups:
       dependencies:
         patterns:
