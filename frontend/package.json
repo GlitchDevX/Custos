@@ -29,12 +29,12 @@
     "@nuxt/ui": "^4.4.0",
     "@scalar/api-reference": "1.38.1",
     "better-sqlite3": "^12.6.2",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.1",
     "nuxt": "^4.3.1",
     "nuxt-shiki": "^0.3.2",
     "typescript": "^5.9.3",
     "vue": "^3.5.28",
-    "vue-router": "^5.0.2"
+    "vue-router": "^5.0.3"
   },
   "devDependencies": {
     "@scalar/types": "^0.4.0"
