@@ -35,7 +35,7 @@ url = "https://download.pytorch.org/whl/cpu"
 [project.optional-dependencies]
 dev = [
     "coverage>=7.8.0",
-    "pytest>=8.3.5",
+    "pytest>=9.0.3",
 ]
 
 [tool.coverage.run]
