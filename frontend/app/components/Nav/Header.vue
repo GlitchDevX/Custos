@@ -20,7 +20,7 @@
         <UButton
           variant="ghost" color="neutral"
           icon="lucide:menu" size="xl"
-          @click="sidebarExpanded = !sidebarExpanded" />
+          @click=";sidebarExpanded = !sidebarExpanded" />
 
         <UDashboardSidebar v-model:open="sidebarExpanded" mode="drawer">
           <UNavigationMenu
