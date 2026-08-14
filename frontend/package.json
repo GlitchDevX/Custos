@@ -27,7 +27,7 @@
     "@nuxt/icon": "^2.2.1",
     "@nuxt/image": "^2.0.0",
     "@nuxt/ui": "^4.5.0",
-    "@scalar/api-reference": "1.38.1",
+    "@scalar/api-reference": "1.65.1",
     "better-sqlite3": "^12.6.2",
     "eslint": "^10.0.2",
     "nuxt": "^4.3.1",
